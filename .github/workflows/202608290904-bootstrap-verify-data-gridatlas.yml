@@ -5,10 +5,11 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/202608290904-bootstrap-verify-data-gridatlas.yml'
-      - '.gitignore'
-      - 'README.md'
-      - 'requirements.lock'
-      - 'contracts/**'
+      - 'contracts/202608290904-data-gridatlas-bootstrap.json'
+      - 'contracts/202608290904-gridatlas-consumer.json'
+      - 'contracts/202608290904-v8-dependency-ledger.json'
+      - 'contracts/202608290904-v8-file-ledger.json'
+      - 'contracts/202608290904-v8-quarantine.json'
       - 'compiler/202608290904-build-dependency-catalog.py'
       - 'atman/202608290904-verify-bootstrap.py'
   workflow_dispatch:
