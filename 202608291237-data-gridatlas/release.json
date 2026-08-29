@@ -1,0 +1,535 @@
+{
+  "authority_licence_and_quarantine_labels_preserved": true,
+  "candidate": {
+    "artifact_archive_bytes": 98317765,
+    "artifact_digest": "sha256:fb32089353927a383f25c641c05b01e3f3c8237ca32d6171fc40679b6de9bc98",
+    "artifact_id": 9714380586,
+    "artifact_name": "data-gridatlas-202608291015-verified-candidate-61096ee84570fd78f7c87b7b4abe25cb521eeba6-run-33250896568-attempt-1",
+    "candidate_bytes": 98243147,
+    "candidate_files": 75,
+    "candidate_manifest_sha256": "3246dbdaa042ae8352ec9b7128cb6c2fe65e4f1aba0534302510661828df2526",
+    "candidate_proof_sha256": "8510dedd1ddb9fe9373719078ccf1407d9f79c4cdd1b5608f1f309fa2c6da2a5",
+    "proof_classification": "VERIFIED_FULL_V8_TRANSPLANT_CANDIDATE",
+    "source_commit": "61096ee84570fd78f7c87b7b4abe25cb521eeba6",
+    "workflow_run_id": 33250896568
+  },
+  "candidate_closure": {
+    "coordinate_tuples": 3812791,
+    "dropped_property_pairs": 4024742,
+    "features": 541282,
+    "geometry_counts": {
+      "LineString": 437288,
+      "MultiLineString": 23,
+      "Point": 103971
+    },
+    "input_bytes": 262709675,
+    "layer_membership_rows": 526388,
+    "layers": 60,
+    "phase_summary": {
+      "p1_foundation": {
+        "features": 25189,
+        "input_bytes": 9876366,
+        "sources": 10,
+        "wired_sources": 10
+      },
+      "p2_lazy_context": {
+        "features": 3961,
+        "input_bytes": 1105648,
+        "sources": 16,
+        "wired_sources": 16
+      },
+      "p3_official_rebuild": {
+        "features": 14286,
+        "input_bytes": 5238917,
+        "sources": 3,
+        "wired_sources": 3
+      },
+      "p4_motorways": {
+        "features": 17713,
+        "input_bytes": 11490282,
+        "sources": 1,
+        "wired_sources": 1
+      },
+      "p4_primary_roads": {
+        "features": 163790,
+        "input_bytes": 79708290,
+        "sources": 1,
+        "wired_sources": 1
+      },
+      "p4_rail_global": {
+        "features": 146263,
+        "input_bytes": 73626852,
+        "sources": 5,
+        "wired_sources": 5
+      },
+      "p4_trunk_roads": {
+        "features": 130228,
+        "input_bytes": 67527843,
+        "sources": 1,
+        "wired_sources": 1
+      },
+      "quarantine": {
+        "features": 39852,
+        "input_bytes": 14135477,
+        "sources": 19,
+        "wired_sources": 3
+      }
+    },
+    "raw_property_pairs": 5088905,
+    "retained_property_pairs": 1064163,
+    "sources": 56,
+    "unwired_features": 11019,
+    "unwired_sources": 16,
+    "wired_features": 530263,
+    "wired_sources": 40
+  },
+  "candidate_proof_sha256": "8510dedd1ddb9fe9373719078ccf1407d9f79c4cdd1b5608f1f309fa2c6da2a5",
+  "classification": "LIVE_IMMUTABLE_DATA_RELEASE",
+  "current_pointer": false,
+  "files": [
+    {
+      "bytes": 64993,
+      "path": "browser-layer-registry.json",
+      "sha256": "9b2169bcfd47bf51f0aaf8350487de19578e32358e191b961385a149a4637e1b"
+    },
+    {
+      "bytes": 3215,
+      "path": "contracts/202608290904-v8-quarantine.json",
+      "sha256": "dd5422c3b485355a151b118d2f97be1fd573548281838a4ea6e4e585749c5f58"
+    },
+    {
+      "bytes": 41224,
+      "path": "contracts/202608291015-v8-layer-config.json",
+      "sha256": "a0f96940190509d4c8f64fc00e1411a5d7a746abaa5bbcd4054bda241d3121e9"
+    },
+    {
+      "bytes": 2019,
+      "path": "contracts/202608291015-v8-runtime-dependencies.json",
+      "sha256": "4bbb5e4bd89cd72368e26c231393eb69ec0ef514f261af40efe4788a525258f8"
+    },
+    {
+      "bytes": 2097,
+      "path": "contracts/202608291015-v8-transplant-parquet.json",
+      "sha256": "734bc1d5acad266f3b235c09a4b365d59ecc62c98cdb9543e7a223e17723262a"
+    },
+    {
+      "bytes": 78272,
+      "path": "contracts/202608291015-v8-transplant-plan.json",
+      "sha256": "19dbe6a500c78039b5859016392eece2e69403690105218a04c55a59060ab91b"
+    },
+    {
+      "bytes": 23435,
+      "path": "data/browser-layer-registry.json",
+      "sha256": "30889c42ed0b2bfe877257f07d417dfb2a249a6dcc493a05e765ea38e94937b1"
+    },
+    {
+      "bytes": 1386620,
+      "path": "data/derived/grid_132kv_snapped.parquet",
+      "sha256": "8d6c6b020c6ee261f85c322f0e7c7c3536e63c4bf2863aa470585f40c79c2a64"
+    },
+    {
+      "bytes": 33974,
+      "path": "data/derived/grid_220kv_snapped.parquet",
+      "sha256": "e66e10d413b3f4cde590c0647e49c2367890dbcadf0e9f648ff3351b079c8bd2"
+    },
+    {
+      "bytes": 530304,
+      "path": "data/derived/grid_275kv_snapped.parquet",
+      "sha256": "c70aa02dd097efecd99c23f82036b25908a9ef1f88db6db12de294e2b4d719e5"
+    },
+    {
+      "bytes": 791477,
+      "path": "data/derived/grid_400kv_snapped.parquet",
+      "sha256": "53663da46fb270f92454399419318840c9a47f5ab3a68e858702eaa2c05dc048"
+    },
+    {
+      "bytes": 300613,
+      "path": "data/derived/grid_66kv_snapped.parquet",
+      "sha256": "86532e8ac22b8c7803df17480e8603d7ee34345f959a8bc49a8f912517d09a35"
+    },
+    {
+      "bytes": 1147276,
+      "path": "data/layer_membership.parquet",
+      "sha256": "2c7cbe8e8b2f39d9960ebee334198482f3aeedb378b5df65e540565aba21eb2d"
+    },
+    {
+      "bytes": 7846,
+      "path": "data/layers.parquet",
+      "sha256": "d3bd643af326af682ec9e4840a4d510ba8fb4ac4f564d25da91e4fc2475c0b4b"
+    },
+    {
+      "bytes": 25695,
+      "path": "data/manifest.json",
+      "sha256": "3246dbdaa042ae8352ec9b7128cb6c2fe65e4f1aba0534302510661828df2526"
+    },
+    {
+      "bytes": 120680,
+      "path": "data/partitions/airports.parquet",
+      "sha256": "b81dad3613a3c8c577df692b1821615a6578f02628201acc1f7e6bc48b6a7624"
+    },
+    {
+      "bytes": 40405,
+      "path": "data/partitions/datacentres.parquet",
+      "sha256": "d957f1a185ff6a2f37d09dc431a694a967e313c026c443b34cbc1fc39b381cb1"
+    },
+    {
+      "bytes": 5284,
+      "path": "data/partitions/deep_subsea_illustrative.parquet",
+      "sha256": "21f8e05303c065150e7466f9b740a726835e27b585fe57d38dea97d5b1162303"
+    },
+    {
+      "bytes": 10137,
+      "path": "data/partitions/elizabeth_line.parquet",
+      "sha256": "1aa7ff65348f2911bc06f3ce12f39a13621283572278ea6f93ce72eb0158b59c"
+    },
+    {
+      "bytes": 640040,
+      "path": "data/partitions/eurostar.parquet",
+      "sha256": "655061a117c6606b342802cd4df651667f5a8949c2e7f923d02823bc113f04d6"
+    },
+    {
+      "bytes": 166308,
+      "path": "data/partitions/ev_chargers.parquet",
+      "sha256": "f9483449c09ba92721e6b205b26f6c07c67915dec6f4d381d5a34ec60b040e47"
+    },
+    {
+      "bytes": 559979,
+      "path": "data/partitions/global_hydrocarbons.parquet",
+      "sha256": "919857c675395db178b662b0911c86a76aec5c8f06fe5446872d7544a78856e5"
+    },
+    {
+      "bytes": 5688405,
+      "path": "data/partitions/global_ports.parquet",
+      "sha256": "6576bbdf7557af5784982ca785f3f50cf497aa12d06b9fc233acd5026d7b00c3"
+    },
+    {
+      "bytes": 1738387,
+      "path": "data/partitions/grid_11kv_ukpn.parquet",
+      "sha256": "dc6af1cce4c78a211c634ceb6928d9179e2a787e1e43714b6528ac1987b79fef"
+    },
+    {
+      "bytes": 1411851,
+      "path": "data/partitions/grid_132kv.parquet",
+      "sha256": "28b39f37bb7e009f30c4ad9f1626ca5d0351e5ebca8e0c59372ea4a658359e68"
+    },
+    {
+      "bytes": 36941,
+      "path": "data/partitions/grid_220kv.parquet",
+      "sha256": "f729d87f0de93ead3fdf7317922a12cf519879cd424bae7f60793c57ecdb75dc"
+    },
+    {
+      "bytes": 604554,
+      "path": "data/partitions/grid_275kv.parquet",
+      "sha256": "27e539c125e6a41df4a66474623887e17ef43505345fdc4df390922abbb99ca4"
+    },
+    {
+      "bytes": 72659,
+      "path": "data/partitions/grid_33kv_east_of_england.parquet",
+      "sha256": "ec4098761f8ddc18c207728f88d3607eea35f3eba01c4f2a3cc8875ea5147738"
+    },
+    {
+      "bytes": 24871,
+      "path": "data/partitions/grid_33kv_london_area.parquet",
+      "sha256": "17710086b2d82aa8bdef48fb1950ad0128ae84558e40a230c0c370ffd38d7c02"
+    },
+    {
+      "bytes": 15549,
+      "path": "data/partitions/grid_33kv_north_east_england.parquet",
+      "sha256": "d251604f674f5292a6c20d963e6590178a23019b58c88aaea03ce3fd6a04d945"
+    },
+    {
+      "bytes": 91746,
+      "path": "data/partitions/grid_33kv_north_west_england.parquet",
+      "sha256": "d913f643160b30a163c63c63d878eb0a9d139b6c4501e30c527ece0bc3c98307"
+    },
+    {
+      "bytes": 99588,
+      "path": "data/partitions/grid_33kv_scotland_north.parquet",
+      "sha256": "b1717172fe715a5b3408072d9fafc67dfeabbb8bd733f4e17f9116830e5c01d3"
+    },
+    {
+      "bytes": 44057,
+      "path": "data/partitions/grid_33kv_scotland_south.parquet",
+      "sha256": "b20786862df3d3e7d140fd7a4b6b92fcecb682453b3d36f9a934012ae102ffda"
+    },
+    {
+      "bytes": 130215,
+      "path": "data/partitions/grid_33kv_south_east_england.parquet",
+      "sha256": "909c08a8c4623a05e65fc20fc82e8e5494061abe36ca5baa2ca784494321cd40"
+    },
+    {
+      "bytes": 424625,
+      "path": "data/partitions/grid_33kv_south_west_england.parquet",
+      "sha256": "e02acc18b4b851255d574f055d9ef6c07df7dffc91f1e6e88729a05c338ccd82"
+    },
+    {
+      "bytes": 63698,
+      "path": "data/partitions/grid_33kv_wales_north.parquet",
+      "sha256": "badbd182291234b0f4511479fa96fe8ff26794dad1d7db0445a07e7ecea875f7"
+    },
+    {
+      "bytes": 584488,
+      "path": "data/partitions/grid_33kv_wales_south.parquet",
+      "sha256": "b84371cb74a7b18a2c02b92c72dcb4513b6f289814bd7bedeee76663874282c5"
+    },
+    {
+      "bytes": 155043,
+      "path": "data/partitions/grid_33kv_yorkshire.parquet",
+      "sha256": "eb8a8bb9c35dc51030af51f7f046acd93dbb60601808407ccd78dfeb3fa76e2f"
+    },
+    {
+      "bytes": 869466,
+      "path": "data/partitions/grid_400kv.parquet",
+      "sha256": "d52f183e2325b76ab9af2951adea4aba1a92f8cecbdbefbe38a36cc5ce52dc76"
+    },
+    {
+      "bytes": 319120,
+      "path": "data/partitions/grid_66kv.parquet",
+      "sha256": "05573fba18b19ef61d69f8845256ee02390ed45f55a86ae51b542d199e29eb79"
+    },
+    {
+      "bytes": 748993,
+      "path": "data/partitions/grid_substations.parquet",
+      "sha256": "1e2d2b6123d9070e866de66d0490c27f3a812f8e2536a1b6b86c792215e9c423"
+    },
+    {
+      "bytes": 419289,
+      "path": "data/partitions/heavy_emitters_uk.parquet",
+      "sha256": "8b542b67ff203812988b7f8bbf312c8be721642296458f556e285fa44beb7699"
+    },
+    {
+      "bytes": 74728,
+      "path": "data/partitions/hs2.parquet",
+      "sha256": "d5aab2ddbe6269de52210fcfb61aaafd38bbda0c45a8c2115c875b7548dde609"
+    },
+    {
+      "bytes": 744705,
+      "path": "data/partitions/industrial_offtakers.parquet",
+      "sha256": "eb0981672bbbe8d84e6ab8fa4ef95c9377d179e01e908ef5471d0297eaa29dff"
+    },
+    {
+      "bytes": 43096,
+      "path": "data/partitions/london_underground.parquet",
+      "sha256": "dd8138366bd98fc03b82f11f065544a02527af427c29992101ab861b91f92304"
+    },
+    {
+      "bytes": 81950,
+      "path": "data/partitions/motorway_services.parquet",
+      "sha256": "8eabf7542ffedd4b19275e6a8d196d68623aa24023ea897db95f05fb1db29000"
+    },
+    {
+      "bytes": 30866,
+      "path": "data/partitions/power_plants.parquet",
+      "sha256": "d55706b9ea02a0aae006025b2c3bca16a2beb0685d116ea0df76c9c43554ccf3"
+    },
+    {
+      "bytes": 587824,
+      "path": "data/partitions/railways.parquet",
+      "sha256": "c9f6a414c73ae5bd0e67018b069af8865814e8c02038aa41fb8c15966af23abb"
+    },
+    {
+      "bytes": 1482074,
+      "path": "data/partitions/repd_master_v8_oracle.parquet",
+      "sha256": "a737d00d54dbee0ccb46be07f18277cb1c5c111acefbfda43f3d34ce3d53416c"
+    },
+    {
+      "bytes": 32624,
+      "path": "data/partitions/stadiums.parquet",
+      "sha256": "6b70a4d7601b68c06b2b610bf28704ff84d973c7444977feb3551eb88e7816d1"
+    },
+    {
+      "bytes": 1563602,
+      "path": "data/partitions/subsea_data_cables.parquet",
+      "sha256": "f2cdd91cef16ece3e91f4698ce2db7340370b74cbd4465bfff02fdbcd68e8cf6"
+    },
+    {
+      "bytes": 11175,
+      "path": "data/partitions/supermarkets_aldi.parquet",
+      "sha256": "4a5bffdf9ba6ce985fa818f36a22a775d473c04fbf50785f4ccfe4be3f2409b4"
+    },
+    {
+      "bytes": 65912,
+      "path": "data/partitions/supermarkets_asda.parquet",
+      "sha256": "c91402680788603cf2c8e8bad2b6f6aa604bfa8f077dee47b7b8f4bd766c1e18"
+    },
+    {
+      "bytes": 5521,
+      "path": "data/partitions/supermarkets_booths.parquet",
+      "sha256": "541ec456472b940feee372489aa7e5533b1018c088272cf035502048225d9cb1"
+    },
+    {
+      "bytes": 7850,
+      "path": "data/partitions/supermarkets_coop.parquet",
+      "sha256": "a8c1eecab30983eacd6aea46481cd7644e6334875340824dbb833b110e5433cf"
+    },
+    {
+      "bytes": 8995,
+      "path": "data/partitions/supermarkets_costco.parquet",
+      "sha256": "073be9bfb2750b8bfd8fecf2159dd2d79ca251cc11cbd1cd4de57d95ea07487a"
+    },
+    {
+      "bytes": 323,
+      "path": "data/partitions/supermarkets_farmfoods.parquet",
+      "sha256": "e66a94ce5b311efd7d29e1c31db67a21ae6cc810da7bdd4d4e807f7876221f6e"
+    },
+    {
+      "bytes": 323,
+      "path": "data/partitions/supermarkets_iceland.parquet",
+      "sha256": "e66a94ce5b311efd7d29e1c31db67a21ae6cc810da7bdd4d4e807f7876221f6e"
+    },
+    {
+      "bytes": 33123,
+      "path": "data/partitions/supermarkets_lidl.parquet",
+      "sha256": "95e08cec45de91d15acc614744cbcf13037829cf15d995f4cfa580e1826b55fd"
+    },
+    {
+      "bytes": 77634,
+      "path": "data/partitions/supermarkets_morrisons.parquet",
+      "sha256": "a45e540771e09d1b54b0578107c2970dbfae988dd01908a6b60b178aa7eb4c05"
+    },
+    {
+      "bytes": 4506,
+      "path": "data/partitions/supermarkets_ms.parquet",
+      "sha256": "218a5589b29f03fe55b34cb15efd7f1dec12e8fa083fb1964426e8e5db3b1256"
+    },
+    {
+      "bytes": 77132,
+      "path": "data/partitions/supermarkets_sainsburys.parquet",
+      "sha256": "1a66ad8c836bd648a281d5873dee5c0ccff738cd42e9fc622069a1bd759c90b9"
+    },
+    {
+      "bytes": 323,
+      "path": "data/partitions/supermarkets_spar.parquet",
+      "sha256": "e66a94ce5b311efd7d29e1c31db67a21ae6cc810da7bdd4d4e807f7876221f6e"
+    },
+    {
+      "bytes": 120828,
+      "path": "data/partitions/supermarkets_tesco.parquet",
+      "sha256": "af6e3fee012519b7a935289528b1fa39f3fedc8da6e615e1fcc8fd508da8cb43"
+    },
+    {
+      "bytes": 25506,
+      "path": "data/partitions/supermarkets_waitrose.parquet",
+      "sha256": "125bb4c03ea1462409c5569c128b0956d9d9eff6c460b17e8a16c32d8d76b254"
+    },
+    {
+      "bytes": 16109232,
+      "path": "data/partitions/uk_mainline_railways.parquet",
+      "sha256": "4cbd1a2b59a33e5e7d8416301cbe357941c94d70db5ca1410a04a9da2a1884cc"
+    },
+    {
+      "bytes": 616668,
+      "path": "data/partitions/uk_metros_trams_local_unwired.parquet",
+      "sha256": "256e98fc83b0caa97ef9c8a4ca4c84ecfcdbb6e66784ee087643748e0b54c31e"
+    },
+    {
+      "bytes": 1411687,
+      "path": "data/partitions/uk_metros_trams_root.parquet",
+      "sha256": "49d46beb139b22afdd4e64bdbcf550f53b6a1bd09910d27e7174e5d1761c4c7a"
+    },
+    {
+      "bytes": 3243863,
+      "path": "data/partitions/uk_motorways.parquet",
+      "sha256": "256b19cc40e9450e685be88205b2be90f3e1622a84ca2918ddf113e7a828377f"
+    },
+    {
+      "bytes": 29292883,
+      "path": "data/partitions/uk_primary_roads.parquet",
+      "sha256": "9df875a7791ed5af1c77a40b9872ff32315711eec73b4b9eaa31e7a0882e8a99"
+    },
+    {
+      "bytes": 23058196,
+      "path": "data/partitions/uk_trunk_roads.parquet",
+      "sha256": "cd5d6dcc36560e0f9561fd4ccfbfbb128312c08ff3bc78a4b2d8d6e83e1b5176"
+    },
+    {
+      "bytes": 14501,
+      "path": "data/phase-manifests/p1_foundation.json",
+      "sha256": "d711622a7b6318dad5c9b5f3e4a32c0bf22e49cc6f4ea0f5413b8420c9e4a573"
+    },
+    {
+      "bytes": 18652,
+      "path": "data/phase-manifests/p2_lazy_context.json",
+      "sha256": "d4e9783868630edff9aabc78dddd4de334ca136f904769bf4edd4f82883aafbb"
+    },
+    {
+      "bytes": 6593,
+      "path": "data/phase-manifests/p3_official_rebuild.json",
+      "sha256": "76c8ff4fae981d04fe74ea7ec77e4fbfb95f164c87fa7f15c5a53cfa02885e79"
+    },
+    {
+      "bytes": 4324,
+      "path": "data/phase-manifests/p4_motorways.json",
+      "sha256": "a54be400211c8dd92b1c490b80f971545587869c98a83afe36472cfc3ffe4305"
+    },
+    {
+      "bytes": 4353,
+      "path": "data/phase-manifests/p4_primary_roads.json",
+      "sha256": "6a83211b807bd743b92ea257d11f3f75725720fad0e402b6022644c3ead001e7"
+    },
+    {
+      "bytes": 8313,
+      "path": "data/phase-manifests/p4_rail_global.json",
+      "sha256": "20233b3658a9f99f476c5a82c933fe0e120e3cda6fc80c0c330bba76bdd263fc"
+    },
+    {
+      "bytes": 4343,
+      "path": "data/phase-manifests/p4_trunk_roads.json",
+      "sha256": "123acd3f11fd5dbd04e46838b9d8dc46a38567faf7e4583dedd73add9737023c"
+    },
+    {
+      "bytes": 20955,
+      "path": "data/phase-manifests/quarantine.json",
+      "sha256": "ae7c758c66593cb8a74bf701aa0f4fa3f3bc1abbdae5c9c5c700623491afb3c5"
+    },
+    {
+      "bytes": 1934,
+      "path": "data/quarantine.parquet",
+      "sha256": "b59fc862b31c42403ae5fe204cd1506355e57cb293e6c87679152ffd4299a696"
+    },
+    {
+      "bytes": 12412,
+      "path": "data/sources.parquet",
+      "sha256": "1c17d405592a055088a7bb38cee6ad522f44c980b046447ea3b1c8014d297ada"
+    },
+    {
+      "bytes": 2063,
+      "path": "index.html",
+      "sha256": "c9343edec682c790e6889ef0a2977e3ab7848aec42573e259c906e9e8aceefa4"
+    },
+    {
+      "bytes": 758,
+      "path": "proof/full-candidate-verification.json",
+      "sha256": "8510dedd1ddb9fe9373719078ccf1407d9f79c4cdd1b5608f1f309fa2c6da2a5"
+    },
+    {
+      "bytes": 674,
+      "path": "readme.md",
+      "sha256": "08994b0b8a7720f8596cd9c22e7a73d3b91111ed716356b0b2bce2190a392d32"
+    }
+  ],
+  "immutable": true,
+  "incepted_at": "2026-08-29T12:37:29+01:00",
+  "oracle": {
+    "commit": "f2f343a92ee972cc74ed23b4b99d8a22896791ad",
+    "immutable": true,
+    "repository": "Ventusltd/globalgrid2050",
+    "tree_sha1": "2a8ecce66fdb06fbeac1d58443b2d67ba17aedb9"
+  },
+  "packaging_source_commit": "9f1e9a574d5183da6406f552b65ed4e36eef8f10",
+  "pages_url": "https://ventusltd.github.io/data-gridatlas/202608291237-data-gridatlas/",
+  "release": true,
+  "release_id": "202608291237-data-gridatlas",
+  "repository": "Ventusltd/data-gridatlas",
+  "repository_path": "202608291237-data-gridatlas",
+  "runtime": {
+    "compression": "ZSTD",
+    "duckdb": "1.3.2",
+    "python": "3.12.13",
+    "runner_image_os": "ubuntu24",
+    "runner_image_version": "20260823.283.1",
+    "threads": 1
+  },
+  "schema": "data-gridatlas.immutable-live-data-release.v1",
+  "v8_untouched": true
+}

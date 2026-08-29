@@ -1,0 +1,581 @@
+{
+  "artifacts": [
+    {
+      "bytes": 140,
+      "path": "memberships/deep_subsea_illustrative.parquet",
+      "rows": 0,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "c0ac35011036247521dd2174e5748a228ab3d7be7c8f4948dadfef2dc6ede046"
+    },
+    {
+      "bytes": 36645,
+      "path": "memberships/grid_11kv_ukpn.parquet",
+      "rows": 15126,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "9b07da845b1a5a8e5ed5bcf5b611fbea0a456b16937b9c08efbd4554b94c99da"
+    },
+    {
+      "bytes": 140,
+      "path": "memberships/grid_33kv_east_of_england.parquet",
+      "rows": 0,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "c0ac35011036247521dd2174e5748a228ab3d7be7c8f4948dadfef2dc6ede046"
+    },
+    {
+      "bytes": 140,
+      "path": "memberships/grid_33kv_london_area.parquet",
+      "rows": 0,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "c0ac35011036247521dd2174e5748a228ab3d7be7c8f4948dadfef2dc6ede046"
+    },
+    {
+      "bytes": 140,
+      "path": "memberships/grid_33kv_north_east_england.parquet",
+      "rows": 0,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "c0ac35011036247521dd2174e5748a228ab3d7be7c8f4948dadfef2dc6ede046"
+    },
+    {
+      "bytes": 140,
+      "path": "memberships/grid_33kv_north_west_england.parquet",
+      "rows": 0,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "c0ac35011036247521dd2174e5748a228ab3d7be7c8f4948dadfef2dc6ede046"
+    },
+    {
+      "bytes": 140,
+      "path": "memberships/grid_33kv_scotland_north.parquet",
+      "rows": 0,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "c0ac35011036247521dd2174e5748a228ab3d7be7c8f4948dadfef2dc6ede046"
+    },
+    {
+      "bytes": 140,
+      "path": "memberships/grid_33kv_scotland_south.parquet",
+      "rows": 0,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "c0ac35011036247521dd2174e5748a228ab3d7be7c8f4948dadfef2dc6ede046"
+    },
+    {
+      "bytes": 140,
+      "path": "memberships/grid_33kv_south_east_england.parquet",
+      "rows": 0,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "c0ac35011036247521dd2174e5748a228ab3d7be7c8f4948dadfef2dc6ede046"
+    },
+    {
+      "bytes": 140,
+      "path": "memberships/grid_33kv_south_west_england.parquet",
+      "rows": 0,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "c0ac35011036247521dd2174e5748a228ab3d7be7c8f4948dadfef2dc6ede046"
+    },
+    {
+      "bytes": 140,
+      "path": "memberships/grid_33kv_wales_north.parquet",
+      "rows": 0,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "c0ac35011036247521dd2174e5748a228ab3d7be7c8f4948dadfef2dc6ede046"
+    },
+    {
+      "bytes": 140,
+      "path": "memberships/grid_33kv_wales_south.parquet",
+      "rows": 0,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "c0ac35011036247521dd2174e5748a228ab3d7be7c8f4948dadfef2dc6ede046"
+    },
+    {
+      "bytes": 140,
+      "path": "memberships/grid_33kv_yorkshire.parquet",
+      "rows": 0,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "c0ac35011036247521dd2174e5748a228ab3d7be7c8f4948dadfef2dc6ede046"
+    },
+    {
+      "bytes": 13894,
+      "path": "memberships/industrial_offtakers.parquet",
+      "rows": 5878,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "ca55da83cff749d2b3bc1348bae913c671f13d15f8d6c08a7f6b47014ed4f4db"
+    },
+    {
+      "bytes": 140,
+      "path": "memberships/supermarkets_farmfoods.parquet",
+      "rows": 0,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "c0ac35011036247521dd2174e5748a228ab3d7be7c8f4948dadfef2dc6ede046"
+    },
+    {
+      "bytes": 140,
+      "path": "memberships/supermarkets_iceland.parquet",
+      "rows": 0,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "c0ac35011036247521dd2174e5748a228ab3d7be7c8f4948dadfef2dc6ede046"
+    },
+    {
+      "bytes": 140,
+      "path": "memberships/supermarkets_spar.parquet",
+      "rows": 0,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "c0ac35011036247521dd2174e5748a228ab3d7be7c8f4948dadfef2dc6ede046"
+    },
+    {
+      "bytes": 140,
+      "path": "memberships/uk_metros_trams_local_unwired.parquet",
+      "rows": 0,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "c0ac35011036247521dd2174e5748a228ab3d7be7c8f4948dadfef2dc6ede046"
+    },
+    {
+      "bytes": 11204,
+      "path": "memberships/uk_metros_trams_root.parquet",
+      "rows": 1737,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "baf227658769f9a80f560db1758419bc35927ae4ab5873aaa8c897ce1f7df6fe"
+    },
+    {
+      "bytes": 5284,
+      "path": "partitions/deep_subsea_illustrative.parquet",
+      "rows": 4,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "21f8e05303c065150e7466f9b740a726835e27b585fe57d38dea97d5b1162303"
+    },
+    {
+      "bytes": 1738387,
+      "path": "partitions/grid_11kv_ukpn.parquet",
+      "rows": 15126,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "dc6af1cce4c78a211c634ceb6928d9179e2a787e1e43714b6528ac1987b79fef"
+    },
+    {
+      "bytes": 72659,
+      "path": "partitions/grid_33kv_east_of_england.parquet",
+      "rows": 277,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "ec4098761f8ddc18c207728f88d3607eea35f3eba01c4f2a3cc8875ea5147738"
+    },
+    {
+      "bytes": 24871,
+      "path": "partitions/grid_33kv_london_area.parquet",
+      "rows": 75,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "17710086b2d82aa8bdef48fb1950ad0128ae84558e40a230c0c370ffd38d7c02"
+    },
+    {
+      "bytes": 15549,
+      "path": "partitions/grid_33kv_north_east_england.parquet",
+      "rows": 37,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "d251604f674f5292a6c20d963e6590178a23019b58c88aaea03ce3fd6a04d945"
+    },
+    {
+      "bytes": 91746,
+      "path": "partitions/grid_33kv_north_west_england.parquet",
+      "rows": 389,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "d913f643160b30a163c63c63d878eb0a9d139b6c4501e30c527ece0bc3c98307"
+    },
+    {
+      "bytes": 99588,
+      "path": "partitions/grid_33kv_scotland_north.parquet",
+      "rows": 254,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "b1717172fe715a5b3408072d9fafc67dfeabbb8bd733f4e17f9116830e5c01d3"
+    },
+    {
+      "bytes": 44057,
+      "path": "partitions/grid_33kv_scotland_south.parquet",
+      "rows": 158,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "b20786862df3d3e7d140fd7a4b6b92fcecb682453b3d36f9a934012ae102ffda"
+    },
+    {
+      "bytes": 130215,
+      "path": "partitions/grid_33kv_south_east_england.parquet",
+      "rows": 499,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "909c08a8c4623a05e65fc20fc82e8e5494061abe36ca5baa2ca784494321cd40"
+    },
+    {
+      "bytes": 424625,
+      "path": "partitions/grid_33kv_south_west_england.parquet",
+      "rows": 1070,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "e02acc18b4b851255d574f055d9ef6c07df7dffc91f1e6e88729a05c338ccd82"
+    },
+    {
+      "bytes": 63698,
+      "path": "partitions/grid_33kv_wales_north.parquet",
+      "rows": 248,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "badbd182291234b0f4511479fa96fe8ff26794dad1d7db0445a07e7ecea875f7"
+    },
+    {
+      "bytes": 584488,
+      "path": "partitions/grid_33kv_wales_south.parquet",
+      "rows": 2133,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "b84371cb74a7b18a2c02b92c72dcb4513b6f289814bd7bedeee76663874282c5"
+    },
+    {
+      "bytes": 155043,
+      "path": "partitions/grid_33kv_yorkshire.parquet",
+      "rows": 608,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "eb8a8bb9c35dc51030af51f7f046acd93dbb60601808407ccd78dfeb3fa76e2f"
+    },
+    {
+      "bytes": 744705,
+      "path": "partitions/industrial_offtakers.parquet",
+      "rows": 5878,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "eb0981672bbbe8d84e6ab8fa4ef95c9377d179e01e908ef5471d0297eaa29dff"
+    },
+    {
+      "bytes": 323,
+      "path": "partitions/supermarkets_farmfoods.parquet",
+      "rows": 0,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "e66a94ce5b311efd7d29e1c31db67a21ae6cc810da7bdd4d4e807f7876221f6e"
+    },
+    {
+      "bytes": 323,
+      "path": "partitions/supermarkets_iceland.parquet",
+      "rows": 0,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "e66a94ce5b311efd7d29e1c31db67a21ae6cc810da7bdd4d4e807f7876221f6e"
+    },
+    {
+      "bytes": 323,
+      "path": "partitions/supermarkets_spar.parquet",
+      "rows": 0,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "e66a94ce5b311efd7d29e1c31db67a21ae6cc810da7bdd4d4e807f7876221f6e"
+    },
+    {
+      "bytes": 616668,
+      "path": "partitions/uk_metros_trams_local_unwired.parquet",
+      "rows": 5267,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "256e98fc83b0caa97ef9c8a4ca4c84ecfcdbb6e66784ee087643748e0b54c31e"
+    },
+    {
+      "bytes": 1411687,
+      "path": "partitions/uk_metros_trams_root.parquet",
+      "rows": 7829,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "49d46beb139b22afdd4e64bdbcf550f53b6a1bd09910d27e7174e5d1761c4c7a"
+    }
+  ],
+  "classification": "V8_TRANSPLANT_PHASE_CANDIDATE",
+  "compute_identity": {
+    "inputs": [
+      {
+        "bytes": 78272,
+        "path": "contracts/202608291015-v8-transplant-plan.json",
+        "sha256": "19dbe6a500c78039b5859016392eece2e69403690105218a04c55a59060ab91b"
+      },
+      {
+        "bytes": 41224,
+        "path": "contracts/202608291015-v8-layer-config.json",
+        "sha256": "a0f96940190509d4c8f64fc00e1411a5d7a746abaa5bbcd4054bda241d3121e9"
+      },
+      {
+        "bytes": 2019,
+        "path": "contracts/202608291015-v8-runtime-dependencies.json",
+        "sha256": "4bbb5e4bd89cd72368e26c231393eb69ec0ef514f261af40efe4788a525258f8"
+      },
+      {
+        "bytes": 2273,
+        "path": "contracts/202608291015-repository-boundary.json",
+        "sha256": "b0c5e5a431705d8f20209c9b124562cad4941e7c14abfff0ab35b3458d962d1b"
+      },
+      {
+        "bytes": 2097,
+        "path": "schemas/202608291015-v8-transplant-parquet.json",
+        "sha256": "734bc1d5acad266f3b235c09a4b365d59ecc62c98cdb9543e7a223e17723262a"
+      },
+      {
+        "bytes": 42222,
+        "path": "contracts/202608290904-v8-dependency-ledger.json",
+        "sha256": "06266505495b3ce2b28bd6f32d6acc7165dbe5dceab8175e4bc7e1d72eaac2f2"
+      },
+      {
+        "bytes": 18601,
+        "path": "contracts/202608290904-v8-file-ledger.json",
+        "sha256": "591ed7bf53f0b001240eab39be20f1c94948f0108d65082f756448bf94f91e0d"
+      },
+      {
+        "bytes": 3215,
+        "path": "contracts/202608290904-v8-quarantine.json",
+        "sha256": "dd5422c3b485355a151b118d2f97be1fd573548281838a4ea6e4e585749c5f58"
+      },
+      {
+        "bytes": 31753,
+        "path": "compiler/202608291015-build-v8-transplant.py",
+        "sha256": "e1228492e386bbb2622e96dc5b5a0b2ebb6986c413e258e18a9d4a9a690a4004"
+      },
+      {
+        "bytes": 66705,
+        "path": "atman/202608291015-verify-v8-transplant.py",
+        "sha256": "dd7fba6bb166d47cb317b1cf428f7655178f63b60271250a95bc1c021430fc6e"
+      },
+      {
+        "bytes": 17323,
+        "path": ".github/workflows/202608291015-build-v8-transplant-candidate.yml",
+        "sha256": "a945c93adb1e822fb64cea9dc792d6156c4fcda65b79707b5179a8ca8a1fe8f3"
+      },
+      {
+        "bytes": 99,
+        "path": "requirements.lock",
+        "sha256": "a4051d0f3834c3fe37cbfa8374532ccf57deb91ad9e5f20bccc9d17ed4de2d98"
+      }
+    ],
+    "key_sha256": "30196acb46bd7516b4f6dea54300d9c3bda9026a2502be4f17b2bb30d128ccf7",
+    "repository": "Ventusltd/data-gridatlas",
+    "runtime": {
+      "duckdb": "1.3.2",
+      "python": "3.12.13",
+      "runner_image_os": "ubuntu24",
+      "runner_image_version": "20260823.283.1",
+      "threads": 1
+    },
+    "v8_commit": "f2f343a92ee972cc74ed23b4b99d8a22896791ad",
+    "v8_repository": "Ventusltd/globalgrid2050"
+  },
+  "current_pointer": false,
+  "generation": "202608291015",
+  "layer_counts": {
+    "11kv": 15126,
+    "dlr": 609,
+    "ind": 5878,
+    "metro": 1128,
+    "tram": 0
+  },
+  "phase": "quarantine",
+  "raw_outputs": 0,
+  "release": false,
+  "runtime": {
+    "compression": "ZSTD",
+    "duckdb": "1.3.2",
+    "python": "3.12.13",
+    "runner_image_os": "ubuntu24",
+    "runner_image_version": "20260823.283.1",
+    "threads": 1
+  },
+  "schema": "data-gridatlas.v8-transplant-phase-manifest.v1",
+  "snap_counts": {},
+  "sources": [
+    {
+      "disposition": "QUARANTINED_UNWIRED",
+      "dropped_property_pairs": 0,
+      "features": 4,
+      "input_bytes": 2875,
+      "input_git_blob_sha1": "d71efce38d72f00c41953d1015815e7bd146a031",
+      "input_sha256": "b77e4d4c0d1be5d7d2a98f9fc95bd573e1bd5c33c17dcbe6a4207970d43d7d59",
+      "memberships": 0,
+      "retained_property_pairs": 16,
+      "source_id": "deep_subsea_illustrative"
+    },
+    {
+      "disposition": "QUARANTINED_SYNTHETIC_UKPN_11KV_IDENTITY",
+      "dropped_property_pairs": 0,
+      "features": 15126,
+      "input_bytes": 3125509,
+      "input_git_blob_sha1": "c35d58c0085a488d9c2bcb5b9a75a601723a609b",
+      "input_sha256": "8edca03ddf50635feb80c1564f5c596808600502c75e5da9b5238a10573f5c54",
+      "memberships": 15126,
+      "retained_property_pairs": 60504,
+      "source_id": "grid_11kv_ukpn"
+    },
+    {
+      "disposition": "QUARANTINED_UNWIRED",
+      "dropped_property_pairs": 0,
+      "features": 277,
+      "input_bytes": 131462,
+      "input_git_blob_sha1": "3330550ff74bb782366dec72276037030dfd5cf8",
+      "input_sha256": "3b20dadce4e6e9ec68c05b95dae1258f43eaf5dacf7f48f8dc49338eaf7767e5",
+      "memberships": 0,
+      "retained_property_pairs": 277,
+      "source_id": "grid_33kv_east_of_england"
+    },
+    {
+      "disposition": "QUARANTINED_UNWIRED",
+      "dropped_property_pairs": 0,
+      "features": 75,
+      "input_bytes": 43734,
+      "input_git_blob_sha1": "58541ba3db7181e4161b50b92d51ae43af024eac",
+      "input_sha256": "f5c292ce2c9519716d2935775099426309c4851b42798a177f084bc1f8215466",
+      "memberships": 0,
+      "retained_property_pairs": 75,
+      "source_id": "grid_33kv_london_area"
+    },
+    {
+      "disposition": "QUARANTINED_UNWIRED",
+      "dropped_property_pairs": 0,
+      "features": 37,
+      "input_bytes": 27200,
+      "input_git_blob_sha1": "3704e885a3a77777f3d30406f3d007e2a4a646bc",
+      "input_sha256": "89357a8873a88e2783d799cdb64c74c21154b0b0e101239103fac849d8ba7233",
+      "memberships": 0,
+      "retained_property_pairs": 37,
+      "source_id": "grid_33kv_north_east_england"
+    },
+    {
+      "disposition": "QUARANTINED_UNWIRED",
+      "dropped_property_pairs": 0,
+      "features": 389,
+      "input_bytes": 161753,
+      "input_git_blob_sha1": "a93d98d23a0d5c0cd7683ca8e31df41a7a6ec6af",
+      "input_sha256": "474ec6e05132c39e08e564e0d6e717995a9a7ed107dfb631e5a29168d8ea40aa",
+      "memberships": 0,
+      "retained_property_pairs": 389,
+      "source_id": "grid_33kv_north_west_england"
+    },
+    {
+      "disposition": "QUARANTINED_UNWIRED",
+      "dropped_property_pairs": 0,
+      "features": 254,
+      "input_bytes": 220709,
+      "input_git_blob_sha1": "3b05d3c111880092e325279f5f4ec5549d2eac61",
+      "input_sha256": "8a6bc8ab51115ad68630898989998f677f590f4e03deb26645a84d336724c6cb",
+      "memberships": 0,
+      "retained_property_pairs": 254,
+      "source_id": "grid_33kv_scotland_north"
+    },
+    {
+      "disposition": "QUARANTINED_UNWIRED",
+      "dropped_property_pairs": 0,
+      "features": 158,
+      "input_bytes": 76647,
+      "input_git_blob_sha1": "a0cc0464d9811f89e155e738ef180b5bc18eee9a",
+      "input_sha256": "1ec82c92cb76fc8395c8b14b04995630ab4a247e0e68a427e1b4394f5177c150",
+      "memberships": 0,
+      "retained_property_pairs": 158,
+      "source_id": "grid_33kv_scotland_south"
+    },
+    {
+      "disposition": "QUARANTINED_UNWIRED",
+      "dropped_property_pairs": 0,
+      "features": 499,
+      "input_bytes": 233997,
+      "input_git_blob_sha1": "049e5c17acab26ca0f87a25d40993bfc540579f9",
+      "input_sha256": "51f3ee2f19b586307d9fa98d2f8a06c14a938d8b34819faaf90ed7970973abbe",
+      "memberships": 0,
+      "retained_property_pairs": 499,
+      "source_id": "grid_33kv_south_east_england"
+    },
+    {
+      "disposition": "QUARANTINED_UNWIRED",
+      "dropped_property_pairs": 0,
+      "features": 1070,
+      "input_bytes": 1013020,
+      "input_git_blob_sha1": "98a371259092f9c2480e1f14101af850300fc551",
+      "input_sha256": "ae86bc2effe5561e981bdaf6c20fa1631a7da75ce47b9d5a880d27d586e3a06a",
+      "memberships": 0,
+      "retained_property_pairs": 1070,
+      "source_id": "grid_33kv_south_west_england"
+    },
+    {
+      "disposition": "QUARANTINED_UNWIRED",
+      "dropped_property_pairs": 0,
+      "features": 248,
+      "input_bytes": 113989,
+      "input_git_blob_sha1": "739a1bd2a45b3f9db0e843a82669dc4a05d14fb3",
+      "input_sha256": "eae330ef232a6eea62c86f160fd92ae0b01989341f2e5e4aaf6e4189b58b49c5",
+      "memberships": 0,
+      "retained_property_pairs": 248,
+      "source_id": "grid_33kv_wales_north"
+    },
+    {
+      "disposition": "QUARANTINED_UNWIRED",
+      "dropped_property_pairs": 0,
+      "features": 2133,
+      "input_bytes": 1165527,
+      "input_git_blob_sha1": "11a7fc71f49c6759596c4d1798fe201e4f2a57dc",
+      "input_sha256": "bfd7cfd936c6c8845055b558c8fb23d00cc822a66fe839abf37ce4827ee74fc5",
+      "memberships": 0,
+      "retained_property_pairs": 2133,
+      "source_id": "grid_33kv_wales_south"
+    },
+    {
+      "disposition": "QUARANTINED_UNWIRED",
+      "dropped_property_pairs": 0,
+      "features": 608,
+      "input_bytes": 278029,
+      "input_git_blob_sha1": "97b8660aad96f660a2455f2bdeccce7370cd157b",
+      "input_sha256": "e490a8300369823b49cd7ebcc235c538a8f563448cf43d13ef4d2a7164c6a2fd",
+      "memberships": 0,
+      "retained_property_pairs": 608,
+      "source_id": "grid_33kv_yorkshire"
+    },
+    {
+      "disposition": "QUARANTINED_OUTPUT_NOT_REPRODUCIBLE_FROM_ADJACENT_FETCHER",
+      "dropped_property_pairs": 0,
+      "features": 5878,
+      "input_bytes": 1193462,
+      "input_git_blob_sha1": "ed80f5be9c3257cd2853da3cf60e7f9dc54e319f",
+      "input_sha256": "c4b3fff1c1da07cf1638e3f1d619ac70ec36be9093a9ca1512329a78ec713919",
+      "memberships": 5878,
+      "retained_property_pairs": 17634,
+      "source_id": "industrial_offtakers"
+    },
+    {
+      "disposition": "QUARANTINED_UNWIRED",
+      "dropped_property_pairs": 0,
+      "features": 0,
+      "input_bytes": 42,
+      "input_git_blob_sha1": "3aa0a428cee3b762abafa05845c0b1ce2d2760a9",
+      "input_sha256": "ed778c73ea51338d6576fb5992b189f2b94d9f3d5e199f46c1af520d6b0b3e6c",
+      "memberships": 0,
+      "retained_property_pairs": 0,
+      "source_id": "supermarkets_farmfoods"
+    },
+    {
+      "disposition": "QUARANTINED_UNWIRED",
+      "dropped_property_pairs": 0,
+      "features": 0,
+      "input_bytes": 42,
+      "input_git_blob_sha1": "3aa0a428cee3b762abafa05845c0b1ce2d2760a9",
+      "input_sha256": "ed778c73ea51338d6576fb5992b189f2b94d9f3d5e199f46c1af520d6b0b3e6c",
+      "memberships": 0,
+      "retained_property_pairs": 0,
+      "source_id": "supermarkets_iceland"
+    },
+    {
+      "disposition": "QUARANTINED_UNWIRED",
+      "dropped_property_pairs": 0,
+      "features": 0,
+      "input_bytes": 42,
+      "input_git_blob_sha1": "3aa0a428cee3b762abafa05845c0b1ce2d2760a9",
+      "input_sha256": "ed778c73ea51338d6576fb5992b189f2b94d9f3d5e199f46c1af520d6b0b3e6c",
+      "memberships": 0,
+      "retained_property_pairs": 0,
+      "source_id": "supermarkets_spar"
+    },
+    {
+      "disposition": "QUARANTINED_UNWIRED",
+      "dropped_property_pairs": 0,
+      "features": 5267,
+      "input_bytes": 1649975,
+      "input_git_blob_sha1": "2c8297b41d5e09ed032f2c76d260ea5b886fb768",
+      "input_sha256": "6d0516fcb84e164a21647bf206af01a124a414879ef923224701e09cc33a9dcd",
+      "memberships": 0,
+      "retained_property_pairs": 15801,
+      "source_id": "uk_metros_trams_local_unwired"
+    },
+    {
+      "disposition": "QUARANTINED_GEOMETRY_MISMATCH",
+      "dropped_property_pairs": 70387,
+      "features": 7829,
+      "input_bytes": 4697463,
+      "input_git_blob_sha1": "ec20aafcea3e7a386ff18a6aef3b865cf626bf4d",
+      "input_sha256": "535e07fea6898614013bf3067794c1cd4c0488083631d9a70e86798cfbf00692",
+      "memberships": 1737,
+      "retained_property_pairs": 21409,
+      "source_id": "uk_metros_trams_root"
+    }
+  ],
+  "v8_commit": "f2f343a92ee972cc74ed23b4b99d8a22896791ad",
+  "v8_untouched": true
+}

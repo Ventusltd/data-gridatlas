@@ -1,0 +1,233 @@
+{
+  "artifacts": [
+    {
+      "bytes": 951,
+      "path": "memberships/eurostar.parquet",
+      "rows": 47,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "d687637123423968987eaf3e5f64d6dfd54536f7143b364b6be73e2bda87a46c"
+    },
+    {
+      "bytes": 22455,
+      "path": "memberships/global_hydrocarbons.parquet",
+      "rows": 3656,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "1aace3ee4edf3cc54a0af08fccb00ddde6645586d65885661b2c6df913a82f52"
+    },
+    {
+      "bytes": 112283,
+      "path": "memberships/global_ports.parquet",
+      "rows": 45148,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "01ef776ba176a2542ef21860b1f4345c0a21108427a3a54ea65e42e23657f509"
+    },
+    {
+      "bytes": 17833,
+      "path": "memberships/subsea_data_cables.parquet",
+      "rows": 7479,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "543b37bf324dd0f0cf70a02e5c415ab9870236b5a0e55ed66167dbf669b9c31d"
+    },
+    {
+      "bytes": 227020,
+      "path": "memberships/uk_mainline_railways.parquet",
+      "rows": 89933,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "1f422c9b88b1d850b808ba962ce70ec108001e88a73101c2df83cb120f7492d6"
+    },
+    {
+      "bytes": 640040,
+      "path": "partitions/eurostar.parquet",
+      "rows": 47,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "655061a117c6606b342802cd4df651667f5a8949c2e7f923d02823bc113f04d6"
+    },
+    {
+      "bytes": 559979,
+      "path": "partitions/global_hydrocarbons.parquet",
+      "rows": 3656,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "919857c675395db178b662b0911c86a76aec5c8f06fe5446872d7544a78856e5"
+    },
+    {
+      "bytes": 5688405,
+      "path": "partitions/global_ports.parquet",
+      "rows": 45148,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "6576bbdf7557af5784982ca785f3f50cf497aa12d06b9fc233acd5026d7b00c3"
+    },
+    {
+      "bytes": 1563602,
+      "path": "partitions/subsea_data_cables.parquet",
+      "rows": 7479,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "f2cdd91cef16ece3e91f4698ce2db7340370b74cbd4465bfff02fdbcd68e8cf6"
+    },
+    {
+      "bytes": 16109232,
+      "path": "partitions/uk_mainline_railways.parquet",
+      "rows": 89933,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "4cbd1a2b59a33e5e7d8416301cbe357941c94d70db5ca1410a04a9da2a1884cc"
+    }
+  ],
+  "classification": "V8_TRANSPLANT_PHASE_CANDIDATE",
+  "compute_identity": {
+    "inputs": [
+      {
+        "bytes": 78272,
+        "path": "contracts/202608291015-v8-transplant-plan.json",
+        "sha256": "19dbe6a500c78039b5859016392eece2e69403690105218a04c55a59060ab91b"
+      },
+      {
+        "bytes": 41224,
+        "path": "contracts/202608291015-v8-layer-config.json",
+        "sha256": "a0f96940190509d4c8f64fc00e1411a5d7a746abaa5bbcd4054bda241d3121e9"
+      },
+      {
+        "bytes": 2019,
+        "path": "contracts/202608291015-v8-runtime-dependencies.json",
+        "sha256": "4bbb5e4bd89cd72368e26c231393eb69ec0ef514f261af40efe4788a525258f8"
+      },
+      {
+        "bytes": 2273,
+        "path": "contracts/202608291015-repository-boundary.json",
+        "sha256": "b0c5e5a431705d8f20209c9b124562cad4941e7c14abfff0ab35b3458d962d1b"
+      },
+      {
+        "bytes": 2097,
+        "path": "schemas/202608291015-v8-transplant-parquet.json",
+        "sha256": "734bc1d5acad266f3b235c09a4b365d59ecc62c98cdb9543e7a223e17723262a"
+      },
+      {
+        "bytes": 42222,
+        "path": "contracts/202608290904-v8-dependency-ledger.json",
+        "sha256": "06266505495b3ce2b28bd6f32d6acc7165dbe5dceab8175e4bc7e1d72eaac2f2"
+      },
+      {
+        "bytes": 18601,
+        "path": "contracts/202608290904-v8-file-ledger.json",
+        "sha256": "591ed7bf53f0b001240eab39be20f1c94948f0108d65082f756448bf94f91e0d"
+      },
+      {
+        "bytes": 3215,
+        "path": "contracts/202608290904-v8-quarantine.json",
+        "sha256": "dd5422c3b485355a151b118d2f97be1fd573548281838a4ea6e4e585749c5f58"
+      },
+      {
+        "bytes": 31753,
+        "path": "compiler/202608291015-build-v8-transplant.py",
+        "sha256": "e1228492e386bbb2622e96dc5b5a0b2ebb6986c413e258e18a9d4a9a690a4004"
+      },
+      {
+        "bytes": 66705,
+        "path": "atman/202608291015-verify-v8-transplant.py",
+        "sha256": "dd7fba6bb166d47cb317b1cf428f7655178f63b60271250a95bc1c021430fc6e"
+      },
+      {
+        "bytes": 17323,
+        "path": ".github/workflows/202608291015-build-v8-transplant-candidate.yml",
+        "sha256": "a945c93adb1e822fb64cea9dc792d6156c4fcda65b79707b5179a8ca8a1fe8f3"
+      },
+      {
+        "bytes": 99,
+        "path": "requirements.lock",
+        "sha256": "a4051d0f3834c3fe37cbfa8374532ccf57deb91ad9e5f20bccc9d17ed4de2d98"
+      }
+    ],
+    "key_sha256": "30196acb46bd7516b4f6dea54300d9c3bda9026a2502be4f17b2bb30d128ccf7",
+    "repository": "Ventusltd/data-gridatlas",
+    "runtime": {
+      "duckdb": "1.3.2",
+      "python": "3.12.13",
+      "runner_image_os": "ubuntu24",
+      "runner_image_version": "20260823.283.1",
+      "threads": 1
+    },
+    "v8_commit": "f2f343a92ee972cc74ed23b4b99d8a22896791ad",
+    "v8_repository": "Ventusltd/globalgrid2050"
+  },
+  "current_pointer": false,
+  "generation": "202608291015",
+  "layer_counts": {
+    "eurostar_route": 22,
+    "eurostar_station": 25,
+    "global_hydrocarbons": 3656,
+    "global_ports_major": 34416,
+    "global_ports_minor": 10732,
+    "mainline_rail": 89933,
+    "subsea_data_cables": 7479
+  },
+  "phase": "p4_rail_global",
+  "raw_outputs": 0,
+  "release": false,
+  "runtime": {
+    "compression": "ZSTD",
+    "duckdb": "1.3.2",
+    "python": "3.12.13",
+    "runner_image_os": "ubuntu24",
+    "runner_image_version": "20260823.283.1",
+    "threads": 1
+  },
+  "schema": "data-gridatlas.v8-transplant-phase-manifest.v1",
+  "snap_counts": {},
+  "sources": [
+    {
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "dropped_property_pairs": 47,
+      "features": 47,
+      "input_bytes": 4259078,
+      "input_git_blob_sha1": "cc7ee381d91cf8c4661247dcd3fb22bfdac5c276",
+      "input_sha256": "31a6e952420908c83bd3f2e034181917e990be2439d058355176b6702177104a",
+      "memberships": 47,
+      "retained_property_pairs": 141,
+      "source_id": "eurostar"
+    },
+    {
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "dropped_property_pairs": 3656,
+      "features": 3656,
+      "input_bytes": 781466,
+      "input_git_blob_sha1": "11ddddb0a7169be05d8fbd60e10d769fa5082fd9",
+      "input_sha256": "fcd7d20120500f8b34cf2e0f6d16a2d098aa06c8dc6575439c4181b8cddf7835",
+      "memberships": 3656,
+      "retained_property_pairs": 14624,
+      "source_id": "global_hydrocarbons"
+    },
+    {
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "dropped_property_pairs": 45148,
+      "features": 45148,
+      "input_bytes": 10186700,
+      "input_git_blob_sha1": "f5c12e8e23acca1e72e65d2a4433322e50fc2e01",
+      "input_sha256": "c203829f74cdf50d34a755f0a959c6ce5298098fe46f81e9bc6d46d2d5f57710",
+      "memberships": 45148,
+      "retained_property_pairs": 180592,
+      "source_id": "global_ports"
+    },
+    {
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "dropped_property_pairs": 7479,
+      "features": 7479,
+      "input_bytes": 3346221,
+      "input_git_blob_sha1": "7016bb409407acec042d986065e0b9bc391ddbfa",
+      "input_sha256": "805859c84994606bde30fe8187d4b9f0355086cbde2c0115dd5a5ed83c6a5bcf",
+      "memberships": 7479,
+      "retained_property_pairs": 22437,
+      "source_id": "subsea_data_cables"
+    },
+    {
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "dropped_property_pairs": 1004917,
+      "features": 89933,
+      "input_bytes": 55053387,
+      "input_git_blob_sha1": "0c4df76359adc89db870341d0c9517813ef131e9",
+      "input_sha256": "d9fc18e080acba24b4e6bc0ec967d4632b861263210d69cebd0d4de71166f88a",
+      "memberships": 89933,
+      "retained_property_pairs": 224845,
+      "source_id": "uk_mainline_railways"
+    }
+  ],
+  "v8_commit": "f2f343a92ee972cc74ed23b4b99d8a22896791ad",
+  "v8_untouched": true
+}

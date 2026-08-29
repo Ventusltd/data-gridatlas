@@ -1,0 +1,50 @@
+{
+  "schema": "data-gridatlas.v8-transplant-parquet-schema.v1",
+  "generation": "202608291015",
+  "partition": {
+    "schema": "data-gridatlas.v8-parity-features.v1",
+    "columns": [
+      ["source_id", "VARCHAR", false],
+      ["feature_index", "INTEGER", false],
+      ["feature_id", "VARCHAR", true],
+      ["geometry_type", "VARCHAR", false],
+      ["geometry_json", "VARCHAR", false],
+      ["properties_json", "VARCHAR", false],
+      ["original_feature_sha256", "VARCHAR", false],
+      ["projected_feature_sha256", "VARCHAR", false],
+      ["min_x", "DOUBLE", false],
+      ["min_y", "DOUBLE", false],
+      ["max_x", "DOUBLE", false],
+      ["max_y", "DOUBLE", false]
+    ],
+    "compression": "ZSTD",
+    "sort": ["feature_index"]
+  },
+  "derived": {
+    "schema": "data-gridatlas.v8-snapped-topology.v1",
+    "parent_column": "original_feature_sha256",
+    "parent_rule": "The original_feature_sha256 is byte-for-byte identical to the raw partition row and identifies the pinned V8 feature before snapping.",
+    "derived_column": "projected_feature_sha256",
+    "derived_rule": "The projected_feature_sha256 identifies the independently verified snapped feature; properties, feature id and interior coordinates are unchanged."
+  },
+  "membership": {
+    "schema": "data-gridatlas.v8-layer-membership.v1",
+    "columns": [
+      ["layer_id", "VARCHAR", false],
+      ["source_id", "VARCHAR", false],
+      ["feature_index", "INTEGER", false]
+    ],
+    "compression": "ZSTD",
+    "sort": ["layer_id", "feature_index"]
+  },
+  "registries": {
+    "sources": "one row per pinned FeatureCollection with identity, phase, rows, geometry and disposition",
+    "layers": "one row per declarative V8 layer with styling/filter JSON and immutable partition path",
+    "quarantine": "one row per blocked source or semantic defect"
+  },
+  "forbidden_outputs": [".geojson", ".csv", ".xlsx", ".duckdb", ".zip", ".tar", ".gz"],
+  "privacy": {
+    "forbidden_property_keys": ["phone", "operator:phone", "payment:phone", "owner", "owner:wikidata", "ownership"],
+    "operator_is_ownership": false
+  }
+}

@@ -1,0 +1,418 @@
+{
+  "artifacts": [
+    {
+      "bytes": 1386620,
+      "path": "derived/grid_132kv_snapped.parquet",
+      "rows": 6227,
+      "schema": "data-gridatlas.v8-snapped-topology.v1",
+      "sha256": "8d6c6b020c6ee261f85c322f0e7c7c3536e63c4bf2863aa470585f40c79c2a64"
+    },
+    {
+      "bytes": 33974,
+      "path": "derived/grid_220kv_snapped.parquet",
+      "rows": 126,
+      "schema": "data-gridatlas.v8-snapped-topology.v1",
+      "sha256": "e66e10d413b3f4cde590c0647e49c2367890dbcadf0e9f648ff3351b079c8bd2"
+    },
+    {
+      "bytes": 530304,
+      "path": "derived/grid_275kv_snapped.parquet",
+      "rows": 2935,
+      "schema": "data-gridatlas.v8-snapped-topology.v1",
+      "sha256": "c70aa02dd097efecd99c23f82036b25908a9ef1f88db6db12de294e2b4d719e5"
+    },
+    {
+      "bytes": 791477,
+      "path": "derived/grid_400kv_snapped.parquet",
+      "rows": 4106,
+      "schema": "data-gridatlas.v8-snapped-topology.v1",
+      "sha256": "53663da46fb270f92454399419318840c9a47f5ab3a68e858702eaa2c05dc048"
+    },
+    {
+      "bytes": 300613,
+      "path": "derived/grid_66kv_snapped.parquet",
+      "rows": 1171,
+      "schema": "data-gridatlas.v8-snapped-topology.v1",
+      "sha256": "86532e8ac22b8c7803df17480e8603d7ee34345f959a8bc49a8f912517d09a35"
+    },
+    {
+      "bytes": 4285,
+      "path": "memberships/airports.parquet",
+      "rows": 810,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "84cff377f6d07b2b7414535550298b4ba84f12fa82ecc5e9c4be39e239c12fba"
+    },
+    {
+      "bytes": 1867,
+      "path": "memberships/datacentres.parquet",
+      "rows": 240,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "2fcf05398adef396e5851cfb7a4311d000d517f7ff1ed0e29456eae4068836f8"
+    },
+    {
+      "bytes": 14701,
+      "path": "memberships/grid_132kv.parquet",
+      "rows": 6227,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "a7d151fee82f1828fa7ef44e6cf4bf564d5dce36762bb991f331a35a60af6c9a"
+    },
+    {
+      "bytes": 1286,
+      "path": "memberships/grid_220kv.parquet",
+      "rows": 126,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "095245c1018a5da0275692f2860480dbeacc440fbff42dfd2916af287b944664"
+    },
+    {
+      "bytes": 15474,
+      "path": "memberships/grid_275kv.parquet",
+      "rows": 2935,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "fdde2302d6d0bd647d885817b1ed12c1683f37c05c04b2b2ad8c683c798769ba"
+    },
+    {
+      "bytes": 24745,
+      "path": "memberships/grid_400kv.parquet",
+      "rows": 4106,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "c0f00a2cffd408b5ac3b6a0bb08cafb677357be2a26bbc846f35c1d68500422d"
+    },
+    {
+      "bytes": 6659,
+      "path": "memberships/grid_66kv.parquet",
+      "rows": 1171,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "c9c938114560b2f85a8d1aba3f1eb0038f4710831401f3eb026423b0ba59acf1"
+    },
+    {
+      "bytes": 13692,
+      "path": "memberships/grid_substations.parquet",
+      "rows": 5800,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "6c0a11db4bcfe7dd0a5b32c64eca13d1b451260de2ac2ee3d7ff247fed959f97"
+    },
+    {
+      "bytes": 1482,
+      "path": "memberships/power_plants.parquet",
+      "rows": 178,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "d81a3495cf3bc4940f5f77d69c3beb7dbce4a20bdc49a00dab8ca5d6314878ec"
+    },
+    {
+      "bytes": 22081,
+      "path": "memberships/railways.parquet",
+      "rows": 3596,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "411ee2c5ffcba5114fa6e9c53d8a35bec20ccb636ce02b4f678660004def3d7e"
+    },
+    {
+      "bytes": 120680,
+      "path": "partitions/airports.parquet",
+      "rows": 810,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "b81dad3613a3c8c577df692b1821615a6578f02628201acc1f7e6bc48b6a7624"
+    },
+    {
+      "bytes": 40405,
+      "path": "partitions/datacentres.parquet",
+      "rows": 240,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "d957f1a185ff6a2f37d09dc431a694a967e313c026c443b34cbc1fc39b381cb1"
+    },
+    {
+      "bytes": 1411851,
+      "path": "partitions/grid_132kv.parquet",
+      "rows": 6227,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "28b39f37bb7e009f30c4ad9f1626ca5d0351e5ebca8e0c59372ea4a658359e68"
+    },
+    {
+      "bytes": 36941,
+      "path": "partitions/grid_220kv.parquet",
+      "rows": 126,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "f729d87f0de93ead3fdf7317922a12cf519879cd424bae7f60793c57ecdb75dc"
+    },
+    {
+      "bytes": 604554,
+      "path": "partitions/grid_275kv.parquet",
+      "rows": 2935,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "27e539c125e6a41df4a66474623887e17ef43505345fdc4df390922abbb99ca4"
+    },
+    {
+      "bytes": 869466,
+      "path": "partitions/grid_400kv.parquet",
+      "rows": 4106,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "d52f183e2325b76ab9af2951adea4aba1a92f8cecbdbefbe38a36cc5ce52dc76"
+    },
+    {
+      "bytes": 319120,
+      "path": "partitions/grid_66kv.parquet",
+      "rows": 1171,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "05573fba18b19ef61d69f8845256ee02390ed45f55a86ae51b542d199e29eb79"
+    },
+    {
+      "bytes": 748993,
+      "path": "partitions/grid_substations.parquet",
+      "rows": 5800,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "1e2d2b6123d9070e866de66d0490c27f3a812f8e2536a1b6b86c792215e9c423"
+    },
+    {
+      "bytes": 30866,
+      "path": "partitions/power_plants.parquet",
+      "rows": 178,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "d55706b9ea02a0aae006025b2c3bca16a2beb0685d116ea0df76c9c43554ccf3"
+    },
+    {
+      "bytes": 587824,
+      "path": "partitions/railways.parquet",
+      "rows": 3596,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "c9f6a414c73ae5bd0e67018b069af8865814e8c02038aa41fb8c15966af23abb"
+    }
+  ],
+  "classification": "V8_TRANSPLANT_PHASE_CANDIDATE",
+  "compute_identity": {
+    "inputs": [
+      {
+        "bytes": 78272,
+        "path": "contracts/202608291015-v8-transplant-plan.json",
+        "sha256": "19dbe6a500c78039b5859016392eece2e69403690105218a04c55a59060ab91b"
+      },
+      {
+        "bytes": 41224,
+        "path": "contracts/202608291015-v8-layer-config.json",
+        "sha256": "a0f96940190509d4c8f64fc00e1411a5d7a746abaa5bbcd4054bda241d3121e9"
+      },
+      {
+        "bytes": 2019,
+        "path": "contracts/202608291015-v8-runtime-dependencies.json",
+        "sha256": "4bbb5e4bd89cd72368e26c231393eb69ec0ef514f261af40efe4788a525258f8"
+      },
+      {
+        "bytes": 2273,
+        "path": "contracts/202608291015-repository-boundary.json",
+        "sha256": "b0c5e5a431705d8f20209c9b124562cad4941e7c14abfff0ab35b3458d962d1b"
+      },
+      {
+        "bytes": 2097,
+        "path": "schemas/202608291015-v8-transplant-parquet.json",
+        "sha256": "734bc1d5acad266f3b235c09a4b365d59ecc62c98cdb9543e7a223e17723262a"
+      },
+      {
+        "bytes": 42222,
+        "path": "contracts/202608290904-v8-dependency-ledger.json",
+        "sha256": "06266505495b3ce2b28bd6f32d6acc7165dbe5dceab8175e4bc7e1d72eaac2f2"
+      },
+      {
+        "bytes": 18601,
+        "path": "contracts/202608290904-v8-file-ledger.json",
+        "sha256": "591ed7bf53f0b001240eab39be20f1c94948f0108d65082f756448bf94f91e0d"
+      },
+      {
+        "bytes": 3215,
+        "path": "contracts/202608290904-v8-quarantine.json",
+        "sha256": "dd5422c3b485355a151b118d2f97be1fd573548281838a4ea6e4e585749c5f58"
+      },
+      {
+        "bytes": 31753,
+        "path": "compiler/202608291015-build-v8-transplant.py",
+        "sha256": "e1228492e386bbb2622e96dc5b5a0b2ebb6986c413e258e18a9d4a9a690a4004"
+      },
+      {
+        "bytes": 66705,
+        "path": "atman/202608291015-verify-v8-transplant.py",
+        "sha256": "dd7fba6bb166d47cb317b1cf428f7655178f63b60271250a95bc1c021430fc6e"
+      },
+      {
+        "bytes": 17323,
+        "path": ".github/workflows/202608291015-build-v8-transplant-candidate.yml",
+        "sha256": "a945c93adb1e822fb64cea9dc792d6156c4fcda65b79707b5179a8ca8a1fe8f3"
+      },
+      {
+        "bytes": 99,
+        "path": "requirements.lock",
+        "sha256": "a4051d0f3834c3fe37cbfa8374532ccf57deb91ad9e5f20bccc9d17ed4de2d98"
+      }
+    ],
+    "key_sha256": "30196acb46bd7516b4f6dea54300d9c3bda9026a2502be4f17b2bb30d128ccf7",
+    "repository": "Ventusltd/data-gridatlas",
+    "runtime": {
+      "duckdb": "1.3.2",
+      "python": "3.12.13",
+      "runner_image_os": "ubuntu24",
+      "runner_image_version": "20260823.283.1",
+      "threads": 1
+    },
+    "v8_commit": "f2f343a92ee972cc74ed23b4b99d8a22896791ad",
+    "v8_repository": "Ventusltd/globalgrid2050"
+  },
+  "current_pointer": false,
+  "generation": "202608291015",
+  "layer_counts": {
+    "132": 6227,
+    "220": 126,
+    "275": 2935,
+    "400": 4106,
+    "66": 1171,
+    "air": 810,
+    "dc": 240,
+    "gas": 174,
+    "nuc": 4,
+    "rail": 3596,
+    "subs": 5800
+  },
+  "phase": "p1_foundation",
+  "raw_outputs": 0,
+  "release": false,
+  "runtime": {
+    "compression": "ZSTD",
+    "duckdb": "1.3.2",
+    "python": "3.12.13",
+    "runner_image_os": "ubuntu24",
+    "runner_image_version": "20260823.283.1",
+    "threads": 1
+  },
+  "schema": "data-gridatlas.v8-transplant-phase-manifest.v1",
+  "snap_counts": {
+    "grid_132kv": {
+      "changed_endpoints": 7218,
+      "changed_features": 4342
+    },
+    "grid_220kv": {
+      "changed_endpoints": 150,
+      "changed_features": 93
+    },
+    "grid_275kv": {
+      "changed_endpoints": 3806,
+      "changed_features": 2212
+    },
+    "grid_400kv": {
+      "changed_endpoints": 4528,
+      "changed_features": 2679
+    },
+    "grid_66kv": {
+      "changed_endpoints": 1353,
+      "changed_features": 828
+    }
+  },
+  "sources": [
+    {
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "dropped_property_pairs": 1620,
+      "features": 810,
+      "input_bytes": 136906,
+      "input_git_blob_sha1": "8ff43da1cde4594966f6d115e1442729dd8e54c1",
+      "input_sha256": "089990967bd391eaee81acdb5f324a4ba17025f753103358a8a400440853fb87",
+      "memberships": 810,
+      "retained_property_pairs": 810,
+      "source_id": "airports"
+    },
+    {
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "dropped_property_pairs": 0,
+      "features": 240,
+      "input_bytes": 40563,
+      "input_git_blob_sha1": "9457f6dc583bbfdcca40926c353738b321fcb09b",
+      "input_sha256": "a686a2e00253bbf30c9f5262439bc2332524e8d5cb34481529c6a711c73acab4",
+      "memberships": 240,
+      "retained_property_pairs": 480,
+      "source_id": "datacentres"
+    },
+    {
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "dropped_property_pairs": 25254,
+      "features": 6227,
+      "input_bytes": 3410191,
+      "input_git_blob_sha1": "fe7acd7b67ecd4be9d71e4da164e496e3b08b7c0",
+      "input_sha256": "9a19c3fef1760ade3a69b0807fd1a049a7138dea09a922e3daaae5741bc2aea9",
+      "memberships": 6227,
+      "retained_property_pairs": 10426,
+      "source_id": "grid_132kv"
+    },
+    {
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "dropped_property_pairs": 574,
+      "features": 126,
+      "input_bytes": 76801,
+      "input_git_blob_sha1": "66d14421c7c26e18cf7fc08175dac5797b534c99",
+      "input_sha256": "6941b35108e581726ab2d707bdf5f47e68deb870716e966aac17aaf2e9ccc7f3",
+      "memberships": 126,
+      "retained_property_pairs": 181,
+      "source_id": "grid_220kv"
+    },
+    {
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "dropped_property_pairs": 12417,
+      "features": 2935,
+      "input_bytes": 1271135,
+      "input_git_blob_sha1": "e1c6ee484a53affbda562cd4e19d9d9f3d8212e2",
+      "input_sha256": "5fd19ae0735e94dc1994df70962f877a33915591663b0266f2fe569faada272d",
+      "memberships": 2935,
+      "retained_property_pairs": 4879,
+      "source_id": "grid_275kv"
+    },
+    {
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "dropped_property_pairs": 16835,
+      "features": 4106,
+      "input_bytes": 1802840,
+      "input_git_blob_sha1": "41f1e35147445d6a41b8dbc761e57392951d5a93",
+      "input_sha256": "0dfe7c681a6c6fe5a182a4ae985eb3ed8a48bc9c14d035a9cfbcaf0c474079bb",
+      "memberships": 4106,
+      "retained_property_pairs": 6239,
+      "source_id": "grid_400kv"
+    },
+    {
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "dropped_property_pairs": 4055,
+      "features": 1171,
+      "input_bytes": 698542,
+      "input_git_blob_sha1": "29907a71c7a3a63586725986ad4887a3a5006e83",
+      "input_sha256": "36267c79febb15d28760a70c5c8efcdcb4930320239d9cfd6e620a315ea5eb0c",
+      "memberships": 1171,
+      "retained_property_pairs": 1740,
+      "source_id": "grid_66kv"
+    },
+    {
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "dropped_property_pairs": 23241,
+      "features": 5800,
+      "input_bytes": 1822645,
+      "input_git_blob_sha1": "11c68163099541ee16b9bfe8e72917ff52f82749",
+      "input_sha256": "ec5450aa10b1592e53e73813fe169194de3fd923f7bffba1bbabd057c8c45b8f",
+      "memberships": 5800,
+      "retained_property_pairs": 15608,
+      "source_id": "grid_substations"
+    },
+    {
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "dropped_property_pairs": 0,
+      "features": 178,
+      "input_bytes": 34134,
+      "input_git_blob_sha1": "3d2ebd597da11610a49578048e9cf798a9d3fe32",
+      "input_sha256": "dde3380a79a9e8d21da54732b1b426dc14a9f23779ccc6f14a812d4f64057e7f",
+      "memberships": 178,
+      "retained_property_pairs": 534,
+      "source_id": "power_plants"
+    },
+    {
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "dropped_property_pairs": 3596,
+      "features": 3596,
+      "input_bytes": 582609,
+      "input_git_blob_sha1": "77d92bfdb1dd3f903fddee2fdc033a6ebbc75577",
+      "input_sha256": "1f424d6f420ec96bbc8f4a323b1d5535d3a535fe8c63c38339539fe3afd97208",
+      "memberships": 3596,
+      "retained_property_pairs": 3596,
+      "source_id": "railways"
+    }
+  ],
+  "v8_commit": "f2f343a92ee972cc74ed23b4b99d8a22896791ad",
+  "v8_untouched": true
+}

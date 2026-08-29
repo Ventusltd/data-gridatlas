@@ -1,0 +1,57 @@
+{
+  "schema": "data-gridatlas.v8-runtime-dependencies.v1",
+  "generation": "202608291015",
+  "owner": "Ventusltd/gridatlas",
+  "data_repository_payload": false,
+  "dependencies": [
+    {
+      "id": "maplibre-gl-js",
+      "version": "3.6.2",
+      "url": "https://cdn.jsdelivr.net/npm/maplibre-gl@3.6.2/dist/maplibre-gl.js",
+      "role": "map renderer",
+      "disposition": "PIN_AND_INTEGRITY_GATE_IN_APPLICATION"
+    },
+    {
+      "id": "maplibre-gl-css",
+      "version": "3.6.2",
+      "url": "https://cdn.jsdelivr.net/npm/maplibre-gl@3.6.2/dist/maplibre-gl.css",
+      "role": "map renderer stylesheet",
+      "disposition": "PIN_AND_INTEGRITY_GATE_IN_APPLICATION"
+    },
+    {
+      "id": "carto-dark-matter",
+      "url": "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
+      "role": "base map style",
+      "disposition": "LIVE_USE_TERMS_AND_ATTRIBUTION_GATE"
+    },
+    {
+      "id": "esri-world-imagery",
+      "url_pattern": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+      "role": "satellite base tiles",
+      "disposition": "LIVE_USE_TERMS_AND_ATTRIBUTION_GATE"
+    },
+    {
+      "id": "google-news-search",
+      "url_pattern": "https://www.google.com/search?tbm=nws&q=<query>",
+      "role": "outbound user-initiated search",
+      "disposition": "OPTIONAL_APPLICATION_LINK"
+    },
+    {
+      "id": "google-images-search",
+      "url_pattern": "https://www.google.com/search?tbm=isch&q=<query>",
+      "role": "outbound user-initiated search",
+      "disposition": "OPTIONAL_APPLICATION_LINK"
+    },
+    {
+      "id": "github-pages",
+      "role": "current static application host",
+      "disposition": "APPLICATION_ONLY; SWITCH_DATA_REPOSITORY_TO_ACTIONS_ONLY_OR_DISABLE_BEFORE_RELEASE"
+    }
+  ],
+  "rules": {
+    "copy_tiles_or_external_payloads": false,
+    "data_release_depends_on_live_runtime_provider": false,
+    "application_must_fail_closed_per_optional_dependency": true,
+    "attribution_required": true
+  }
+}

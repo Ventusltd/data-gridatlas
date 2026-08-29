@@ -1,0 +1,517 @@
+{
+  "artifacts": [
+    {
+      "bytes": 927,
+      "path": "memberships/elizabeth_line.parquet",
+      "rows": 45,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "3e1428bb0b3d4bf3406339d1d80e65b9c9ae7b326103a6aede8488898ac401e1"
+    },
+    {
+      "bytes": 3314,
+      "path": "memberships/hs2.parquet",
+      "rows": 521,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "8c3514d7ac6c2e255c0bbe14af290386ea5400ffca0a4afbbd02fa2fd8064f0a"
+    },
+    {
+      "bytes": 2020,
+      "path": "memberships/london_underground.parquet",
+      "rows": 269,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "a3e01014f93a5864e5bdfe3c669b89e6499e73d62c4c8155317a74897ae25c6c"
+    },
+    {
+      "bytes": 3481,
+      "path": "memberships/motorway_services.parquet",
+      "rows": 529,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "2ae78bff2227921d77dcc1153105b0f7c75f4b120fd40e62ac70abd64e344951"
+    },
+    {
+      "bytes": 1479,
+      "path": "memberships/stadiums.parquet",
+      "rows": 180,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "2c99280b5c57e06d58124a11854fe4208ef4d1694e8cd41910216a188159b6f9"
+    },
+    {
+      "bytes": 917,
+      "path": "memberships/supermarkets_aldi.parquet",
+      "rows": 45,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "1e30134990fba91bca8260ec43725c94d28a708cc3f22e5d7db118a81fed7e73"
+    },
+    {
+      "bytes": 2441,
+      "path": "memberships/supermarkets_asda.parquet",
+      "rows": 388,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "bcad278cd38fa05d3cccc0cfab98401a45864b1e1467f4536300b27bf21ffeb8"
+    },
+    {
+      "bytes": 835,
+      "path": "memberships/supermarkets_booths.parquet",
+      "rows": 9,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "9352c3e4bd3e6fe6975feb72d592203f910a91ec7ed4beafccd4031d940c4303"
+    },
+    {
+      "bytes": 831,
+      "path": "memberships/supermarkets_coop.parquet",
+      "rows": 24,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "3006fda571e9166034a46df9225e2df0bbe5083ce1891f3991275d16f9b5d931"
+    },
+    {
+      "bytes": 895,
+      "path": "memberships/supermarkets_costco.parquet",
+      "rows": 30,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "6130707cf950076cb974c812166d98cf87413d5ad6534148dc770a25d2055176"
+    },
+    {
+      "bytes": 1510,
+      "path": "memberships/supermarkets_lidl.parquet",
+      "rows": 182,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "1082a7a790247508034af74995be8415e5b418ee7a91982a59c5d226961f0f26"
+    },
+    {
+      "bytes": 3193,
+      "path": "memberships/supermarkets_morrisons.parquet",
+      "rows": 442,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "346e7c41a3aa7c02a65b374f3da17c691631d81a0bfd67943ca20803748cea99"
+    },
+    {
+      "bytes": 766,
+      "path": "memberships/supermarkets_ms.parquet",
+      "rows": 3,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "fda5b280f9865a1ceef1c730206d39089f6eaa15a19099d7625ce759bcf055ce"
+    },
+    {
+      "bytes": 3190,
+      "path": "memberships/supermarkets_sainsburys.parquet",
+      "rows": 439,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "d81c56a87d8ef31739fe40bb146074ba852488b27ad387ec68767daac71bd2b4"
+    },
+    {
+      "bytes": 4037,
+      "path": "memberships/supermarkets_tesco.parquet",
+      "rows": 727,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "5c2f2d997644d0e898474f50a881e62d9f60d49349b137fa236be204b492e010"
+    },
+    {
+      "bytes": 1389,
+      "path": "memberships/supermarkets_waitrose.parquet",
+      "rows": 128,
+      "schema": "data-gridatlas.v8-layer-membership.v1",
+      "sha256": "da93768cd0ea3080e8421cd70fe4525f59c6991a8f014eb2a1ca55da08fad3aa"
+    },
+    {
+      "bytes": 10137,
+      "path": "partitions/elizabeth_line.parquet",
+      "rows": 45,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "1aa7ff65348f2911bc06f3ce12f39a13621283572278ea6f93ce72eb0158b59c"
+    },
+    {
+      "bytes": 74728,
+      "path": "partitions/hs2.parquet",
+      "rows": 521,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "d5aab2ddbe6269de52210fcfb61aaafd38bbda0c45a8c2115c875b7548dde609"
+    },
+    {
+      "bytes": 43096,
+      "path": "partitions/london_underground.parquet",
+      "rows": 269,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "dd8138366bd98fc03b82f11f065544a02527af427c29992101ab861b91f92304"
+    },
+    {
+      "bytes": 81950,
+      "path": "partitions/motorway_services.parquet",
+      "rows": 529,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "8eabf7542ffedd4b19275e6a8d196d68623aa24023ea897db95f05fb1db29000"
+    },
+    {
+      "bytes": 32624,
+      "path": "partitions/stadiums.parquet",
+      "rows": 180,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "6b70a4d7601b68c06b2b610bf28704ff84d973c7444977feb3551eb88e7816d1"
+    },
+    {
+      "bytes": 11175,
+      "path": "partitions/supermarkets_aldi.parquet",
+      "rows": 45,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "4a5bffdf9ba6ce985fa818f36a22a775d473c04fbf50785f4ccfe4be3f2409b4"
+    },
+    {
+      "bytes": 65912,
+      "path": "partitions/supermarkets_asda.parquet",
+      "rows": 388,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "c91402680788603cf2c8e8bad2b6f6aa604bfa8f077dee47b7b8f4bd766c1e18"
+    },
+    {
+      "bytes": 5521,
+      "path": "partitions/supermarkets_booths.parquet",
+      "rows": 9,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "541ec456472b940feee372489aa7e5533b1018c088272cf035502048225d9cb1"
+    },
+    {
+      "bytes": 7850,
+      "path": "partitions/supermarkets_coop.parquet",
+      "rows": 24,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "a8c1eecab30983eacd6aea46481cd7644e6334875340824dbb833b110e5433cf"
+    },
+    {
+      "bytes": 8995,
+      "path": "partitions/supermarkets_costco.parquet",
+      "rows": 30,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "073be9bfb2750b8bfd8fecf2159dd2d79ca251cc11cbd1cd4de57d95ea07487a"
+    },
+    {
+      "bytes": 33123,
+      "path": "partitions/supermarkets_lidl.parquet",
+      "rows": 182,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "95e08cec45de91d15acc614744cbcf13037829cf15d995f4cfa580e1826b55fd"
+    },
+    {
+      "bytes": 77634,
+      "path": "partitions/supermarkets_morrisons.parquet",
+      "rows": 442,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "a45e540771e09d1b54b0578107c2970dbfae988dd01908a6b60b178aa7eb4c05"
+    },
+    {
+      "bytes": 4506,
+      "path": "partitions/supermarkets_ms.parquet",
+      "rows": 3,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "218a5589b29f03fe55b34cb15efd7f1dec12e8fa083fb1964426e8e5db3b1256"
+    },
+    {
+      "bytes": 77132,
+      "path": "partitions/supermarkets_sainsburys.parquet",
+      "rows": 439,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "1a66ad8c836bd648a281d5873dee5c0ccff738cd42e9fc622069a1bd759c90b9"
+    },
+    {
+      "bytes": 120828,
+      "path": "partitions/supermarkets_tesco.parquet",
+      "rows": 727,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "af6e3fee012519b7a935289528b1fa39f3fedc8da6e615e1fcc8fd508da8cb43"
+    },
+    {
+      "bytes": 25506,
+      "path": "partitions/supermarkets_waitrose.parquet",
+      "rows": 128,
+      "schema": "data-gridatlas.v8-parity-features.v1",
+      "sha256": "125bb4c03ea1462409c5569c128b0956d9d9eff6c460b17e8a16c32d8d76b254"
+    }
+  ],
+  "classification": "V8_TRANSPLANT_PHASE_CANDIDATE",
+  "compute_identity": {
+    "inputs": [
+      {
+        "bytes": 78272,
+        "path": "contracts/202608291015-v8-transplant-plan.json",
+        "sha256": "19dbe6a500c78039b5859016392eece2e69403690105218a04c55a59060ab91b"
+      },
+      {
+        "bytes": 41224,
+        "path": "contracts/202608291015-v8-layer-config.json",
+        "sha256": "a0f96940190509d4c8f64fc00e1411a5d7a746abaa5bbcd4054bda241d3121e9"
+      },
+      {
+        "bytes": 2019,
+        "path": "contracts/202608291015-v8-runtime-dependencies.json",
+        "sha256": "4bbb5e4bd89cd72368e26c231393eb69ec0ef514f261af40efe4788a525258f8"
+      },
+      {
+        "bytes": 2273,
+        "path": "contracts/202608291015-repository-boundary.json",
+        "sha256": "b0c5e5a431705d8f20209c9b124562cad4941e7c14abfff0ab35b3458d962d1b"
+      },
+      {
+        "bytes": 2097,
+        "path": "schemas/202608291015-v8-transplant-parquet.json",
+        "sha256": "734bc1d5acad266f3b235c09a4b365d59ecc62c98cdb9543e7a223e17723262a"
+      },
+      {
+        "bytes": 42222,
+        "path": "contracts/202608290904-v8-dependency-ledger.json",
+        "sha256": "06266505495b3ce2b28bd6f32d6acc7165dbe5dceab8175e4bc7e1d72eaac2f2"
+      },
+      {
+        "bytes": 18601,
+        "path": "contracts/202608290904-v8-file-ledger.json",
+        "sha256": "591ed7bf53f0b001240eab39be20f1c94948f0108d65082f756448bf94f91e0d"
+      },
+      {
+        "bytes": 3215,
+        "path": "contracts/202608290904-v8-quarantine.json",
+        "sha256": "dd5422c3b485355a151b118d2f97be1fd573548281838a4ea6e4e585749c5f58"
+      },
+      {
+        "bytes": 31753,
+        "path": "compiler/202608291015-build-v8-transplant.py",
+        "sha256": "e1228492e386bbb2622e96dc5b5a0b2ebb6986c413e258e18a9d4a9a690a4004"
+      },
+      {
+        "bytes": 66705,
+        "path": "atman/202608291015-verify-v8-transplant.py",
+        "sha256": "dd7fba6bb166d47cb317b1cf428f7655178f63b60271250a95bc1c021430fc6e"
+      },
+      {
+        "bytes": 17323,
+        "path": ".github/workflows/202608291015-build-v8-transplant-candidate.yml",
+        "sha256": "a945c93adb1e822fb64cea9dc792d6156c4fcda65b79707b5179a8ca8a1fe8f3"
+      },
+      {
+        "bytes": 99,
+        "path": "requirements.lock",
+        "sha256": "a4051d0f3834c3fe37cbfa8374532ccf57deb91ad9e5f20bccc9d17ed4de2d98"
+      }
+    ],
+    "key_sha256": "30196acb46bd7516b4f6dea54300d9c3bda9026a2502be4f17b2bb30d128ccf7",
+    "repository": "Ventusltd/data-gridatlas",
+    "runtime": {
+      "duckdb": "1.3.2",
+      "python": "3.12.13",
+      "runner_image_os": "ubuntu24",
+      "runner_image_version": "20260823.283.1",
+      "threads": 1
+    },
+    "v8_commit": "f2f343a92ee972cc74ed23b4b99d8a22896791ad",
+    "v8_repository": "Ventusltd/globalgrid2050"
+  },
+  "current_pointer": false,
+  "generation": "202608291015",
+  "layer_counts": {
+    "aldi": 45,
+    "asda": 388,
+    "booths": 9,
+    "coop": 24,
+    "costco": 30,
+    "elizabeth": 45,
+    "hs2": 521,
+    "lidl": 182,
+    "lu": 269,
+    "morrisons": 442,
+    "motorway_services": 529,
+    "ms": 3,
+    "sainsburys": 439,
+    "stadiums": 180,
+    "tesco": 727,
+    "waitrose": 128
+  },
+  "phase": "p2_lazy_context",
+  "raw_outputs": 0,
+  "release": false,
+  "runtime": {
+    "compression": "ZSTD",
+    "duckdb": "1.3.2",
+    "python": "3.12.13",
+    "runner_image_os": "ubuntu24",
+    "runner_image_version": "20260823.283.1",
+    "threads": 1
+  },
+  "schema": "data-gridatlas.v8-transplant-phase-manifest.v1",
+  "snap_counts": {},
+  "sources": [
+    {
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "dropped_property_pairs": 45,
+      "features": 45,
+      "input_bytes": 9037,
+      "input_git_blob_sha1": "1241bcd4bcdb7881cc16e963549b5ca9e9f579c5",
+      "input_sha256": "ce8e880385cc5383bb8ca4cfca7840d15121e99d6e57de8393f91d675f0e438b",
+      "memberships": 45,
+      "retained_property_pairs": 135,
+      "source_id": "elizabeth_line"
+    },
+    {
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "dropped_property_pairs": 0,
+      "features": 521,
+      "input_bytes": 65898,
+      "input_git_blob_sha1": "30eb7f85cef4c5101ffc06b2d97716aafe5ca880",
+      "input_sha256": "17e2bc8ba148063f9c1bc6af848d40d7183f3b30d6f6096754d7f007607dcb9b",
+      "memberships": 521,
+      "retained_property_pairs": 521,
+      "source_id": "hs2"
+    },
+    {
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "dropped_property_pairs": 0,
+      "features": 269,
+      "input_bytes": 82559,
+      "input_git_blob_sha1": "d26f6af62f815c96c1c70900dbf8da3717892ed0",
+      "input_sha256": "41abcaa6c3a306bb5f7df7078df527aec44703497d18059230a009bdda6e324e",
+      "memberships": 269,
+      "retained_property_pairs": 807,
+      "source_id": "london_underground"
+    },
+    {
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "dropped_property_pairs": 529,
+      "features": 529,
+      "input_bytes": 107192,
+      "input_git_blob_sha1": "92152da3fdc4999ef6589ff31151bfa00cd6fdb5",
+      "input_sha256": "b99f48691ea527d5fec1132d236f3fdcec8f93f25ca979cd6af70baf665caeb1",
+      "memberships": 529,
+      "retained_property_pairs": 1587,
+      "source_id": "motorway_services"
+    },
+    {
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "dropped_property_pairs": 180,
+      "features": 180,
+      "input_bytes": 42769,
+      "input_git_blob_sha1": "3e1e9b469ec7313bfec96d905bc95a976fa4aa55",
+      "input_sha256": "24f5e196864000c24550d60a7db2fb1b99f34b52a1d2554c712e91a75c639c0c",
+      "memberships": 180,
+      "retained_property_pairs": 1080,
+      "source_id": "stadiums"
+    },
+    {
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "dropped_property_pairs": 135,
+      "features": 45,
+      "input_bytes": 15917,
+      "input_git_blob_sha1": "ce26b0f079baedb88272a5ee255ac3af9a3fdeb4",
+      "input_sha256": "37b3f7290bb2705593b3e2d99d35e8139f58f4809ac8e913da7a2998eb7dcc1c",
+      "memberships": 45,
+      "retained_property_pairs": 360,
+      "source_id": "supermarkets_aldi"
+    },
+    {
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "dropped_property_pairs": 1164,
+      "features": 388,
+      "input_bytes": 117793,
+      "input_git_blob_sha1": "064bb331dfe577a5469f76557ef00aa4e8a12aab",
+      "input_sha256": "627afb99ac697687c0d5927c7e26271b6001c07307c91c129a23d59ad9ff499d",
+      "memberships": 388,
+      "retained_property_pairs": 3104,
+      "source_id": "supermarkets_asda"
+    },
+    {
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "dropped_property_pairs": 27,
+      "features": 9,
+      "input_bytes": 2847,
+      "input_git_blob_sha1": "c79a71544c788453369419f918f740e41a0324c0",
+      "input_sha256": "3a7b588ca0d88c7328b7ad85845fb31caf55747a6b0b6d7c36c34a80d90f3d38",
+      "memberships": 9,
+      "retained_property_pairs": 72,
+      "source_id": "supermarkets_booths"
+    },
+    {
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "dropped_property_pairs": 72,
+      "features": 24,
+      "input_bytes": 8428,
+      "input_git_blob_sha1": "d6ca83598a747f3a76480f93e7e494206416bf69",
+      "input_sha256": "3949a2ccd73c6bd040871f0b5c4101233e51eff6d9c92ba1596080c75cda90ec",
+      "memberships": 24,
+      "retained_property_pairs": 192,
+      "source_id": "supermarkets_coop"
+    },
+    {
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "dropped_property_pairs": 90,
+      "features": 30,
+      "input_bytes": 9694,
+      "input_git_blob_sha1": "cb02157f4f6bdbd95dc58f1ad4ae13f47a1de7cb",
+      "input_sha256": "c635229b3c602d485627eea70c8268054f0e7ba280524ee672715c4ce66eee7e",
+      "memberships": 30,
+      "retained_property_pairs": 240,
+      "source_id": "supermarkets_costco"
+    },
+    {
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "dropped_property_pairs": 546,
+      "features": 182,
+      "input_bytes": 63528,
+      "input_git_blob_sha1": "ee7ca9860f02bbe40cea9694b48cf17ea247ea70",
+      "input_sha256": "4b875659b02903dff1d053bb2b052914c9ef1131955cc06a9ae19aee01b7e20b",
+      "memberships": 182,
+      "retained_property_pairs": 1456,
+      "source_id": "supermarkets_lidl"
+    },
+    {
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "dropped_property_pairs": 1326,
+      "features": 442,
+      "input_bytes": 156119,
+      "input_git_blob_sha1": "166385b99e01838c8a62c6bd304e94533195367a",
+      "input_sha256": "3de5dc77a2e8b0635582746acaea06515d6080e970b92fc252191eb566451da9",
+      "memberships": 442,
+      "retained_property_pairs": 3536,
+      "source_id": "supermarkets_morrisons"
+    },
+    {
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "dropped_property_pairs": 9,
+      "features": 3,
+      "input_bytes": 971,
+      "input_git_blob_sha1": "030be558517786d9e61c4a96aa23da86d32381ee",
+      "input_sha256": "49607d056c4283d2a51b74eb4271d795c1569e1e5d5ffab0419800dc106c207d",
+      "memberships": 3,
+      "retained_property_pairs": 24,
+      "source_id": "supermarkets_ms"
+    },
+    {
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "dropped_property_pairs": 1317,
+      "features": 439,
+      "input_bytes": 153154,
+      "input_git_blob_sha1": "3dc95e9a4fb8abde922763cc764f0e556f961211",
+      "input_sha256": "850e501c773ed335899fdbeb661201e9d4302b7287509ad766e8a9b4dc9e5655",
+      "memberships": 439,
+      "retained_property_pairs": 3512,
+      "source_id": "supermarkets_sainsburys"
+    },
+    {
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "dropped_property_pairs": 2181,
+      "features": 727,
+      "input_bytes": 225282,
+      "input_git_blob_sha1": "39fbd2c38d019f1d236936a5e74ef96b20c20ada",
+      "input_sha256": "c1051a24e71a33dc663bb33c1918f041fe73518d445a4ec978331de7f1076f2d",
+      "memberships": 727,
+      "retained_property_pairs": 5816,
+      "source_id": "supermarkets_tesco"
+    },
+    {
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "dropped_property_pairs": 384,
+      "features": 128,
+      "input_bytes": 44460,
+      "input_git_blob_sha1": "1199d61f0b3ee607563fa97fa0487a579a17cd3e",
+      "input_sha256": "86fd8f771e2400648efcea5e8b4e48f8ed0eccd8def61a7c5b08de674fe23fc2",
+      "memberships": 128,
+      "retained_property_pairs": 1024,
+      "source_id": "supermarkets_waitrose"
+    }
+  ],
+  "v8_commit": "f2f343a92ee972cc74ed23b4b99d8a22896791ad",
+  "v8_untouched": true
+}

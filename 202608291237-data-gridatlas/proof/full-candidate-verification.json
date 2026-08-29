@@ -1,0 +1,33 @@
+{
+  "checks": {
+    "candidate": {
+      "artifacts": 74,
+      "bytes": 98243147,
+      "features": 541282,
+      "memberships": 526388,
+      "sources": 56
+    },
+    "contracts": {
+      "features": 541282,
+      "layers": 60,
+      "sources": 56
+    },
+    "repository": {
+      "live_release_bytes": 0,
+      "tracked_bytes": 344472,
+      "tracked_files": 19
+    }
+  },
+  "classification": "VERIFIED_FULL_V8_TRANSPLANT_CANDIDATE",
+  "current_pointer": false,
+  "failed": 0,
+  "generation": "202608291015",
+  "release": false,
+  "repository_source_commit": "61096ee84570fd78f7c87b7b4abe25cb521eeba6",
+  "runtime": {
+    "duckdb": "1.3.2",
+    "python": "3.12.13"
+  },
+  "schema": "data-gridatlas.v8-transplant-verification.v1",
+  "v8_untouched": true
+}

@@ -1,0 +1,1486 @@
+{
+  "schema": "data-gridatlas.declarative-layer-config.v1",
+  "generation": "202608291015",
+  "source": {
+    "repository": "Ventusltd/globalgrid2050",
+    "commit": "f2f343a92ee972cc74ed23b4b99d8a22896791ad",
+    "path": "repd_grid_atlasv8/index.html",
+    "git_blob_sha1": "278c3f55d3b61af9d13417c99bfb558374131143",
+    "sha256": "241d73b19e88febf5df34bfc07e16170ead5cb9ea92476e3479d5a04d9ec35f1"
+  },
+  "map": {
+    "center": [
+      -3.5,
+      54.0
+    ],
+    "zoom": 4.2
+  },
+  "closure": {
+    "groups": 11,
+    "layers": 60,
+    "urls": 40,
+    "preload_layers": 12,
+    "layer_membership_rows": 526388
+  },
+  "groups": [
+    {
+      "group": "Topology (GeoJSON)",
+      "layers": [
+        {
+          "id": "400",
+          "label": "400kV",
+          "color": "#0054ff",
+          "type": "line",
+          "width": 2.5,
+          "url": "data/grid_400kv.geojson",
+          "snap": true,
+          "preload": true,
+          "v9_data": {
+            "source_id": "grid_400kv",
+            "parquet_path": "partitions/grid_400kv.parquet",
+            "phase": "p1_foundation",
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF"
+          }
+        },
+        {
+          "id": "275",
+          "label": "275kV",
+          "color": "#ff0000",
+          "type": "line",
+          "width": 2,
+          "url": "data/grid_275kv.geojson",
+          "snap": true,
+          "preload": true,
+          "v9_data": {
+            "source_id": "grid_275kv",
+            "parquet_path": "partitions/grid_275kv.parquet",
+            "phase": "p1_foundation",
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF"
+          }
+        },
+        {
+          "id": "220",
+          "label": "220kV",
+          "color": "#ff9900",
+          "type": "line",
+          "width": 1.8,
+          "url": "data/grid_220kv.geojson",
+          "snap": true,
+          "preload": true,
+          "v9_data": {
+            "source_id": "grid_220kv",
+            "parquet_path": "partitions/grid_220kv.parquet",
+            "phase": "p1_foundation",
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF"
+          }
+        },
+        {
+          "id": "132",
+          "label": "132kV",
+          "color": "#00cc00",
+          "type": "line",
+          "width": 1.5,
+          "url": "data/grid_132kv.geojson",
+          "snap": true,
+          "preload": true,
+          "v9_data": {
+            "source_id": "grid_132kv",
+            "parquet_path": "partitions/grid_132kv.parquet",
+            "phase": "p1_foundation",
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF"
+          }
+        },
+        {
+          "id": "66",
+          "label": "66kV",
+          "color": "#b200ff",
+          "type": "line",
+          "width": 1.2,
+          "url": "data/grid_66kv.geojson",
+          "snap": true,
+          "preload": true,
+          "v9_data": {
+            "source_id": "grid_66kv",
+            "parquet_path": "partitions/grid_66kv.parquet",
+            "phase": "p1_foundation",
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF"
+          }
+        },
+        {
+          "id": "11kv",
+          "label": "11kV (UKPN)",
+          "color": "#ff00ff",
+          "type": "point",
+          "radius": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            13.5,
+            4,
+            15,
+            8,
+            18,
+            18
+          ],
+          "url": "data/grid_11kv_ukpn.geojson",
+          "minzoom": 13.5,
+          "preload": false,
+          "v9_data": {
+            "source_id": "grid_11kv_ukpn",
+            "parquet_path": "partitions/grid_11kv_ukpn.parquet",
+            "phase": "quarantine",
+            "disposition": "QUARANTINED_SYNTHETIC_UKPN_11KV_IDENTITY"
+          }
+        },
+        {
+          "id": "subs",
+          "label": "Subs",
+          "color": "#ffffff",
+          "type": "point",
+          "radius": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            5,
+            3,
+            10,
+            5,
+            14,
+            10,
+            18,
+            22
+          ],
+          "url": "data/grid_substations.geojson",
+          "isSubs": true,
+          "preload": true,
+          "v9_data": {
+            "source_id": "grid_substations",
+            "parquet_path": "partitions/grid_substations.parquet",
+            "phase": "p1_foundation",
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF"
+          }
+        }
+      ]
+    },
+    {
+      "group": "Assets (GeoJSON)",
+      "layers": [
+        {
+          "id": "nuc",
+          "label": "Nuclear",
+          "color": "#39ff14",
+          "type": "point",
+          "radius": 4.5,
+          "url": "data/power_plants.geojson",
+          "filter": [
+            "==",
+            [
+              "get",
+              "source"
+            ],
+            "nuclear"
+          ],
+          "preload": true,
+          "v9_data": {
+            "source_id": "power_plants",
+            "parquet_path": "partitions/power_plants.parquet",
+            "phase": "p1_foundation",
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF"
+          }
+        },
+        {
+          "id": "gas",
+          "label": "Gas",
+          "color": "#ff4500",
+          "type": "point",
+          "radius": 4.5,
+          "url": "data/power_plants.geojson",
+          "filter": [
+            "!=",
+            [
+              "get",
+              "source"
+            ],
+            "nuclear"
+          ],
+          "preload": true,
+          "v9_data": {
+            "source_id": "power_plants",
+            "parquet_path": "partitions/power_plants.parquet",
+            "phase": "p1_foundation",
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF"
+          }
+        },
+        {
+          "id": "ind",
+          "label": "Industry",
+          "color": "#ff6600",
+          "type": "point",
+          "radius": 4.5,
+          "url": "data/industrial_offtakers.geojson",
+          "preload": true,
+          "v9_data": {
+            "source_id": "industrial_offtakers",
+            "parquet_path": "partitions/industrial_offtakers.parquet",
+            "phase": "quarantine",
+            "disposition": "QUARANTINED_OUTPUT_NOT_REPRODUCIBLE_FROM_ADJACENT_FETCHER"
+          }
+        },
+        {
+          "id": "dc",
+          "label": "Data Ctrs",
+          "color": "#00ffff",
+          "type": "point",
+          "radius": 4.5,
+          "url": "data/datacentres.geojson",
+          "preload": true,
+          "v9_data": {
+            "source_id": "datacentres",
+            "parquet_path": "partitions/datacentres.parquet",
+            "phase": "p1_foundation",
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF"
+          }
+        },
+        {
+          "id": "air",
+          "label": "Airports",
+          "color": "#ff00ff",
+          "type": "point",
+          "radius": 4.5,
+          "url": "data/airports.geojson",
+          "preload": true,
+          "v9_data": {
+            "source_id": "airports",
+            "parquet_path": "partitions/airports.parquet",
+            "phase": "p1_foundation",
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF"
+          }
+        },
+        {
+          "id": "rail",
+          "label": "Railways",
+          "color": "#ffd700",
+          "type": "point",
+          "radius": 4.5,
+          "url": "data/railways.geojson",
+          "preload": true,
+          "v9_data": {
+            "source_id": "railways",
+            "parquet_path": "partitions/railways.parquet",
+            "phase": "p1_foundation",
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF"
+          }
+        }
+      ]
+    },
+    {
+      "group": "Supermarkets (GeoJSON)",
+      "layers": [
+        {
+          "id": "tesco",
+          "label": "Tesco",
+          "color": "#ee1c2e",
+          "type": "point",
+          "radius": 4.5,
+          "url": "data/supermarkets_tesco.geojson",
+          "preload": false,
+          "v9_data": {
+            "source_id": "supermarkets_tesco",
+            "parquet_path": "partitions/supermarkets_tesco.parquet",
+            "phase": "p2_lazy_context",
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF"
+          }
+        },
+        {
+          "id": "sainsburys",
+          "label": "Sainsbury's",
+          "color": "#ff8200",
+          "type": "point",
+          "radius": 4.5,
+          "url": "data/supermarkets_sainsburys.geojson",
+          "preload": false,
+          "v9_data": {
+            "source_id": "supermarkets_sainsburys",
+            "parquet_path": "partitions/supermarkets_sainsburys.parquet",
+            "phase": "p2_lazy_context",
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF"
+          }
+        },
+        {
+          "id": "asda",
+          "label": "Asda",
+          "color": "#78be20",
+          "type": "point",
+          "radius": 4.5,
+          "url": "data/supermarkets_asda.geojson",
+          "preload": false,
+          "v9_data": {
+            "source_id": "supermarkets_asda",
+            "parquet_path": "partitions/supermarkets_asda.parquet",
+            "phase": "p2_lazy_context",
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF"
+          }
+        },
+        {
+          "id": "morrisons",
+          "label": "Morrisons",
+          "color": "#ffd700",
+          "type": "point",
+          "radius": 4.5,
+          "url": "data/supermarkets_morrisons.geojson",
+          "preload": false,
+          "v9_data": {
+            "source_id": "supermarkets_morrisons",
+            "parquet_path": "partitions/supermarkets_morrisons.parquet",
+            "phase": "p2_lazy_context",
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF"
+          }
+        },
+        {
+          "id": "aldi",
+          "label": "Aldi",
+          "color": "#003087",
+          "type": "point",
+          "radius": 4.5,
+          "url": "data/supermarkets_aldi.geojson",
+          "preload": false,
+          "v9_data": {
+            "source_id": "supermarkets_aldi",
+            "parquet_path": "partitions/supermarkets_aldi.parquet",
+            "phase": "p2_lazy_context",
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF"
+          }
+        },
+        {
+          "id": "lidl",
+          "label": "Lidl",
+          "color": "#0050aa",
+          "type": "point",
+          "radius": 4.5,
+          "url": "data/supermarkets_lidl.geojson",
+          "preload": false,
+          "v9_data": {
+            "source_id": "supermarkets_lidl",
+            "parquet_path": "partitions/supermarkets_lidl.parquet",
+            "phase": "p2_lazy_context",
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF"
+          }
+        },
+        {
+          "id": "waitrose",
+          "label": "Waitrose",
+          "color": "#7ab800",
+          "type": "point",
+          "radius": 4.5,
+          "url": "data/supermarkets_waitrose.geojson",
+          "preload": false,
+          "v9_data": {
+            "source_id": "supermarkets_waitrose",
+            "parquet_path": "partitions/supermarkets_waitrose.parquet",
+            "phase": "p2_lazy_context",
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF"
+          }
+        },
+        {
+          "id": "ms",
+          "label": "M&S Food",
+          "color": "#009b77",
+          "type": "point",
+          "radius": 4.5,
+          "url": "data/supermarkets_ms.geojson",
+          "preload": false,
+          "v9_data": {
+            "source_id": "supermarkets_ms",
+            "parquet_path": "partitions/supermarkets_ms.parquet",
+            "phase": "p2_lazy_context",
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF"
+          }
+        },
+        {
+          "id": "coop",
+          "label": "Co-op",
+          "color": "#00b1a9",
+          "type": "point",
+          "radius": 4.5,
+          "url": "data/supermarkets_coop.geojson",
+          "preload": false,
+          "v9_data": {
+            "source_id": "supermarkets_coop",
+            "parquet_path": "partitions/supermarkets_coop.parquet",
+            "phase": "p2_lazy_context",
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF"
+          }
+        },
+        {
+          "id": "costco",
+          "label": "Costco",
+          "color": "#005daa",
+          "type": "point",
+          "radius": 4.5,
+          "url": "data/supermarkets_costco.geojson",
+          "preload": false,
+          "v9_data": {
+            "source_id": "supermarkets_costco",
+            "parquet_path": "partitions/supermarkets_costco.parquet",
+            "phase": "p2_lazy_context",
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF"
+          }
+        },
+        {
+          "id": "booths",
+          "label": "Booths",
+          "color": "#6d2077",
+          "type": "point",
+          "radius": 4.5,
+          "url": "data/supermarkets_booths.geojson",
+          "preload": false,
+          "v9_data": {
+            "source_id": "supermarkets_booths",
+            "parquet_path": "partitions/supermarkets_booths.parquet",
+            "phase": "p2_lazy_context",
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF"
+          }
+        }
+      ]
+    },
+    {
+      "group": "Transit (GeoJSON)",
+      "layers": [
+        {
+          "id": "elizabeth",
+          "label": "Elizabeth Line",
+          "color": "#60399E",
+          "type": "point",
+          "radius": 5,
+          "url": "data/elizabeth_line.geojson",
+          "preload": false,
+          "v9_data": {
+            "source_id": "elizabeth_line",
+            "parquet_path": "partitions/elizabeth_line.parquet",
+            "phase": "p2_lazy_context",
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF"
+          }
+        },
+        {
+          "id": "lu",
+          "label": "London Underground",
+          "color": "#e32017",
+          "type": "point",
+          "radius": 5,
+          "url": "data/london_underground.geojson",
+          "preload": false,
+          "v9_data": {
+            "source_id": "london_underground",
+            "parquet_path": "partitions/london_underground.parquet",
+            "phase": "p2_lazy_context",
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF"
+          }
+        },
+        {
+          "id": "dlr",
+          "label": "DLR",
+          "color": "#00afad",
+          "type": "point",
+          "radius": 5,
+          "url": "/uk_metros_trams.geojson",
+          "preload": false,
+          "filter": [
+            "all",
+            [
+              "in",
+              "Docklands",
+              [
+                "get",
+                "operator"
+              ]
+            ],
+            [
+              "!",
+              [
+                "in",
+                "London Underground",
+                [
+                  "get",
+                  "operator"
+                ]
+              ]
+            ]
+          ],
+          "v9_data": {
+            "source_id": "uk_metros_trams_root",
+            "parquet_path": "partitions/uk_metros_trams_root.parquet",
+            "phase": "quarantine",
+            "disposition": "QUARANTINED_GEOMETRY_MISMATCH"
+          }
+        },
+        {
+          "id": "metro",
+          "label": "UK Metro",
+          "color": "#f3a712",
+          "type": "point",
+          "radius": 5,
+          "url": "/uk_metros_trams.geojson",
+          "preload": false,
+          "filter": [
+            "any",
+            [
+              "in",
+              "Tyne",
+              [
+                "get",
+                "operator"
+              ]
+            ],
+            [
+              "in",
+              "Metrolink",
+              [
+                "get",
+                "operator"
+              ]
+            ],
+            [
+              "in",
+              "Supertram",
+              [
+                "get",
+                "operator"
+              ]
+            ],
+            [
+              "in",
+              "Nottingham",
+              [
+                "get",
+                "operator"
+              ]
+            ],
+            [
+              "in",
+              "Edinburgh",
+              [
+                "get",
+                "operator"
+              ]
+            ],
+            [
+              "in",
+              "Midland Metro",
+              [
+                "get",
+                "operator"
+              ]
+            ]
+          ],
+          "v9_data": {
+            "source_id": "uk_metros_trams_root",
+            "parquet_path": "partitions/uk_metros_trams_root.parquet",
+            "phase": "quarantine",
+            "disposition": "QUARANTINED_GEOMETRY_MISMATCH"
+          }
+        },
+        {
+          "id": "tram",
+          "label": "Trams & Light Rail",
+          "color": "#84329b",
+          "type": "point",
+          "radius": 5,
+          "url": "/uk_metros_trams.geojson",
+          "preload": false,
+          "filter": [
+            "all",
+            [
+              "==",
+              [
+                "get",
+                "type"
+              ],
+              "Tram / Light Rail"
+            ],
+            [
+              "!",
+              [
+                "in",
+                "London Underground",
+                [
+                  "get",
+                  "operator"
+                ]
+              ]
+            ]
+          ],
+          "v9_data": {
+            "source_id": "uk_metros_trams_root",
+            "parquet_path": "partitions/uk_metros_trams_root.parquet",
+            "phase": "quarantine",
+            "disposition": "QUARANTINED_GEOMETRY_MISMATCH"
+          }
+        },
+        {
+          "id": "mainline_rail",
+          "label": "UK Mainline Railways",
+          "color": "#ff8800",
+          "type": "line",
+          "width": 1.5,
+          "url": "/uk_mainline_railways.geojson",
+          "preload": false,
+          "v9_data": {
+            "source_id": "uk_mainline_railways",
+            "parquet_path": "partitions/uk_mainline_railways.parquet",
+            "phase": "p4_rail_global",
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF"
+          }
+        },
+        {
+          "id": "hs2",
+          "label": "HS2",
+          "color": "#2c6fad",
+          "type": "point",
+          "radius": 4,
+          "url": "data/hs2.geojson",
+          "preload": false,
+          "v9_data": {
+            "source_id": "hs2",
+            "parquet_path": "partitions/hs2.parquet",
+            "phase": "p2_lazy_context",
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF"
+          }
+        },
+        {
+          "id": "eurostar_route",
+          "label": "Eurostar (HS1) UK & Europe",
+          "color": "#001489",
+          "type": "line",
+          "width": 2.5,
+          "url": "data/eurostar.geojson",
+          "filter": [
+            "==",
+            [
+              "get",
+              "type"
+            ],
+            "route"
+          ],
+          "preload": false,
+          "v9_data": {
+            "source_id": "eurostar",
+            "parquet_path": "partitions/eurostar.parquet",
+            "phase": "p4_rail_global",
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF"
+          }
+        },
+        {
+          "id": "eurostar_station",
+          "label": "Eurostar Stations UK & Europe",
+          "color": "#ffd700",
+          "type": "point",
+          "radius": 5.5,
+          "url": "data/eurostar.geojson",
+          "filter": [
+            "==",
+            [
+              "get",
+              "type"
+            ],
+            "eurostar_station"
+          ],
+          "preload": false,
+          "v9_data": {
+            "source_id": "eurostar",
+            "parquet_path": "partitions/eurostar.parquet",
+            "phase": "p4_rail_global",
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF"
+          }
+        }
+      ]
+    },
+    {
+      "group": "Leisure & Sports (GeoJSON)",
+      "layers": [
+        {
+          "id": "stadiums",
+          "label": "Major Stadiums",
+          "color": "#e5ff00",
+          "type": "point",
+          "radius": 5.5,
+          "url": "data/stadiums.geojson",
+          "preload": false,
+          "v9_data": {
+            "source_id": "stadiums",
+            "parquet_path": "partitions/stadiums.parquet",
+            "phase": "p2_lazy_context",
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF"
+          }
+        }
+      ]
+    },
+    {
+      "group": "Global Data Backbone",
+      "layers": [
+        {
+          "id": "subsea_data_cables",
+          "label": "Subsea Data Cables (Fibre) (not all connections available yet)",
+          "color": "#00e5ff",
+          "type": "line",
+          "width": 1.5,
+          "url": "data/subsea_data_cables.geojson",
+          "preload": false,
+          "v9_data": {
+            "source_id": "subsea_data_cables",
+            "parquet_path": "partitions/subsea_data_cables.parquet",
+            "phase": "p4_rail_global",
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF"
+          }
+        }
+      ]
+    },
+    {
+      "group": "Global Supply Chain & Chokepoints",
+      "layers": [
+        {
+          "id": "global_ports_major",
+          "label": "Major Ports (Deep Water/Ferry)",
+          "color": "#00bfff",
+          "type": "point",
+          "radius": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "get",
+              "area_ha"
+            ],
+            0,
+            8,
+            80,
+            10,
+            500,
+            16
+          ],
+          "url": "data/global_ports.geojson",
+          "filter": [
+            "==",
+            [
+              "get",
+              "type"
+            ],
+            "Major Cargo/Container Port"
+          ],
+          "preload": false,
+          "v9_data": {
+            "source_id": "global_ports",
+            "parquet_path": "partitions/global_ports.parquet",
+            "phase": "p4_rail_global",
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF"
+          }
+        },
+        {
+          "id": "global_ports_minor",
+          "label": "Inland / Minor Harbours",
+          "color": "#0055aa",
+          "type": "point",
+          "radius": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "get",
+              "area_ha"
+            ],
+            0,
+            2.5,
+            50,
+            4.5,
+            200,
+            6
+          ],
+          "url": "data/global_ports.geojson",
+          "filter": [
+            "==",
+            [
+              "get",
+              "type"
+            ],
+            "Minor/Local Harbour"
+          ],
+          "preload": false,
+          "v9_data": {
+            "source_id": "global_ports",
+            "parquet_path": "partitions/global_ports.parquet",
+            "phase": "p4_rail_global",
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF"
+          }
+        },
+        {
+          "id": "global_hydrocarbons",
+          "label": "Global Hydrocarbons (Oil, Gas, LNG)",
+          "color": "#ff3300",
+          "type": "point",
+          "radius": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "get",
+              "area_ha"
+            ],
+            0,
+            4,
+            100,
+            8,
+            1000,
+            15
+          ],
+          "url": "data/global_hydrocarbons.geojson",
+          "preload": false,
+          "v9_data": {
+            "source_id": "global_hydrocarbons",
+            "parquet_path": "partitions/global_hydrocarbons.parquet",
+            "phase": "p4_rail_global",
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF"
+          }
+        }
+      ]
+    },
+    {
+      "group": "Highway Infrastructure",
+      "layers": [
+        {
+          "id": "motorways",
+          "label": "Motorways",
+          "color": "#0054ff",
+          "type": "line",
+          "width": 2.5,
+          "url": "/uk_motorways.geojson",
+          "preload": false,
+          "v9_data": {
+            "source_id": "uk_motorways",
+            "parquet_path": "partitions/uk_motorways.parquet",
+            "phase": "p4_motorways",
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF"
+          }
+        },
+        {
+          "id": "trunk_roads",
+          "label": "Major A-Roads (Trunk)",
+          "color": "#00cc00",
+          "type": "line",
+          "width": 1.8,
+          "url": "/uk_trunk_roads.geojson",
+          "preload": false,
+          "v9_data": {
+            "source_id": "uk_trunk_roads",
+            "parquet_path": "partitions/uk_trunk_roads.parquet",
+            "phase": "p4_trunk_roads",
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF"
+          }
+        },
+        {
+          "id": "primary_roads",
+          "label": "A-Roads (Primary)",
+          "color": "#ff4400",
+          "type": "line",
+          "width": 1.2,
+          "url": "/uk_primary_roads.geojson",
+          "preload": false,
+          "v9_data": {
+            "source_id": "uk_primary_roads",
+            "parquet_path": "partitions/uk_primary_roads.parquet",
+            "phase": "p4_primary_roads",
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF"
+          }
+        },
+        {
+          "id": "motorway_services",
+          "label": "Motorway Services",
+          "color": "#ff00ff",
+          "type": "point",
+          "radius": 5.5,
+          "url": "data/motorway_services.geojson",
+          "preload": false,
+          "v9_data": {
+            "source_id": "motorway_services",
+            "parquet_path": "partitions/motorway_services.parquet",
+            "phase": "p2_lazy_context",
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF"
+          }
+        }
+      ]
+    },
+    {
+      "group": "EV (GeoJSON)",
+      "layers": [
+        {
+          "id": "ev",
+          "label": "EV Rapid (100kW+)",
+          "color": "#00ff88",
+          "type": "point",
+          "radius": 5,
+          "url": "data/ev_chargers.geojson",
+          "preload": false,
+          "v9_data": {
+            "source_id": "ev_chargers",
+            "parquet_path": "partitions/ev_chargers.parquet",
+            "phase": "p3_official_rebuild",
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF"
+          }
+        }
+      ]
+    },
+    {
+      "group": "Heavy Industry",
+      "layers": [
+        {
+          "id": "naei_co2",
+          "label": "Major Industrial Sites",
+          "color": "#ff4400",
+          "type": "point",
+          "url": "/heavy_emitters_uk.json",
+          "preload": false,
+          "v9_data": {
+            "source_id": "heavy_emitters_uk",
+            "parquet_path": "partitions/heavy_emitters_uk.parquet",
+            "phase": "p3_official_rebuild",
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF"
+          }
+        }
+      ]
+    },
+    {
+      "group": "REPD (GeoJSON)",
+      "layers": [
+        {
+          "id": "solar",
+          "label": "Solar PV",
+          "color": "#ffff00",
+          "type": "point",
+          "radius": 8,
+          "url": "/dist/repd_master.json",
+          "filter": [
+            "==",
+            [
+              "get",
+              "tech"
+            ],
+            "solar"
+          ],
+          "preload": false,
+          "v9_data": {
+            "source_id": "repd_master_v8_oracle",
+            "parquet_path": "partitions/repd_master_v8_oracle.parquet",
+            "phase": "p3_official_rebuild",
+            "disposition": "ORACLE_ONLY_REPLACED_BY_OFFICIAL_REPD_V9"
+          }
+        },
+        {
+          "id": "solar_operational",
+          "label": "Solar PV (Operational Only)",
+          "color": "#00ff88",
+          "type": "point",
+          "radius": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "coalesce",
+              [
+                "get",
+                "capacity"
+              ],
+              0
+            ],
+            0,
+            10,
+            10,
+            14,
+            50,
+            18,
+            100,
+            22,
+            200,
+            28,
+            350,
+            35,
+            500,
+            42
+          ],
+          "url": "/dist/repd_master.json",
+          "filter": [
+            "all",
+            [
+              "==",
+              [
+                "get",
+                "tech"
+              ],
+              "solar"
+            ],
+            [
+              "==",
+              [
+                "get",
+                "status"
+              ],
+              "operational"
+            ]
+          ],
+          "preload": false,
+          "v9_data": {
+            "source_id": "repd_master_v8_oracle",
+            "parquet_path": "partitions/repd_master_v8_oracle.parquet",
+            "phase": "p3_official_rebuild",
+            "disposition": "ORACLE_ONLY_REPLACED_BY_OFFICIAL_REPD_V9"
+          }
+        },
+        {
+          "id": "solar_roof",
+          "label": "Solar Roof",
+          "color": "#ffcc00",
+          "type": "point",
+          "radius": 8,
+          "url": "/dist/repd_master.json",
+          "filter": [
+            "==",
+            [
+              "get",
+              "tech"
+            ],
+            "solar_roof"
+          ],
+          "preload": false,
+          "v9_data": {
+            "source_id": "repd_master_v8_oracle",
+            "parquet_path": "partitions/repd_master_v8_oracle.parquet",
+            "phase": "p3_official_rebuild",
+            "disposition": "ORACLE_ONLY_REPLACED_BY_OFFICIAL_REPD_V9"
+          }
+        },
+        {
+          "id": "wind",
+          "label": "Wind",
+          "color": "#00ffff",
+          "type": "point",
+          "radius": 8,
+          "url": "/dist/repd_master.json",
+          "filter": [
+            "==",
+            [
+              "get",
+              "tech"
+            ],
+            "wind"
+          ],
+          "preload": false,
+          "v9_data": {
+            "source_id": "repd_master_v8_oracle",
+            "parquet_path": "partitions/repd_master_v8_oracle.parquet",
+            "phase": "p3_official_rebuild",
+            "disposition": "ORACLE_ONLY_REPLACED_BY_OFFICIAL_REPD_V9"
+          }
+        },
+        {
+          "id": "wind_onshore_operational",
+          "label": "Onshore Wind (Operational Only)",
+          "color": "#00ffcc",
+          "type": "point",
+          "radius": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "coalesce",
+              [
+                "get",
+                "capacity"
+              ],
+              0
+            ],
+            0,
+            8,
+            10,
+            12,
+            50,
+            16,
+            100,
+            20,
+            200,
+            26,
+            350,
+            32,
+            500,
+            38
+          ],
+          "url": "/dist/repd_master.json",
+          "filter": [
+            "all",
+            [
+              "==",
+              [
+                "get",
+                "raw_tech"
+              ],
+              "Wind Onshore"
+            ],
+            [
+              "==",
+              [
+                "get",
+                "status"
+              ],
+              "operational"
+            ]
+          ],
+          "preload": false,
+          "v9_data": {
+            "source_id": "repd_master_v8_oracle",
+            "parquet_path": "partitions/repd_master_v8_oracle.parquet",
+            "phase": "p3_official_rebuild",
+            "disposition": "ORACLE_ONLY_REPLACED_BY_OFFICIAL_REPD_V9"
+          }
+        },
+        {
+          "id": "wind_offshore_operational",
+          "label": "Offshore Wind (Operational Only)",
+          "color": "#0066ff",
+          "type": "point",
+          "radius": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "coalesce",
+              [
+                "get",
+                "capacity"
+              ],
+              0
+            ],
+            0,
+            8,
+            10,
+            12,
+            50,
+            16,
+            100,
+            20,
+            200,
+            26,
+            350,
+            32,
+            500,
+            38
+          ],
+          "url": "/dist/repd_master.json",
+          "filter": [
+            "all",
+            [
+              "==",
+              [
+                "get",
+                "raw_tech"
+              ],
+              "Wind Offshore"
+            ],
+            [
+              "==",
+              [
+                "get",
+                "status"
+              ],
+              "operational"
+            ]
+          ],
+          "preload": false,
+          "v9_data": {
+            "source_id": "repd_master_v8_oracle",
+            "parquet_path": "partitions/repd_master_v8_oracle.parquet",
+            "phase": "p3_official_rebuild",
+            "disposition": "ORACLE_ONLY_REPLACED_BY_OFFICIAL_REPD_V9"
+          }
+        },
+        {
+          "id": "bess",
+          "label": "Battery Storage",
+          "color": "#ffae00",
+          "type": "point",
+          "radius": 8,
+          "url": "/dist/repd_master.json",
+          "filter": [
+            "==",
+            [
+              "get",
+              "tech"
+            ],
+            "bess"
+          ],
+          "preload": false,
+          "v9_data": {
+            "source_id": "repd_master_v8_oracle",
+            "parquet_path": "partitions/repd_master_v8_oracle.parquet",
+            "phase": "p3_official_rebuild",
+            "disposition": "ORACLE_ONLY_REPLACED_BY_OFFICIAL_REPD_V9"
+          }
+        },
+        {
+          "id": "bess_operational",
+          "label": "Battery Storage (Operational Only)",
+          "color": "#ff69b4",
+          "type": "point",
+          "radius": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "coalesce",
+              [
+                "get",
+                "capacity"
+              ],
+              0
+            ],
+            0,
+            8,
+            10,
+            12,
+            50,
+            16,
+            100,
+            20,
+            200,
+            26,
+            350,
+            32,
+            500,
+            38
+          ],
+          "url": "/dist/repd_master.json",
+          "filter": [
+            "all",
+            [
+              "==",
+              [
+                "get",
+                "tech"
+              ],
+              "bess"
+            ],
+            [
+              "==",
+              [
+                "get",
+                "status"
+              ],
+              "operational"
+            ]
+          ],
+          "preload": false,
+          "v9_data": {
+            "source_id": "repd_master_v8_oracle",
+            "parquet_path": "partitions/repd_master_v8_oracle.parquet",
+            "phase": "p3_official_rebuild",
+            "disposition": "ORACLE_ONLY_REPLACED_BY_OFFICIAL_REPD_V9"
+          }
+        },
+        {
+          "id": "biomass",
+          "label": "Biomass & EfW",
+          "color": "#39ff14",
+          "type": "point",
+          "radius": 8,
+          "url": "/dist/repd_master.json",
+          "filter": [
+            "==",
+            [
+              "get",
+              "tech"
+            ],
+            "biomass"
+          ],
+          "preload": false,
+          "v9_data": {
+            "source_id": "repd_master_v8_oracle",
+            "parquet_path": "partitions/repd_master_v8_oracle.parquet",
+            "phase": "p3_official_rebuild",
+            "disposition": "ORACLE_ONLY_REPLACED_BY_OFFICIAL_REPD_V9"
+          }
+        },
+        {
+          "id": "tidal",
+          "label": "Tidal & Wave",
+          "color": "#00bfff",
+          "type": "point",
+          "radius": 8,
+          "url": "/dist/repd_master.json",
+          "filter": [
+            "==",
+            [
+              "get",
+              "tech"
+            ],
+            "tidal"
+          ],
+          "preload": false,
+          "v9_data": {
+            "source_id": "repd_master_v8_oracle",
+            "parquet_path": "partitions/repd_master_v8_oracle.parquet",
+            "phase": "p3_official_rebuild",
+            "disposition": "ORACLE_ONLY_REPLACED_BY_OFFICIAL_REPD_V9"
+          }
+        },
+        {
+          "id": "hydrogen",
+          "label": "Hydrogen",
+          "color": "#ffffff",
+          "type": "point",
+          "radius": 8,
+          "url": "/dist/repd_master.json",
+          "filter": [
+            "==",
+            [
+              "get",
+              "tech"
+            ],
+            "hydrogen"
+          ],
+          "preload": false,
+          "v9_data": {
+            "source_id": "repd_master_v8_oracle",
+            "parquet_path": "partitions/repd_master_v8_oracle.parquet",
+            "phase": "p3_official_rebuild",
+            "disposition": "ORACLE_ONLY_REPLACED_BY_OFFICIAL_REPD_V9"
+          }
+        },
+        {
+          "id": "hydro",
+          "label": "Hydro & Pumped Storage",
+          "color": "#00aaff",
+          "type": "point",
+          "radius": 8,
+          "url": "/dist/repd_master.json",
+          "filter": [
+            "==",
+            [
+              "get",
+              "tech"
+            ],
+            "hydro"
+          ],
+          "preload": false,
+          "v9_data": {
+            "source_id": "repd_master_v8_oracle",
+            "parquet_path": "partitions/repd_master_v8_oracle.parquet",
+            "phase": "p3_official_rebuild",
+            "disposition": "ORACLE_ONLY_REPLACED_BY_OFFICIAL_REPD_V9"
+          }
+        },
+        {
+          "id": "flywheel",
+          "label": "Flywheel",
+          "color": "#ff69b4",
+          "type": "point",
+          "radius": 8,
+          "url": "/dist/repd_master.json",
+          "filter": [
+            "==",
+            [
+              "get",
+              "tech"
+            ],
+            "flywheel"
+          ],
+          "preload": false,
+          "v9_data": {
+            "source_id": "repd_master_v8_oracle",
+            "parquet_path": "partitions/repd_master_v8_oracle.parquet",
+            "phase": "p3_official_rebuild",
+            "disposition": "ORACLE_ONLY_REPLACED_BY_OFFICIAL_REPD_V9"
+          }
+        },
+        {
+          "id": "act",
+          "label": "Advanced Conversion",
+          "color": "#ff6600",
+          "type": "point",
+          "radius": 8,
+          "url": "/dist/repd_master.json",
+          "filter": [
+            "==",
+            [
+              "get",
+              "tech"
+            ],
+            "act"
+          ],
+          "preload": false,
+          "v9_data": {
+            "source_id": "repd_master_v8_oracle",
+            "parquet_path": "partitions/repd_master_v8_oracle.parquet",
+            "phase": "p3_official_rebuild",
+            "disposition": "ORACLE_ONLY_REPLACED_BY_OFFICIAL_REPD_V9"
+          }
+        },
+        {
+          "id": "geothermal",
+          "label": "Geothermal",
+          "color": "#ff3300",
+          "type": "point",
+          "radius": 8,
+          "url": "/dist/repd_master.json",
+          "filter": [
+            "==",
+            [
+              "get",
+              "tech"
+            ],
+            "geothermal"
+          ],
+          "preload": false,
+          "v9_data": {
+            "source_id": "repd_master_v8_oracle",
+            "parquet_path": "partitions/repd_master_v8_oracle.parquet",
+            "phase": "p3_official_rebuild",
+            "disposition": "ORACLE_ONLY_REPLACED_BY_OFFICIAL_REPD_V9"
+          }
+        },
+        {
+          "id": "caes",
+          "label": "Compressed Air Storage",
+          "color": "#88aaff",
+          "type": "point",
+          "radius": 8,
+          "url": "/dist/repd_master.json",
+          "filter": [
+            "==",
+            [
+              "get",
+              "tech"
+            ],
+            "caes"
+          ],
+          "preload": false,
+          "v9_data": {
+            "source_id": "repd_master_v8_oracle",
+            "parquet_path": "partitions/repd_master_v8_oracle.parquet",
+            "phase": "p3_official_rebuild",
+            "disposition": "ORACLE_ONLY_REPLACED_BY_OFFICIAL_REPD_V9"
+          }
+        }
+      ]
+    }
+  ]
+}

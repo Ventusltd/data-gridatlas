@@ -1,0 +1,2095 @@
+{
+  "base_url": "https://ventusltd.github.io/data-gridatlas/202608291237-data-gridatlas/",
+  "candidate_generation": "202608291015",
+  "candidate_manifest_url": "data/manifest.json",
+  "classification": "LIVE_IMMUTABLE_DATA_RELEASE",
+  "current_pointer": false,
+  "data_base_path": "data/",
+  "generation": "202608291237-data-gridatlas",
+  "groups": [
+    {
+      "group": "Topology (GeoJSON)",
+      "layers": [
+        {
+          "available": true,
+          "color": "#0054ff",
+          "default_visible": false,
+          "enabled": true,
+          "id": "400",
+          "label": "400kV",
+          "preload": false,
+          "publishable": true,
+          "snap": true,
+          "type": "line",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": true,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "derived/grid_400kv_snapped.parquet",
+            "parquet_url": "data/derived/grid_400kv_snapped.parquet",
+            "phase": "p1_foundation",
+            "source_id": "grid_400kv"
+          },
+          "width": 2.5
+        },
+        {
+          "available": true,
+          "color": "#ff0000",
+          "default_visible": false,
+          "enabled": true,
+          "id": "275",
+          "label": "275kV",
+          "preload": false,
+          "publishable": true,
+          "snap": true,
+          "type": "line",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": true,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "derived/grid_275kv_snapped.parquet",
+            "parquet_url": "data/derived/grid_275kv_snapped.parquet",
+            "phase": "p1_foundation",
+            "source_id": "grid_275kv"
+          },
+          "width": 2
+        },
+        {
+          "available": true,
+          "color": "#ff9900",
+          "default_visible": false,
+          "enabled": true,
+          "id": "220",
+          "label": "220kV",
+          "preload": false,
+          "publishable": true,
+          "snap": true,
+          "type": "line",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": true,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "derived/grid_220kv_snapped.parquet",
+            "parquet_url": "data/derived/grid_220kv_snapped.parquet",
+            "phase": "p1_foundation",
+            "source_id": "grid_220kv"
+          },
+          "width": 1.8
+        },
+        {
+          "available": true,
+          "color": "#00cc00",
+          "default_visible": false,
+          "enabled": true,
+          "id": "132",
+          "label": "132kV",
+          "preload": false,
+          "publishable": true,
+          "snap": true,
+          "type": "line",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": true,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "derived/grid_132kv_snapped.parquet",
+            "parquet_url": "data/derived/grid_132kv_snapped.parquet",
+            "phase": "p1_foundation",
+            "source_id": "grid_132kv"
+          },
+          "width": 1.5
+        },
+        {
+          "available": true,
+          "color": "#b200ff",
+          "default_visible": false,
+          "enabled": true,
+          "id": "66",
+          "label": "66kV",
+          "preload": false,
+          "publishable": true,
+          "snap": true,
+          "type": "line",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": true,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "derived/grid_66kv_snapped.parquet",
+            "parquet_url": "data/derived/grid_66kv_snapped.parquet",
+            "phase": "p1_foundation",
+            "source_id": "grid_66kv"
+          },
+          "width": 1.2
+        },
+        {
+          "available": true,
+          "color": "#ff00ff",
+          "default_visible": false,
+          "enabled": true,
+          "id": "11kv",
+          "label": "11kV (UKPN)",
+          "minzoom": 13.5,
+          "preload": false,
+          "publishable": true,
+          "radius": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            13.5,
+            4,
+            15,
+            8,
+            18,
+            18
+          ],
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "QUARANTINED_SYNTHETIC_UKPN_11KV_IDENTITY",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/grid_11kv_ukpn.parquet",
+            "parquet_url": "data/partitions/grid_11kv_ukpn.parquet",
+            "phase": "quarantine",
+            "source_id": "grid_11kv_ukpn"
+          }
+        },
+        {
+          "available": true,
+          "color": "#ffffff",
+          "default_visible": false,
+          "enabled": true,
+          "id": "subs",
+          "isSubs": true,
+          "label": "Subs",
+          "preload": false,
+          "publishable": true,
+          "radius": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            5,
+            3,
+            10,
+            5,
+            14,
+            10,
+            18,
+            22
+          ],
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": true,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/grid_substations.parquet",
+            "parquet_url": "data/partitions/grid_substations.parquet",
+            "phase": "p1_foundation",
+            "source_id": "grid_substations"
+          }
+        }
+      ]
+    },
+    {
+      "group": "Assets (GeoJSON)",
+      "layers": [
+        {
+          "available": true,
+          "color": "#39ff14",
+          "default_visible": false,
+          "enabled": true,
+          "filter": [
+            "==",
+            [
+              "get",
+              "source"
+            ],
+            "nuclear"
+          ],
+          "id": "nuc",
+          "label": "Nuclear",
+          "preload": false,
+          "publishable": true,
+          "radius": 4.5,
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": true,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/power_plants.parquet",
+            "parquet_url": "data/partitions/power_plants.parquet",
+            "phase": "p1_foundation",
+            "source_id": "power_plants"
+          }
+        },
+        {
+          "available": true,
+          "color": "#ff4500",
+          "default_visible": false,
+          "enabled": true,
+          "filter": [
+            "!=",
+            [
+              "get",
+              "source"
+            ],
+            "nuclear"
+          ],
+          "id": "gas",
+          "label": "Gas",
+          "preload": false,
+          "publishable": true,
+          "radius": 4.5,
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": true,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/power_plants.parquet",
+            "parquet_url": "data/partitions/power_plants.parquet",
+            "phase": "p1_foundation",
+            "source_id": "power_plants"
+          }
+        },
+        {
+          "available": true,
+          "color": "#ff6600",
+          "default_visible": false,
+          "enabled": true,
+          "id": "ind",
+          "label": "Industry",
+          "preload": false,
+          "publishable": true,
+          "radius": 4.5,
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": true,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "QUARANTINED_OUTPUT_NOT_REPRODUCIBLE_FROM_ADJACENT_FETCHER",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/industrial_offtakers.parquet",
+            "parquet_url": "data/partitions/industrial_offtakers.parquet",
+            "phase": "quarantine",
+            "source_id": "industrial_offtakers"
+          }
+        },
+        {
+          "available": true,
+          "color": "#00ffff",
+          "default_visible": false,
+          "enabled": true,
+          "id": "dc",
+          "label": "Data Ctrs",
+          "preload": false,
+          "publishable": true,
+          "radius": 4.5,
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": true,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/datacentres.parquet",
+            "parquet_url": "data/partitions/datacentres.parquet",
+            "phase": "p1_foundation",
+            "source_id": "datacentres"
+          }
+        },
+        {
+          "available": true,
+          "color": "#ff00ff",
+          "default_visible": false,
+          "enabled": true,
+          "id": "air",
+          "label": "Airports",
+          "preload": false,
+          "publishable": true,
+          "radius": 4.5,
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": true,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/airports.parquet",
+            "parquet_url": "data/partitions/airports.parquet",
+            "phase": "p1_foundation",
+            "source_id": "airports"
+          }
+        },
+        {
+          "available": true,
+          "color": "#ffd700",
+          "default_visible": false,
+          "enabled": true,
+          "id": "rail",
+          "label": "Railways",
+          "preload": false,
+          "publishable": true,
+          "radius": 4.5,
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": true,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/railways.parquet",
+            "parquet_url": "data/partitions/railways.parquet",
+            "phase": "p1_foundation",
+            "source_id": "railways"
+          }
+        }
+      ]
+    },
+    {
+      "group": "Supermarkets (GeoJSON)",
+      "layers": [
+        {
+          "available": true,
+          "color": "#ee1c2e",
+          "default_visible": false,
+          "enabled": true,
+          "id": "tesco",
+          "label": "Tesco",
+          "preload": false,
+          "publishable": true,
+          "radius": 4.5,
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/supermarkets_tesco.parquet",
+            "parquet_url": "data/partitions/supermarkets_tesco.parquet",
+            "phase": "p2_lazy_context",
+            "source_id": "supermarkets_tesco"
+          }
+        },
+        {
+          "available": true,
+          "color": "#ff8200",
+          "default_visible": false,
+          "enabled": true,
+          "id": "sainsburys",
+          "label": "Sainsbury's",
+          "preload": false,
+          "publishable": true,
+          "radius": 4.5,
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/supermarkets_sainsburys.parquet",
+            "parquet_url": "data/partitions/supermarkets_sainsburys.parquet",
+            "phase": "p2_lazy_context",
+            "source_id": "supermarkets_sainsburys"
+          }
+        },
+        {
+          "available": true,
+          "color": "#78be20",
+          "default_visible": false,
+          "enabled": true,
+          "id": "asda",
+          "label": "Asda",
+          "preload": false,
+          "publishable": true,
+          "radius": 4.5,
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/supermarkets_asda.parquet",
+            "parquet_url": "data/partitions/supermarkets_asda.parquet",
+            "phase": "p2_lazy_context",
+            "source_id": "supermarkets_asda"
+          }
+        },
+        {
+          "available": true,
+          "color": "#ffd700",
+          "default_visible": false,
+          "enabled": true,
+          "id": "morrisons",
+          "label": "Morrisons",
+          "preload": false,
+          "publishable": true,
+          "radius": 4.5,
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/supermarkets_morrisons.parquet",
+            "parquet_url": "data/partitions/supermarkets_morrisons.parquet",
+            "phase": "p2_lazy_context",
+            "source_id": "supermarkets_morrisons"
+          }
+        },
+        {
+          "available": true,
+          "color": "#003087",
+          "default_visible": false,
+          "enabled": true,
+          "id": "aldi",
+          "label": "Aldi",
+          "preload": false,
+          "publishable": true,
+          "radius": 4.5,
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/supermarkets_aldi.parquet",
+            "parquet_url": "data/partitions/supermarkets_aldi.parquet",
+            "phase": "p2_lazy_context",
+            "source_id": "supermarkets_aldi"
+          }
+        },
+        {
+          "available": true,
+          "color": "#0050aa",
+          "default_visible": false,
+          "enabled": true,
+          "id": "lidl",
+          "label": "Lidl",
+          "preload": false,
+          "publishable": true,
+          "radius": 4.5,
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/supermarkets_lidl.parquet",
+            "parquet_url": "data/partitions/supermarkets_lidl.parquet",
+            "phase": "p2_lazy_context",
+            "source_id": "supermarkets_lidl"
+          }
+        },
+        {
+          "available": true,
+          "color": "#7ab800",
+          "default_visible": false,
+          "enabled": true,
+          "id": "waitrose",
+          "label": "Waitrose",
+          "preload": false,
+          "publishable": true,
+          "radius": 4.5,
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/supermarkets_waitrose.parquet",
+            "parquet_url": "data/partitions/supermarkets_waitrose.parquet",
+            "phase": "p2_lazy_context",
+            "source_id": "supermarkets_waitrose"
+          }
+        },
+        {
+          "available": true,
+          "color": "#009b77",
+          "default_visible": false,
+          "enabled": true,
+          "id": "ms",
+          "label": "M&S Food",
+          "preload": false,
+          "publishable": true,
+          "radius": 4.5,
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/supermarkets_ms.parquet",
+            "parquet_url": "data/partitions/supermarkets_ms.parquet",
+            "phase": "p2_lazy_context",
+            "source_id": "supermarkets_ms"
+          }
+        },
+        {
+          "available": true,
+          "color": "#00b1a9",
+          "default_visible": false,
+          "enabled": true,
+          "id": "coop",
+          "label": "Co-op",
+          "preload": false,
+          "publishable": true,
+          "radius": 4.5,
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/supermarkets_coop.parquet",
+            "parquet_url": "data/partitions/supermarkets_coop.parquet",
+            "phase": "p2_lazy_context",
+            "source_id": "supermarkets_coop"
+          }
+        },
+        {
+          "available": true,
+          "color": "#005daa",
+          "default_visible": false,
+          "enabled": true,
+          "id": "costco",
+          "label": "Costco",
+          "preload": false,
+          "publishable": true,
+          "radius": 4.5,
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/supermarkets_costco.parquet",
+            "parquet_url": "data/partitions/supermarkets_costco.parquet",
+            "phase": "p2_lazy_context",
+            "source_id": "supermarkets_costco"
+          }
+        },
+        {
+          "available": true,
+          "color": "#6d2077",
+          "default_visible": false,
+          "enabled": true,
+          "id": "booths",
+          "label": "Booths",
+          "preload": false,
+          "publishable": true,
+          "radius": 4.5,
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/supermarkets_booths.parquet",
+            "parquet_url": "data/partitions/supermarkets_booths.parquet",
+            "phase": "p2_lazy_context",
+            "source_id": "supermarkets_booths"
+          }
+        }
+      ]
+    },
+    {
+      "group": "Transit (GeoJSON)",
+      "layers": [
+        {
+          "available": true,
+          "color": "#60399E",
+          "default_visible": false,
+          "enabled": true,
+          "id": "elizabeth",
+          "label": "Elizabeth Line",
+          "preload": false,
+          "publishable": true,
+          "radius": 5,
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/elizabeth_line.parquet",
+            "parquet_url": "data/partitions/elizabeth_line.parquet",
+            "phase": "p2_lazy_context",
+            "source_id": "elizabeth_line"
+          }
+        },
+        {
+          "available": true,
+          "color": "#e32017",
+          "default_visible": false,
+          "enabled": true,
+          "id": "lu",
+          "label": "London Underground",
+          "preload": false,
+          "publishable": true,
+          "radius": 5,
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/london_underground.parquet",
+            "parquet_url": "data/partitions/london_underground.parquet",
+            "phase": "p2_lazy_context",
+            "source_id": "london_underground"
+          }
+        },
+        {
+          "available": true,
+          "color": "#00afad",
+          "default_visible": false,
+          "enabled": true,
+          "filter": [
+            "all",
+            [
+              "in",
+              "Docklands",
+              [
+                "get",
+                "operator"
+              ]
+            ],
+            [
+              "!",
+              [
+                "in",
+                "London Underground",
+                [
+                  "get",
+                  "operator"
+                ]
+              ]
+            ]
+          ],
+          "id": "dlr",
+          "label": "DLR",
+          "preload": false,
+          "publishable": true,
+          "radius": 5,
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "QUARANTINED_GEOMETRY_MISMATCH",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/uk_metros_trams_root.parquet",
+            "parquet_url": "data/partitions/uk_metros_trams_root.parquet",
+            "phase": "quarantine",
+            "source_id": "uk_metros_trams_root"
+          }
+        },
+        {
+          "available": true,
+          "color": "#f3a712",
+          "default_visible": false,
+          "enabled": true,
+          "filter": [
+            "any",
+            [
+              "in",
+              "Tyne",
+              [
+                "get",
+                "operator"
+              ]
+            ],
+            [
+              "in",
+              "Metrolink",
+              [
+                "get",
+                "operator"
+              ]
+            ],
+            [
+              "in",
+              "Supertram",
+              [
+                "get",
+                "operator"
+              ]
+            ],
+            [
+              "in",
+              "Nottingham",
+              [
+                "get",
+                "operator"
+              ]
+            ],
+            [
+              "in",
+              "Edinburgh",
+              [
+                "get",
+                "operator"
+              ]
+            ],
+            [
+              "in",
+              "Midland Metro",
+              [
+                "get",
+                "operator"
+              ]
+            ]
+          ],
+          "id": "metro",
+          "label": "UK Metro",
+          "preload": false,
+          "publishable": true,
+          "radius": 5,
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "QUARANTINED_GEOMETRY_MISMATCH",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/uk_metros_trams_root.parquet",
+            "parquet_url": "data/partitions/uk_metros_trams_root.parquet",
+            "phase": "quarantine",
+            "source_id": "uk_metros_trams_root"
+          }
+        },
+        {
+          "available": true,
+          "color": "#84329b",
+          "default_visible": false,
+          "enabled": true,
+          "filter": [
+            "all",
+            [
+              "==",
+              [
+                "get",
+                "type"
+              ],
+              "Tram / Light Rail"
+            ],
+            [
+              "!",
+              [
+                "in",
+                "London Underground",
+                [
+                  "get",
+                  "operator"
+                ]
+              ]
+            ]
+          ],
+          "id": "tram",
+          "label": "Trams & Light Rail",
+          "preload": false,
+          "publishable": true,
+          "radius": 5,
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "QUARANTINED_GEOMETRY_MISMATCH",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/uk_metros_trams_root.parquet",
+            "parquet_url": "data/partitions/uk_metros_trams_root.parquet",
+            "phase": "quarantine",
+            "source_id": "uk_metros_trams_root"
+          }
+        },
+        {
+          "available": true,
+          "color": "#ff8800",
+          "default_visible": false,
+          "enabled": true,
+          "id": "mainline_rail",
+          "label": "UK Mainline Railways",
+          "preload": false,
+          "publishable": true,
+          "type": "line",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/uk_mainline_railways.parquet",
+            "parquet_url": "data/partitions/uk_mainline_railways.parquet",
+            "phase": "p4_rail_global",
+            "source_id": "uk_mainline_railways"
+          },
+          "width": 1.5
+        },
+        {
+          "available": true,
+          "color": "#2c6fad",
+          "default_visible": false,
+          "enabled": true,
+          "id": "hs2",
+          "label": "HS2",
+          "preload": false,
+          "publishable": true,
+          "radius": 4,
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/hs2.parquet",
+            "parquet_url": "data/partitions/hs2.parquet",
+            "phase": "p2_lazy_context",
+            "source_id": "hs2"
+          }
+        },
+        {
+          "available": true,
+          "color": "#001489",
+          "default_visible": false,
+          "enabled": true,
+          "filter": [
+            "==",
+            [
+              "get",
+              "type"
+            ],
+            "route"
+          ],
+          "id": "eurostar_route",
+          "label": "Eurostar (HS1) UK & Europe",
+          "preload": false,
+          "publishable": true,
+          "type": "line",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/eurostar.parquet",
+            "parquet_url": "data/partitions/eurostar.parquet",
+            "phase": "p4_rail_global",
+            "source_id": "eurostar"
+          },
+          "width": 2.5
+        },
+        {
+          "available": true,
+          "color": "#ffd700",
+          "default_visible": false,
+          "enabled": true,
+          "filter": [
+            "==",
+            [
+              "get",
+              "type"
+            ],
+            "eurostar_station"
+          ],
+          "id": "eurostar_station",
+          "label": "Eurostar Stations UK & Europe",
+          "preload": false,
+          "publishable": true,
+          "radius": 5.5,
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/eurostar.parquet",
+            "parquet_url": "data/partitions/eurostar.parquet",
+            "phase": "p4_rail_global",
+            "source_id": "eurostar"
+          }
+        }
+      ]
+    },
+    {
+      "group": "Leisure & Sports (GeoJSON)",
+      "layers": [
+        {
+          "available": true,
+          "color": "#e5ff00",
+          "default_visible": false,
+          "enabled": true,
+          "id": "stadiums",
+          "label": "Major Stadiums",
+          "preload": false,
+          "publishable": true,
+          "radius": 5.5,
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/stadiums.parquet",
+            "parquet_url": "data/partitions/stadiums.parquet",
+            "phase": "p2_lazy_context",
+            "source_id": "stadiums"
+          }
+        }
+      ]
+    },
+    {
+      "group": "Global Data Backbone",
+      "layers": [
+        {
+          "available": true,
+          "color": "#00e5ff",
+          "default_visible": false,
+          "enabled": true,
+          "id": "subsea_data_cables",
+          "label": "Subsea Data Cables (Fibre) (not all connections available yet)",
+          "preload": false,
+          "publishable": true,
+          "type": "line",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/subsea_data_cables.parquet",
+            "parquet_url": "data/partitions/subsea_data_cables.parquet",
+            "phase": "p4_rail_global",
+            "source_id": "subsea_data_cables"
+          },
+          "width": 1.5
+        }
+      ]
+    },
+    {
+      "group": "Global Supply Chain & Chokepoints",
+      "layers": [
+        {
+          "available": true,
+          "color": "#00bfff",
+          "default_visible": false,
+          "enabled": true,
+          "filter": [
+            "==",
+            [
+              "get",
+              "type"
+            ],
+            "Major Cargo/Container Port"
+          ],
+          "id": "global_ports_major",
+          "label": "Major Ports (Deep Water/Ferry)",
+          "preload": false,
+          "publishable": true,
+          "radius": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "get",
+              "area_ha"
+            ],
+            0,
+            8,
+            80,
+            10,
+            500,
+            16
+          ],
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/global_ports.parquet",
+            "parquet_url": "data/partitions/global_ports.parquet",
+            "phase": "p4_rail_global",
+            "source_id": "global_ports"
+          }
+        },
+        {
+          "available": true,
+          "color": "#0055aa",
+          "default_visible": false,
+          "enabled": true,
+          "filter": [
+            "==",
+            [
+              "get",
+              "type"
+            ],
+            "Minor/Local Harbour"
+          ],
+          "id": "global_ports_minor",
+          "label": "Inland / Minor Harbours",
+          "preload": false,
+          "publishable": true,
+          "radius": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "get",
+              "area_ha"
+            ],
+            0,
+            2.5,
+            50,
+            4.5,
+            200,
+            6
+          ],
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/global_ports.parquet",
+            "parquet_url": "data/partitions/global_ports.parquet",
+            "phase": "p4_rail_global",
+            "source_id": "global_ports"
+          }
+        },
+        {
+          "available": true,
+          "color": "#ff3300",
+          "default_visible": false,
+          "enabled": true,
+          "id": "global_hydrocarbons",
+          "label": "Global Hydrocarbons (Oil, Gas, LNG)",
+          "preload": false,
+          "publishable": true,
+          "radius": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "get",
+              "area_ha"
+            ],
+            0,
+            4,
+            100,
+            8,
+            1000,
+            15
+          ],
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/global_hydrocarbons.parquet",
+            "parquet_url": "data/partitions/global_hydrocarbons.parquet",
+            "phase": "p4_rail_global",
+            "source_id": "global_hydrocarbons"
+          }
+        }
+      ]
+    },
+    {
+      "group": "Highway Infrastructure",
+      "layers": [
+        {
+          "available": true,
+          "color": "#0054ff",
+          "default_visible": false,
+          "enabled": true,
+          "id": "motorways",
+          "label": "Motorways",
+          "preload": false,
+          "publishable": true,
+          "type": "line",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/uk_motorways.parquet",
+            "parquet_url": "data/partitions/uk_motorways.parquet",
+            "phase": "p4_motorways",
+            "source_id": "uk_motorways"
+          },
+          "width": 2.5
+        },
+        {
+          "available": true,
+          "color": "#00cc00",
+          "default_visible": false,
+          "enabled": true,
+          "id": "trunk_roads",
+          "label": "Major A-Roads (Trunk)",
+          "preload": false,
+          "publishable": true,
+          "type": "line",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/uk_trunk_roads.parquet",
+            "parquet_url": "data/partitions/uk_trunk_roads.parquet",
+            "phase": "p4_trunk_roads",
+            "source_id": "uk_trunk_roads"
+          },
+          "width": 1.8
+        },
+        {
+          "available": true,
+          "color": "#ff4400",
+          "default_visible": false,
+          "enabled": true,
+          "id": "primary_roads",
+          "label": "A-Roads (Primary)",
+          "preload": false,
+          "publishable": true,
+          "type": "line",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/uk_primary_roads.parquet",
+            "parquet_url": "data/partitions/uk_primary_roads.parquet",
+            "phase": "p4_primary_roads",
+            "source_id": "uk_primary_roads"
+          },
+          "width": 1.2
+        },
+        {
+          "available": true,
+          "color": "#ff00ff",
+          "default_visible": false,
+          "enabled": true,
+          "id": "motorway_services",
+          "label": "Motorway Services",
+          "preload": false,
+          "publishable": true,
+          "radius": 5.5,
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/motorway_services.parquet",
+            "parquet_url": "data/partitions/motorway_services.parquet",
+            "phase": "p2_lazy_context",
+            "source_id": "motorway_services"
+          }
+        }
+      ]
+    },
+    {
+      "group": "EV (GeoJSON)",
+      "layers": [
+        {
+          "available": true,
+          "color": "#00ff88",
+          "default_visible": false,
+          "enabled": true,
+          "id": "ev",
+          "label": "EV Rapid (100kW+)",
+          "preload": false,
+          "publishable": true,
+          "radius": 5,
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/ev_chargers.parquet",
+            "parquet_url": "data/partitions/ev_chargers.parquet",
+            "phase": "p3_official_rebuild",
+            "source_id": "ev_chargers"
+          }
+        }
+      ]
+    },
+    {
+      "group": "Heavy Industry",
+      "layers": [
+        {
+          "available": true,
+          "color": "#ff4400",
+          "default_visible": false,
+          "enabled": true,
+          "id": "naei_co2",
+          "label": "Major Industrial Sites",
+          "preload": false,
+          "publishable": true,
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/heavy_emitters_uk.parquet",
+            "parquet_url": "data/partitions/heavy_emitters_uk.parquet",
+            "phase": "p3_official_rebuild",
+            "source_id": "heavy_emitters_uk"
+          }
+        }
+      ]
+    },
+    {
+      "group": "REPD (GeoJSON)",
+      "layers": [
+        {
+          "available": true,
+          "color": "#ffff00",
+          "default_visible": false,
+          "enabled": true,
+          "filter": [
+            "==",
+            [
+              "get",
+              "tech"
+            ],
+            "solar"
+          ],
+          "id": "solar",
+          "label": "Solar PV",
+          "preload": false,
+          "publishable": true,
+          "radius": 8,
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "ORACLE_ONLY_REPLACED_BY_OFFICIAL_REPD_V9",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/repd_master_v8_oracle.parquet",
+            "parquet_url": "data/partitions/repd_master_v8_oracle.parquet",
+            "phase": "p3_official_rebuild",
+            "source_id": "repd_master_v8_oracle"
+          }
+        },
+        {
+          "available": true,
+          "color": "#00ff88",
+          "default_visible": false,
+          "enabled": true,
+          "filter": [
+            "all",
+            [
+              "==",
+              [
+                "get",
+                "tech"
+              ],
+              "solar"
+            ],
+            [
+              "==",
+              [
+                "get",
+                "status"
+              ],
+              "operational"
+            ]
+          ],
+          "id": "solar_operational",
+          "label": "Solar PV (Operational Only)",
+          "preload": false,
+          "publishable": true,
+          "radius": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "coalesce",
+              [
+                "get",
+                "capacity"
+              ],
+              0
+            ],
+            0,
+            10,
+            10,
+            14,
+            50,
+            18,
+            100,
+            22,
+            200,
+            28,
+            350,
+            35,
+            500,
+            42
+          ],
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "ORACLE_ONLY_REPLACED_BY_OFFICIAL_REPD_V9",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/repd_master_v8_oracle.parquet",
+            "parquet_url": "data/partitions/repd_master_v8_oracle.parquet",
+            "phase": "p3_official_rebuild",
+            "source_id": "repd_master_v8_oracle"
+          }
+        },
+        {
+          "available": true,
+          "color": "#ffcc00",
+          "default_visible": false,
+          "enabled": true,
+          "filter": [
+            "==",
+            [
+              "get",
+              "tech"
+            ],
+            "solar_roof"
+          ],
+          "id": "solar_roof",
+          "label": "Solar Roof",
+          "preload": false,
+          "publishable": true,
+          "radius": 8,
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "ORACLE_ONLY_REPLACED_BY_OFFICIAL_REPD_V9",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/repd_master_v8_oracle.parquet",
+            "parquet_url": "data/partitions/repd_master_v8_oracle.parquet",
+            "phase": "p3_official_rebuild",
+            "source_id": "repd_master_v8_oracle"
+          }
+        },
+        {
+          "available": true,
+          "color": "#00ffff",
+          "default_visible": false,
+          "enabled": true,
+          "filter": [
+            "==",
+            [
+              "get",
+              "tech"
+            ],
+            "wind"
+          ],
+          "id": "wind",
+          "label": "Wind",
+          "preload": false,
+          "publishable": true,
+          "radius": 8,
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "ORACLE_ONLY_REPLACED_BY_OFFICIAL_REPD_V9",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/repd_master_v8_oracle.parquet",
+            "parquet_url": "data/partitions/repd_master_v8_oracle.parquet",
+            "phase": "p3_official_rebuild",
+            "source_id": "repd_master_v8_oracle"
+          }
+        },
+        {
+          "available": true,
+          "color": "#00ffcc",
+          "default_visible": false,
+          "enabled": true,
+          "filter": [
+            "all",
+            [
+              "==",
+              [
+                "get",
+                "raw_tech"
+              ],
+              "Wind Onshore"
+            ],
+            [
+              "==",
+              [
+                "get",
+                "status"
+              ],
+              "operational"
+            ]
+          ],
+          "id": "wind_onshore_operational",
+          "label": "Onshore Wind (Operational Only)",
+          "preload": false,
+          "publishable": true,
+          "radius": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "coalesce",
+              [
+                "get",
+                "capacity"
+              ],
+              0
+            ],
+            0,
+            8,
+            10,
+            12,
+            50,
+            16,
+            100,
+            20,
+            200,
+            26,
+            350,
+            32,
+            500,
+            38
+          ],
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "ORACLE_ONLY_REPLACED_BY_OFFICIAL_REPD_V9",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/repd_master_v8_oracle.parquet",
+            "parquet_url": "data/partitions/repd_master_v8_oracle.parquet",
+            "phase": "p3_official_rebuild",
+            "source_id": "repd_master_v8_oracle"
+          }
+        },
+        {
+          "available": true,
+          "color": "#0066ff",
+          "default_visible": false,
+          "enabled": true,
+          "filter": [
+            "all",
+            [
+              "==",
+              [
+                "get",
+                "raw_tech"
+              ],
+              "Wind Offshore"
+            ],
+            [
+              "==",
+              [
+                "get",
+                "status"
+              ],
+              "operational"
+            ]
+          ],
+          "id": "wind_offshore_operational",
+          "label": "Offshore Wind (Operational Only)",
+          "preload": false,
+          "publishable": true,
+          "radius": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "coalesce",
+              [
+                "get",
+                "capacity"
+              ],
+              0
+            ],
+            0,
+            8,
+            10,
+            12,
+            50,
+            16,
+            100,
+            20,
+            200,
+            26,
+            350,
+            32,
+            500,
+            38
+          ],
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "ORACLE_ONLY_REPLACED_BY_OFFICIAL_REPD_V9",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/repd_master_v8_oracle.parquet",
+            "parquet_url": "data/partitions/repd_master_v8_oracle.parquet",
+            "phase": "p3_official_rebuild",
+            "source_id": "repd_master_v8_oracle"
+          }
+        },
+        {
+          "available": true,
+          "color": "#ffae00",
+          "default_visible": false,
+          "enabled": true,
+          "filter": [
+            "==",
+            [
+              "get",
+              "tech"
+            ],
+            "bess"
+          ],
+          "id": "bess",
+          "label": "Battery Storage",
+          "preload": false,
+          "publishable": true,
+          "radius": 8,
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "ORACLE_ONLY_REPLACED_BY_OFFICIAL_REPD_V9",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/repd_master_v8_oracle.parquet",
+            "parquet_url": "data/partitions/repd_master_v8_oracle.parquet",
+            "phase": "p3_official_rebuild",
+            "source_id": "repd_master_v8_oracle"
+          }
+        },
+        {
+          "available": true,
+          "color": "#ff69b4",
+          "default_visible": false,
+          "enabled": true,
+          "filter": [
+            "all",
+            [
+              "==",
+              [
+                "get",
+                "tech"
+              ],
+              "bess"
+            ],
+            [
+              "==",
+              [
+                "get",
+                "status"
+              ],
+              "operational"
+            ]
+          ],
+          "id": "bess_operational",
+          "label": "Battery Storage (Operational Only)",
+          "preload": false,
+          "publishable": true,
+          "radius": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "coalesce",
+              [
+                "get",
+                "capacity"
+              ],
+              0
+            ],
+            0,
+            8,
+            10,
+            12,
+            50,
+            16,
+            100,
+            20,
+            200,
+            26,
+            350,
+            32,
+            500,
+            38
+          ],
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "ORACLE_ONLY_REPLACED_BY_OFFICIAL_REPD_V9",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/repd_master_v8_oracle.parquet",
+            "parquet_url": "data/partitions/repd_master_v8_oracle.parquet",
+            "phase": "p3_official_rebuild",
+            "source_id": "repd_master_v8_oracle"
+          }
+        },
+        {
+          "available": true,
+          "color": "#39ff14",
+          "default_visible": false,
+          "enabled": true,
+          "filter": [
+            "==",
+            [
+              "get",
+              "tech"
+            ],
+            "biomass"
+          ],
+          "id": "biomass",
+          "label": "Biomass & EfW",
+          "preload": false,
+          "publishable": true,
+          "radius": 8,
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "ORACLE_ONLY_REPLACED_BY_OFFICIAL_REPD_V9",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/repd_master_v8_oracle.parquet",
+            "parquet_url": "data/partitions/repd_master_v8_oracle.parquet",
+            "phase": "p3_official_rebuild",
+            "source_id": "repd_master_v8_oracle"
+          }
+        },
+        {
+          "available": true,
+          "color": "#00bfff",
+          "default_visible": false,
+          "enabled": true,
+          "filter": [
+            "==",
+            [
+              "get",
+              "tech"
+            ],
+            "tidal"
+          ],
+          "id": "tidal",
+          "label": "Tidal & Wave",
+          "preload": false,
+          "publishable": true,
+          "radius": 8,
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "ORACLE_ONLY_REPLACED_BY_OFFICIAL_REPD_V9",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/repd_master_v8_oracle.parquet",
+            "parquet_url": "data/partitions/repd_master_v8_oracle.parquet",
+            "phase": "p3_official_rebuild",
+            "source_id": "repd_master_v8_oracle"
+          }
+        },
+        {
+          "available": true,
+          "color": "#ffffff",
+          "default_visible": false,
+          "enabled": true,
+          "filter": [
+            "==",
+            [
+              "get",
+              "tech"
+            ],
+            "hydrogen"
+          ],
+          "id": "hydrogen",
+          "label": "Hydrogen",
+          "preload": false,
+          "publishable": true,
+          "radius": 8,
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "ORACLE_ONLY_REPLACED_BY_OFFICIAL_REPD_V9",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/repd_master_v8_oracle.parquet",
+            "parquet_url": "data/partitions/repd_master_v8_oracle.parquet",
+            "phase": "p3_official_rebuild",
+            "source_id": "repd_master_v8_oracle"
+          }
+        },
+        {
+          "available": true,
+          "color": "#00aaff",
+          "default_visible": false,
+          "enabled": true,
+          "filter": [
+            "==",
+            [
+              "get",
+              "tech"
+            ],
+            "hydro"
+          ],
+          "id": "hydro",
+          "label": "Hydro & Pumped Storage",
+          "preload": false,
+          "publishable": true,
+          "radius": 8,
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "ORACLE_ONLY_REPLACED_BY_OFFICIAL_REPD_V9",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/repd_master_v8_oracle.parquet",
+            "parquet_url": "data/partitions/repd_master_v8_oracle.parquet",
+            "phase": "p3_official_rebuild",
+            "source_id": "repd_master_v8_oracle"
+          }
+        },
+        {
+          "available": true,
+          "color": "#ff69b4",
+          "default_visible": false,
+          "enabled": true,
+          "filter": [
+            "==",
+            [
+              "get",
+              "tech"
+            ],
+            "flywheel"
+          ],
+          "id": "flywheel",
+          "label": "Flywheel",
+          "preload": false,
+          "publishable": true,
+          "radius": 8,
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "ORACLE_ONLY_REPLACED_BY_OFFICIAL_REPD_V9",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/repd_master_v8_oracle.parquet",
+            "parquet_url": "data/partitions/repd_master_v8_oracle.parquet",
+            "phase": "p3_official_rebuild",
+            "source_id": "repd_master_v8_oracle"
+          }
+        },
+        {
+          "available": true,
+          "color": "#ff6600",
+          "default_visible": false,
+          "enabled": true,
+          "filter": [
+            "==",
+            [
+              "get",
+              "tech"
+            ],
+            "act"
+          ],
+          "id": "act",
+          "label": "Advanced Conversion",
+          "preload": false,
+          "publishable": true,
+          "radius": 8,
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "ORACLE_ONLY_REPLACED_BY_OFFICIAL_REPD_V9",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/repd_master_v8_oracle.parquet",
+            "parquet_url": "data/partitions/repd_master_v8_oracle.parquet",
+            "phase": "p3_official_rebuild",
+            "source_id": "repd_master_v8_oracle"
+          }
+        },
+        {
+          "available": true,
+          "color": "#ff3300",
+          "default_visible": false,
+          "enabled": true,
+          "filter": [
+            "==",
+            [
+              "get",
+              "tech"
+            ],
+            "geothermal"
+          ],
+          "id": "geothermal",
+          "label": "Geothermal",
+          "preload": false,
+          "publishable": true,
+          "radius": 8,
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "ORACLE_ONLY_REPLACED_BY_OFFICIAL_REPD_V9",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/repd_master_v8_oracle.parquet",
+            "parquet_url": "data/partitions/repd_master_v8_oracle.parquet",
+            "phase": "p3_official_rebuild",
+            "source_id": "repd_master_v8_oracle"
+          }
+        },
+        {
+          "available": true,
+          "color": "#88aaff",
+          "default_visible": false,
+          "enabled": true,
+          "filter": [
+            "==",
+            [
+              "get",
+              "tech"
+            ],
+            "caes"
+          ],
+          "id": "caes",
+          "label": "Compressed Air Storage",
+          "preload": false,
+          "publishable": true,
+          "radius": 8,
+          "type": "point",
+          "url": null,
+          "v9_data": {
+            "candidate_enabled": false,
+            "candidate_preload": false,
+            "candidate_publishable": false,
+            "data_live": true,
+            "disposition": "ORACLE_ONLY_REPLACED_BY_OFFICIAL_REPD_V9",
+            "membership_url": "data/layer_membership.parquet",
+            "parquet_path": "partitions/repd_master_v8_oracle.parquet",
+            "parquet_url": "data/partitions/repd_master_v8_oracle.parquet",
+            "phase": "p3_official_rebuild",
+            "source_id": "repd_master_v8_oracle"
+          }
+        }
+      ]
+    }
+  ],
+  "layer_membership_url": "data/layer_membership.parquet",
+  "layers_url": "data/layers.parquet",
+  "load_policy": {
+    "default_visible_layers": [],
+    "fetch_on_user_enable_only": true,
+    "initial_fetches": 0
+  },
+  "map": {
+    "center": [
+      -3.5,
+      54.0
+    ],
+    "zoom": 4.2
+  },
+  "pages_publication": true,
+  "raw_urls": false,
+  "receipt_semantics": {
+    "browser_initial_fetches": 0,
+    "default_visible": false,
+    "enabled": "selectable",
+    "publishable": "available_in_this_immutable_public_release"
+  },
+  "release": true,
+  "schema": "data-gridatlas.live-browser-layer-registry.v1",
+  "sources_url": "data/sources.parquet"
+}
