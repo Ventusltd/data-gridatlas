@@ -1,0 +1,222 @@
+name: 202608291507 Data Grid Atlas watchdog and router
+run-name: Hourly watchdog ${{ github.sha }}
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/202608291507-watchdog-router.yml'
+      - 'atman/202608291507-current-integrity.py'
+      - 'contracts/202608291507-automation.json'
+      - 'runbooks/202608291507-data-gridatlas-automation.md'
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: data-gridatlas-watchdog-202608291507
+  cancel-in-progress: true
+
+env:
+  AUTOMATION_CONTRACT: contracts/202608291507-automation.json
+  INTEGRITY_WORKFLOW: 202608291507-current-integrity.yml
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+
+jobs:
+  resolve:
+    name: Resolve stable recovery anchor
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    outputs:
+      head_sha: ${{ steps.anchor.outputs.head_sha }}
+      pointer_sha256: ${{ steps.anchor.outputs.pointer_sha256 }}
+    steps:
+      - name: Checkout exact watchdog commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Resolve immutable pointer without rebuilding
+        id: anchor
+        run: |
+          set -eu
+          mkdir -p work
+          python atman/202608291507-current-integrity.py resolve \
+            --repository . \
+            --contract "$AUTOMATION_CONTRACT" \
+            --expected-head "$GITHUB_SHA" \
+            --output work/watchdog-plan.json \
+            --github-output "$GITHUB_OUTPUT"
+
+  probe:
+    name: Probe ${{ matrix.mode }}
+    needs: resolve
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        mode: [data-pointer, data-release, consumer]
+    steps:
+      - name: Checkout exact resolved commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ needs.resolve.outputs.head_sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Run bounded public probe
+        env:
+          EXPECTED_HEAD: ${{ needs.resolve.outputs.head_sha }}
+          EXPECTED_POINTER: ${{ needs.resolve.outputs.pointer_sha256 }}
+          PROBE_MODE: ${{ matrix.mode }}
+        run: |
+          set -eu
+          mkdir -p work
+          python atman/202608291507-current-integrity.py probe \
+            --repository . \
+            --contract "$AUTOMATION_CONTRACT" \
+            --expected-head "$EXPECTED_HEAD" \
+            --expected-pointer-sha256 "$EXPECTED_POINTER" \
+            --mode "$PROBE_MODE" \
+            --output "work/probe-$PROBE_MODE.json"
+
+      - name: Retain watchdog probe
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: data-gridatlas-202608291507-probe-${{ matrix.mode }}-${{ needs.resolve.outputs.head_sha }}
+          path: work/probe-${{ matrix.mode }}.json
+          if-no-files-found: error
+          retention-days: 30
+          compression-level: 0
+
+  route:
+    name: Resume, wait or no-op at exact HEAD
+    needs: [resolve, probe]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      actions: write
+      contents: read
+    steps:
+      - name: Route exact current-integrity run
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EXPECTED_HEAD: ${{ needs.resolve.outputs.head_sha }}
+          EXPECTED_POINTER: ${{ needs.resolve.outputs.pointer_sha256 }}
+        run: |
+          set -eu
+          mkdir -p work
+          python - <<'PY'
+          import json, os
+          from datetime import datetime, timezone
+          from pathlib import Path
+          from urllib.request import Request, urlopen
+
+          repository = os.environ['GITHUB_REPOSITORY']
+          workflow = os.environ['INTEGRITY_WORKFLOW']
+          expected_head = os.environ['EXPECTED_HEAD']
+          expected_pointer = os.environ['EXPECTED_POINTER']
+          token = os.environ['GH_TOKEN']
+          api = f'https://api.github.com/repos/{repository}'
+          headers = {
+              'Accept': 'application/vnd.github+json',
+              'Authorization': f'Bearer {token}',
+              'Content-Type': 'application/json',
+              'X-GitHub-Api-Version': '2022-11-28',
+          }
+
+          def request(url, method='GET', payload=None):
+              body = None if payload is None else json.dumps(payload).encode()
+              with urlopen(Request(url, data=body, headers=headers, method=method), timeout=30) as response:
+                  raw = response.read()
+                  return None if not raw else json.loads(raw)
+
+          runs = request(f'{api}/actions/workflows/{workflow}/runs?branch=main&per_page=100')['workflow_runs']
+          matches = [
+              run for run in runs
+              if run.get('head_sha') == expected_head
+              and run.get('path') == f'.github/workflows/{workflow}'
+          ]
+          matches.sort(key=lambda run: (run.get('created_at', ''), run.get('id', 0)), reverse=True)
+          selected = matches[0] if matches else None
+          result = {
+              'schema': 'data-gridatlas.watchdog-router.v1',
+              'generation': '202608291507',
+              'recorded_at': datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z'),
+              'repository': repository,
+              'head_sha': expected_head,
+              'pointer_sha256': expected_pointer,
+              'selected_run_id': None if selected is None else selected['id'],
+              'selected_run_attempt': None if selected is None else selected['run_attempt'],
+              'main_mutated': False,
+              'rebuild_dispatched': False,
+              'failed': 0,
+          }
+
+          if selected is None:
+              request(
+                  f'{api}/actions/workflows/{workflow}/dispatches',
+                  method='POST',
+                  payload={
+                      'ref': 'main',
+                      'inputs': {
+                          'expected_head_sha': expected_head,
+                          'expected_pointer_sha256': expected_pointer,
+                      },
+                  },
+              )
+              result['classification'] = 'DISPATCHED_CURRENT_INTEGRITY'
+          elif selected['status'] != 'completed':
+              result['classification'] = 'WAITING_FOR_CURRENT_INTEGRITY'
+          elif selected['conclusion'] == 'success':
+              result['classification'] = 'NOOP_ALREADY_VERIFIED'
+          elif selected['run_attempt'] < 3 and selected['conclusion'] in ('failure', 'timed_out'):
+              request(f"{api}/actions/runs/{selected['id']}/rerun-failed-jobs", method='POST', payload={})
+              result['classification'] = 'RERUN_FAILED_INTEGRITY_JOBS'
+          elif selected['run_attempt'] < 3 and selected['conclusion'] in ('cancelled', 'stale'):
+              request(
+                  f'{api}/actions/workflows/{workflow}/dispatches',
+                  method='POST',
+                  payload={
+                      'ref': 'main',
+                      'inputs': {
+                          'expected_head_sha': expected_head,
+                          'expected_pointer_sha256': expected_pointer,
+                      },
+                  },
+              )
+              result['classification'] = 'REDISPATCHED_CANCELLED_INTEGRITY'
+          else:
+              result['classification'] = 'BLOCKED_AFTER_THREE_ATTEMPTS'
+              result['failed'] = 1
+
+          Path('work/watchdog-router.json').write_text(
+              json.dumps(result, sort_keys=True, indent=2) + '\n', encoding='utf-8'
+          )
+          with Path(os.environ['GITHUB_STEP_SUMMARY']).open('a', encoding='utf-8') as handle:
+              handle.write('## Data Grid Atlas watchdog\n\n```json\n')
+              handle.write(json.dumps(result, sort_keys=True, indent=2))
+              handle.write('\n```\n')
+          print(json.dumps(result, sort_keys=True))
+          if result['failed']:
+              raise SystemExit('integrity recovery exhausted; fail closed')
+          PY
+
+      - name: Retain router decision
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: data-gridatlas-202608291507-watchdog-${{ needs.resolve.outputs.head_sha }}-${{ github.run_id }}
+          path: work/watchdog-router.json
+          if-no-files-found: error
+          retention-days: 90
+          compression-level: 0

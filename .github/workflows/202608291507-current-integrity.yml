@@ -1,0 +1,188 @@
+name: 202608291507 Verify current Data Grid Atlas integrity
+run-name: Current integrity ${{ inputs.expected_head_sha || github.sha }}
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/202608291507-current-integrity.yml'
+      - 'atman/202608291507-current-integrity.py'
+      - 'contracts/202608291507-automation.json'
+      - '202608291237-data-gridatlas/**'
+      - 'releases/current.json'
+      - 'state/live-set.json'
+  workflow_dispatch:
+    inputs:
+      expected_head_sha:
+        description: Exact main commit to verify; blank uses the dispatch commit
+        required: false
+        type: string
+      expected_pointer_sha256:
+        description: Exact pointer SHA-256; blank uses the automation contract
+        required: false
+        type: string
+  workflow_call:
+    inputs:
+      expected_head_sha:
+        required: false
+        type: string
+      expected_pointer_sha256:
+        required: false
+        type: string
+
+permissions: {}
+
+concurrency:
+  group: data-gridatlas-current-integrity-${{ inputs.expected_head_sha || github.sha }}
+  cancel-in-progress: false
+
+env:
+  AUTOMATION_CONTRACT: contracts/202608291507-automation.json
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+
+jobs:
+  resolve:
+    name: Resolve exact live pointer and eight-lane plan
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    outputs:
+      head_sha: ${{ steps.plan.outputs.head_sha }}
+      pointer_sha256: ${{ steps.plan.outputs.pointer_sha256 }}
+      release_id: ${{ steps.plan.outputs.release_id }}
+      matrix: ${{ steps.plan.outputs.matrix }}
+    steps:
+      - name: Checkout exact triggering commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ inputs.expected_head_sha || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Resolve immutable data, pointer and balanced lanes
+        id: plan
+        env:
+          EXPECTED_HEAD: ${{ inputs.expected_head_sha || github.sha }}
+          EXPECTED_POINTER: ${{ inputs.expected_pointer_sha256 || '' }}
+        run: |
+          set -eu
+          mkdir -p work
+          python atman/202608291507-current-integrity.py resolve \
+            --repository . \
+            --contract "$AUTOMATION_CONTRACT" \
+            --expected-head "$EXPECTED_HEAD" \
+            --expected-pointer-sha256 "$EXPECTED_POINTER" \
+            --output work/current-integrity-plan.json \
+            --github-output "$GITHUB_OUTPUT"
+
+      - name: Retain exact integrity plan
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: data-gridatlas-202608291507-plan-${{ steps.plan.outputs.head_sha }}
+          path: work/current-integrity-plan.json
+          if-no-files-found: error
+          retention-days: 90
+          compression-level: 0
+
+  integrity_shard:
+    name: Lane ${{ matrix.lane }} ${{ matrix.role }}
+    needs: resolve
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      max-parallel: 8
+      matrix: ${{ fromJSON(needs.resolve.outputs.matrix) }}
+    steps:
+      - name: Checkout exact resolved commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ needs.resolve.outputs.head_sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Configure pinned Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12.13'
+
+      - name: Install locked DuckDB engine
+        run: python -m pip install --disable-pip-version-check --require-hashes -r requirements.lock
+
+      - name: Verify local Parquet, DuckDB, privacy, CORS and ranges
+        env:
+          EXPECTED_HEAD: ${{ needs.resolve.outputs.head_sha }}
+          EXPECTED_POINTER: ${{ needs.resolve.outputs.pointer_sha256 }}
+          LANE: ${{ matrix.lane }}
+          ROLE: ${{ matrix.role }}
+        run: |
+          set -eu
+          mkdir -p work
+          python atman/202608291507-current-integrity.py shard \
+            --repository . \
+            --contract "$AUTOMATION_CONTRACT" \
+            --expected-head "$EXPECTED_HEAD" \
+            --expected-pointer-sha256 "$EXPECTED_POINTER" \
+            --lane "$LANE" \
+            --role "$ROLE" \
+            --output "work/shard-$LANE.json"
+
+      - name: Retain lane attestation
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: data-gridatlas-202608291507-shard-${{ matrix.lane }}-${{ needs.resolve.outputs.head_sha }}
+          path: |
+            work/shard-${{ matrix.lane }}.json
+            work/full-release-verification.json
+          if-no-files-found: error
+          retention-days: 90
+          compression-level: 0
+
+  reduce:
+    name: Reduce all eight exact attestations
+    needs: [resolve, integrity_shard]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout exact resolved commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ needs.resolve.outputs.head_sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Download all lane attestations
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131
+        with:
+          pattern: data-gridatlas-202608291507-shard-*-${{ needs.resolve.outputs.head_sha }}
+          path: work/shards
+          merge-multiple: true
+
+      - name: Prove complete non-overlapping release closure
+        env:
+          EXPECTED_HEAD: ${{ needs.resolve.outputs.head_sha }}
+          EXPECTED_POINTER: ${{ needs.resolve.outputs.pointer_sha256 }}
+        run: |
+          set -eu
+          python atman/202608291507-current-integrity.py reduce \
+            --repository . \
+            --contract "$AUTOMATION_CONTRACT" \
+            --expected-head "$EXPECTED_HEAD" \
+            --expected-pointer-sha256 "$EXPECTED_POINTER" \
+            --attestations work/shards \
+            --output work/current-integrity-attestation.json
+          cat work/current-integrity-attestation.json >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Retain current-integrity attestation
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: data-gridatlas-202608291507-current-integrity-${{ needs.resolve.outputs.head_sha }}
+          path: work/current-integrity-attestation.json
+          if-no-files-found: error
+          retention-days: 90
+          compression-level: 0

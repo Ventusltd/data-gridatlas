@@ -1,0 +1,78 @@
+name: 202608291507 Guard Data Grid Atlas automation contract
+run-name: Automation contract guard ${{ github.event.pull_request.head.sha || github.sha }}
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/**'
+      - 'atman/**'
+      - 'compiler/**'
+      - 'contracts/**'
+      - 'schemas/**'
+      - '202608291237-data-gridatlas/**'
+      - 'releases/current.json'
+      - 'state/live-set.json'
+      - 'requirements.lock'
+      - 'runbooks/**'
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/**'
+      - 'atman/**'
+      - 'compiler/**'
+      - 'contracts/**'
+      - 'schemas/**'
+      - '202608291237-data-gridatlas/**'
+      - 'releases/current.json'
+      - 'state/live-set.json'
+      - 'requirements.lock'
+      - 'runbooks/**'
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: data-gridatlas-contract-guard-${{ github.event.pull_request.head.sha || github.sha }}
+  cancel-in-progress: false
+
+env:
+  AUTOMATION_CONTRACT: contracts/202608291507-automation.json
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+
+jobs:
+  guard:
+    name: Guard source, pins, permissions and immutable boundary
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout exact push or pull-request head
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Verify bounded read-only automation successor
+        env:
+          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          set -eu
+          mkdir -p work
+          python atman/202608291507-current-integrity.py guard \
+            --repository . \
+            --contract "$AUTOMATION_CONTRACT" \
+            --expected-head "$EXPECTED_HEAD" \
+            --output work/automation-contract-guard.json
+          cat work/automation-contract-guard.json >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Retain read-only guard attestation
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: data-gridatlas-202608291507-contract-guard-${{ github.event.pull_request.head.sha || github.sha }}
+          path: work/automation-contract-guard.json
+          if-no-files-found: error
+          retention-days: 90
+          compression-level: 0

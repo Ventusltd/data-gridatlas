@@ -1,0 +1,109 @@
+{
+  "schema": "data-gridatlas.automation-contract.v1",
+  "generation": "202608291507",
+  "incepted_at": "2026-08-29T15:07:12+01:00",
+  "baseline_reconciled_at": "2026-08-29T15:28:08+01:00",
+  "repository": "Ventusltd/data-gridatlas",
+  "baseline": {
+    "main_commit": "b8668b4d5f34880158aeed2eab5c4a1e678a467d",
+    "main_tree": "1110328db3150b2f9579e53cfcec2560aa5ccfaa",
+    "pre_automation_anchor": "fd1c49eece37d1a8035d8fcdc6c08d20a5cdbd13",
+    "pointer_sha256": "08664a2fab1f2a6442a866b43abe3748fe4418e6bf0892630850a6edfd3f2283",
+    "release_id": "202608291237-data-gridatlas",
+    "release_tree": "727c7fa1533f720b9420fd849be7c04826eba24b",
+    "release_commit": "32459230b958ff6ddbdb24365f56da83ab1cdc93",
+    "release_sha256": "19684ac3e86fac4346fab121a948bab0aa857108564fec5be242484d2baefd06",
+    "manifest_sha256": "3246dbdaa042ae8352ec9b7128cb6c2fe65e4f1aba0534302510661828df2526",
+    "browser_registry_sha256": "9b2169bcfd47bf51f0aaf8350487de19578e32358e191b961385a149a4637e1b",
+    "ledger_sha256": "93c2639b9442244dc3b94b0079d16fdbfd0ba2153dc4601404fcb3fb1fb504d5",
+    "packaging_source_commit": "9f1e9a574d5183da6406f552b65ed4e36eef8f10",
+    "candidate_source_commit": "61096ee84570fd78f7c87b7b4abe25cb521eeba6",
+    "routing_release": {
+      "release_id": "202608291410-repd-routing",
+      "source_commit": "0d3af65d69592340d14acf5be2af5ead123f324a",
+      "release_commit": "b8668b4d5f34880158aeed2eab5c4a1e678a467d",
+      "release_tree": "cef0fffc848fb4b04ed94b0ec1f8cbaed3877a17",
+      "projects_sha256": "c06aedef176d2d38fd135806306a8ef81b4af9994c7be31e8bd760304149f862",
+      "release_sha256": "7b6936713e83afc52b9a897eb33cbeffc36d2e0fbf9a40fe782d05f6c7943704",
+      "ledger_sha256": "39767408994820497cc1f2f3c8f062c61ffcd0b5c8268102e16fd16864cc7d2c"
+    }
+  },
+  "consumer": {
+    "repository": "Ventusltd/gridatlas",
+    "pointer_commit": "936a31f703d31bd975af22d7349708d68a143d56",
+    "pointer_sha256": "29628a9ba376b24a72248fac7e9333e0487a33e86ad50d309a7b868932fea4d6",
+    "publication_commit": "1898184ccbf52ca836cf1482362fc5933baf3e8d",
+    "release_id": "202608291239-atlas-v9",
+    "release_manifest_sha256": "7c903a395e14e880bd76bd6e8a11fc68aafc2418bd351467d3538cefe3da90cc",
+    "build_manifest_sha256": "889986bc8fda3c8086525eaa05d75eabd446e6d91d3015c4fa2d27ded6cac7d6",
+    "index_sha256": "023f758ff54bb522f1f4e0de00bfc52e42b5232c5e9d60b362930d3d3d77bfda",
+    "query": {
+      "parameter": "repd_ref",
+      "value": "16135",
+      "postcode": "MK430ZY"
+    },
+    "final_attestation": {
+      "workflow_run_id": 33253661157,
+      "artifact_id": 9715140542,
+      "artifact_digest": "sha256:e80278cdfcf9c8b479f680762185519e8de683f9e5b8297f25c241de61e6c488"
+    }
+  },
+  "closure": {
+    "layers": 60,
+    "sources": 56,
+    "features": 541282,
+    "memberships": 526388,
+    "parquet_files": 65,
+    "parquet_bytes": 98111983,
+    "shards": 8,
+    "raw_geojson_outputs": 0
+  },
+  "runtime": {
+    "runner": "ubuntu-24.04",
+    "python": "3.12.13",
+    "duckdb": "1.3.2",
+    "maximum_job_minutes": 20,
+    "maximum_parallel_shards": 8
+  },
+  "public": {
+    "data_root": "https://ventusltd.github.io/data-gridatlas/",
+    "app_root": "https://ventusltd.github.io/gridatlas/",
+    "cors": "*",
+    "identity_encoding": true,
+    "parquet_prefix": "PAR1",
+    "parquet_suffix": "PAR1"
+  },
+  "workflow": {
+    "watchdog": ".github/workflows/202608291507-watchdog-router.yml",
+    "integrity": ".github/workflows/202608291507-current-integrity.yml",
+    "guard": ".github/workflows/202608291507-contract-guard.yml",
+    "schedule_utc": "17 * * * *",
+    "maximum_rerun_attempts": 3,
+    "integrity_artifact_prefix": "data-gridatlas-202608291507-current-integrity"
+  },
+  "action_pins": {
+    "actions/checkout": "3d3c42e5aac5ba805825da76410c181273ba90b1",
+    "actions/setup-python": "5fda3b95a4ea91299a34e894583c3862153e4b97",
+    "actions/upload-artifact": "043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+    "actions/download-artifact": "37930b1c2abaa49bbe596cd826c3c89aef350131"
+  },
+  "first_checkpoint_files": [
+    ".github/workflows/202608291507-contract-guard.yml",
+    ".github/workflows/202608291507-watchdog-router.yml",
+    ".github/workflows/202608291507-current-integrity.yml",
+    "atman/202608291507-current-integrity.py",
+    "contracts/202608291507-automation.json",
+    "runbooks/202608291507-data-gridatlas-automation.md"
+  ],
+  "rules": {
+    "mutate_main": false,
+    "mutate_pointer": false,
+    "mutate_immutable_release": false,
+    "dispatch_historical_build": false,
+    "dispatch_historical_publish": false,
+    "rebuild_when_pointer_is_verified": false,
+    "resume_matching_failed_integrity_jobs_only": true,
+    "preserve_authority_licence_and_quarantine_labels": true,
+    "cross_repository_write_credentials": false
+  }
+}
