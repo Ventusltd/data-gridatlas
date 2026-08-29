@@ -336,20 +336,64 @@ def validate_contracts(repository):
 def validate_repository(repository, contracts):
     command = ["git", "-C", str(repository), "ls-files", "--cached", "--others", "--exclude-standard", "-z"]
     observed = sorted(filter(None, subprocess.check_output(command).decode().split("\0")))
-    expected = sorted(contracts["boundary"]["expected_tracked_files"])
-    require(observed == expected, f"repository source allowlist mismatch: {observed}")
+    boundary = contracts["boundary"]
+    required = set(boundary["expected_tracked_files"])
+    successors = set(boundary["allowed_successor_files"])
+    release_roots = set(boundary["allowed_live_release_roots"])
+    pointers = set(boundary["allowed_pointer_files"])
+    observed_set = set(observed)
+    require(required <= observed_set, f"required repository source missing: {sorted(required - observed_set)}")
+    source_files = {
+        relative for relative in observed
+        if PurePosixPath(relative).parts[0] not in release_roots and relative not in pointers
+    }
+    require(source_files <= required | successors, f"repository source allowlist mismatch: {sorted(source_files - required - successors)}")
     total = 0
-    forbidden_suffixes = tuple(contracts["boundary"]["forbidden_suffixes"])
-    forbidden_roots = set(contracts["boundary"]["forbidden_roots"])
-    for relative in observed:
+    forbidden_suffixes = tuple(boundary["forbidden_suffixes"])
+    forbidden_roots = set(boundary["forbidden_roots"])
+    for relative in sorted(source_files):
         path = repository / relative
         require(path.is_file() and not path.is_symlink(), f"non-regular source: {relative}")
         size = path.stat().st_size
         total += size
-        require(size <= contracts["boundary"]["maximum_file_bytes"], f"oversize source: {relative}")
+        require(size <= boundary["maximum_file_bytes"], f"oversize source: {relative}")
         require(not relative.lower().endswith(forbidden_suffixes), f"generated/raw source: {relative}")
         require(PurePosixPath(relative).parts[0] not in forbidden_roots, f"forbidden source root: {relative}")
-    require(total <= contracts["boundary"]["maximum_repository_bytes"], f"repository source too large: {total}")
+    require(total <= boundary["maximum_repository_bytes"], f"repository source too large: {total}")
+
+    release_files = [
+        relative for relative in observed
+        if PurePosixPath(relative).parts[0] in release_roots
+    ]
+    release_bytes = 0
+    if release_files:
+        require(len(release_roots) == 1, "ambiguous live release root")
+        release_root = next(iter(release_roots))
+        ledger_path = repository / release_root / "sha256sums.txt"
+        require(ledger_path.is_file(), "live release SHA ledger missing")
+        ledger = {}
+        for line in ledger_path.read_text(encoding="utf-8").splitlines():
+            digest, relative = line.split(maxsplit=1)
+            relative = relative.lstrip("*")
+            require(HEX64.fullmatch(digest) and relative not in ledger, "invalid live release SHA ledger")
+            ledger[relative] = digest
+        expected_release = {f"{release_root}/{relative}" for relative in ledger} | {f"{release_root}/sha256sums.txt"}
+        require(set(release_files) == expected_release, "live release file allowlist mismatch")
+        for relative in release_files:
+            path = repository / relative
+            require(path.is_file() and not path.is_symlink(), f"non-regular live release file: {relative}")
+            size = path.stat().st_size
+            release_bytes += size
+            require(size <= boundary["maximum_live_release_file_bytes"], f"oversize live release file: {relative}")
+            if path.name != "sha256sums.txt":
+                logical = PurePosixPath(relative).relative_to(release_root).as_posix()
+                require(hashlib.sha256(path.read_bytes()).hexdigest() == ledger[logical], f"live release SHA mismatch: {relative}")
+        require(release_bytes <= boundary["maximum_live_release_bytes"], "live release repository budget exceeded")
+
+    for relative in sorted(observed_set & pointers):
+        pointer = load_json(repository / relative)
+        require(pointer.get("generation") == "202608291237", f"pointer generation mismatch: {relative}")
+        require(pointer.get("release_path") == "202608291237-data-gridatlas/", f"pointer release mismatch: {relative}")
 
     historical = (repository / ".github/workflows/202608290904-bootstrap-verify-data-gridatlas.yml").read_text(encoding="utf-8")
     historical_trigger_lines = {
@@ -385,7 +429,16 @@ def validate_repository(repository, contracts):
     require(current.count("persist-credentials: false") == 3, "checkout credential persistence drift")
     require(current.count("--require-hashes -r requirements.lock") == 3, "hashed install policy drift")
     require(current.count("github.workflow_sha") == 5, "workflow execution identity gap")
-    require("push:\n    branches: [main]\n  workflow_dispatch:" in current, "all-main-push boundary trigger missing")
+    require("push:\n    branches: [main]\n    paths:" in current, "timestamped candidate trigger missing")
+    for required_trigger in (
+        "'.github/workflows/202608291015-build-v8-transplant-candidate.yml'",
+        "'atman/202608291015-verify-v8-transplant.py'",
+        "'compiler/202608291015-build-v8-transplant.py'",
+        "'contracts/202608291015-repository-boundary.json'",
+        "'contracts/202608291015-v8-transplant-plan.json'",
+        "'schemas/202608291015-v8-transplant-parquet.json'",
+    ):
+        require(required_trigger in current, f"candidate trigger input missing: {required_trigger}")
     require("REJECTED-data-gridatlas-202608291015-${{ inputs.expected_source_sha || github.sha }}" in current, "rejected evidence classification missing")
     require("if: steps.atman.outcome == 'success' && steps.final_cas.outcome == 'success'" in current, "accepted artifact gate missing")
     require(
@@ -393,7 +446,7 @@ def validate_repository(repository, contracts):
         == "duckdb==1.3.2 \\\n    --hash=sha256:36abdfe0d1704fe09b08d233165f312dad7d7d0ecaaca5fb3bb869f4838a2d0b\n",
         "dependency lock drift",
     )
-    return {"tracked_files": len(observed), "tracked_bytes": total}
+    return {"tracked_files": len(observed), "tracked_bytes": total, "live_release_bytes": release_bytes}
 
 
 def parquet_compression(connection, path):

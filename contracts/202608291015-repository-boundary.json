@@ -22,10 +22,25 @@
     "requirements.lock",
     "schemas/202608291015-v8-transplant-parquet.json"
   ],
+  "allowed_successor_files": [
+    ".github/workflows/202608291237-publish-live-data-gridatlas.yml",
+    "atman/202608291237-verify-live-data-release.py",
+    "compiler/202608291237-materialise-live-data-release.py",
+    "contracts/202608291237-live-data-release.json"
+  ],
+  "allowed_live_release_roots": [
+    "202608291237-data-gridatlas"
+  ],
+  "allowed_pointer_files": [
+    "releases/current.json",
+    "state/live-set.json"
+  ],
   "maximum_file_bytes": 1000000,
   "maximum_repository_bytes": 3000000,
+  "maximum_live_release_file_bytes": 40000000,
+  "maximum_live_release_bytes": 150000000,
   "forbidden_suffixes": [".geojson", ".csv", ".tsv", ".xlsx", ".parquet", ".duckdb", ".zip", ".tar", ".gz"],
   "forbidden_roots": ["data", "dist", "releases", "state", "work", "build-a", "build-b", "build-cache", "build-evidence"],
   "historical_workflow_rule": "Timestamped predecessor workflows may trigger only on their own timestamped source inputs.",
-  "candidate_rule": "Generated V8 parity payloads are Actions artifacts only; no source-tree payload or Pages data publication."
+  "candidate_rule": "Generation 202608291015 remains immutable candidate evidence. A separately verified 202608291237 timestamp folder may publish its exact Parquet closure; movable pointers require an exact live gridatlas consumer receipt."
 }

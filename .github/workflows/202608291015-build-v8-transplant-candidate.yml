@@ -3,6 +3,21 @@ name: 202608291015 Build full V8 transplant candidate
 on:
   push:
     branches: [main]
+    paths:
+      - '.github/workflows/202608291015-build-v8-transplant-candidate.yml'
+      - '.gitignore'
+      - 'README.md'
+      - 'requirements.lock'
+      - 'atman/202608291015-verify-v8-transplant.py'
+      - 'compiler/202608291015-build-v8-transplant.py'
+      - 'contracts/202608290904-v8-dependency-ledger.json'
+      - 'contracts/202608290904-v8-file-ledger.json'
+      - 'contracts/202608290904-v8-quarantine.json'
+      - 'contracts/202608291015-repository-boundary.json'
+      - 'contracts/202608291015-v8-layer-config.json'
+      - 'contracts/202608291015-v8-runtime-dependencies.json'
+      - 'contracts/202608291015-v8-transplant-plan.json'
+      - 'schemas/202608291015-v8-transplant-parquet.json'
   workflow_dispatch:
     inputs:
       expected_source_sha:
