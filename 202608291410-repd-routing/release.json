@@ -1,0 +1,47 @@
+{
+  "classification": "IMMUTABLE_REPD_ROUTING_RELEASE",
+  "consumer_contract": {
+    "decode_geometry_status": true,
+    "existing_layer_release_pointer_unchanged": true,
+    "identity_key": "repd_ref",
+    "select_only_geometry_status_valid": true
+  },
+  "coverage": {
+    "map_identities": 7652,
+    "map_set_sha256": "4199f74165ed049c382ae322c5b5577a06a01c72dde0df9711a0bc368a918834",
+    "no_map_identities": 28,
+    "no_map_set_sha256": "4e172523b8b352c73f98e7533cbb814559dd5d1dd9c2c04d1ee3904df26303e6",
+    "projects": 7680,
+    "unique_numeric_repd_refs": 7680
+  },
+  "files": {
+    "index": {
+      "bytes": 913,
+      "path": "index.html",
+      "sha256": "2623b9a6b4033cee8a95d582e9f1f709367b9773756a8d9874dbcb2f395a6eaa"
+    },
+    "projects": {
+      "bytes": 979338,
+      "path": "projects.json",
+      "sha256": "c06aedef176d2d38fd135806306a8ef81b4af9994c7be31e8bd760304149f862"
+    }
+  },
+  "generation": "202608291410",
+  "immutable": true,
+  "incepted_at": "2026-08-29T14:10:00Z",
+  "public_url": "https://ventusltd.github.io/data-gridatlas/202608291410-repd-routing/",
+  "release_id": "202608291410-repd-routing",
+  "schema": "data-gridatlas.repd-routing-release.v1",
+  "source": {
+    "bytes": 979338,
+    "commit": "693ccda8e6288d449763ce2b3a4ba16ed7b93fee",
+    "path": "releases/data/202608270055-8ab1807551bc-v8-fast-projects.json",
+    "repository": "Ventusltd/pipelinenews",
+    "role": "WORKING_V8_DEEP_LINK_ROUTING_ORACLE",
+    "schema": "pipelinenews.v8.fast-project-index.v1",
+    "sha256": "c06aedef176d2d38fd135806306a8ef81b4af9994c7be31e8bd760304149f862"
+  },
+  "source_commit": "0d3af65d69592340d14acf5be2af5ead123f324a",
+  "source_committed_at": "2026-08-29T15:24:28+01:00",
+  "source_parent_commit": "fd1c49eece37d1a8035d8fcdc6c08d20a5cdbd13"
+}
