@@ -1,6 +1,9 @@
 work/
 build-a/
 build-b/
+build-cache/
+build-evidence/
+candidate/
 .cache/
 __pycache__/
 *.py[cod]

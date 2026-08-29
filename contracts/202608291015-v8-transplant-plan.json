@@ -1,0 +1,2264 @@
+{
+  "schema": "data-gridatlas.v8-transplant-plan.v1",
+  "generation": "202608291015",
+  "incepted_at": "2026-08-29T10:15:00+01:00",
+  "classification": "FULL_V8_PARITY_CANDIDATE_ONLY",
+  "source": {
+    "repository": "Ventusltd/globalgrid2050",
+    "commit": "f2f343a92ee972cc74ed23b4b99d8a22896791ad",
+    "commit_tree_sha1": "2a8ecce66fdb06fbeac1d58443b2d67ba17aedb9",
+    "v8_untouched": true
+  },
+  "closure": {
+    "sources": 56,
+    "wired_sources": 40,
+    "unwired_sources": 16,
+    "layers": 60,
+    "features": 541282,
+    "wired_features": 530263,
+    "unwired_features": 11019,
+    "input_bytes": 262709675,
+    "geometry_counts": {
+      "LineString": 437288,
+      "MultiLineString": 23,
+      "Point": 103971
+    },
+    "coordinate_tuples": 3812791,
+    "raw_property_pairs": 5088905,
+    "retained_property_pairs": 1064163,
+    "dropped_property_pairs": 4024742,
+    "layer_membership_rows": 526388,
+    "phase_summary": {
+      "p1_foundation": {
+        "sources": 10,
+        "wired_sources": 10,
+        "features": 25189,
+        "input_bytes": 9876366
+      },
+      "p2_lazy_context": {
+        "sources": 16,
+        "wired_sources": 16,
+        "features": 3961,
+        "input_bytes": 1105648
+      },
+      "p3_official_rebuild": {
+        "sources": 3,
+        "wired_sources": 3,
+        "features": 14286,
+        "input_bytes": 5238917
+      },
+      "p4_rail_global": {
+        "sources": 5,
+        "wired_sources": 5,
+        "features": 146263,
+        "input_bytes": 73626852
+      },
+      "p4_motorways": {
+        "sources": 1,
+        "wired_sources": 1,
+        "features": 17713,
+        "input_bytes": 11490282
+      },
+      "p4_trunk_roads": {
+        "sources": 1,
+        "wired_sources": 1,
+        "features": 130228,
+        "input_bytes": 67527843
+      },
+      "p4_primary_roads": {
+        "sources": 1,
+        "wired_sources": 1,
+        "features": 163790,
+        "input_bytes": 79708290
+      },
+      "quarantine": {
+        "sources": 19,
+        "wired_sources": 3,
+        "features": 39852,
+        "input_bytes": 14135477
+      }
+    }
+  },
+  "property_policy": {
+    "retained_keys": [
+      "name",
+      "SiteName",
+      "Site Name",
+      "type",
+      "street",
+      "city",
+      "postcode",
+      "area_m2",
+      "area_ha",
+      "colour",
+      "brand",
+      "operator",
+      "club",
+      "capacity",
+      "sport",
+      "emission_tco2e",
+      "datatype",
+      "sector",
+      "country",
+      "tech",
+      "raw_tech",
+      "voltage",
+      "power_kw",
+      "connectors",
+      "status",
+      "mounting",
+      "source"
+    ],
+    "forbidden_keys": [
+      "phone",
+      "operator:phone",
+      "payment:phone",
+      "owner",
+      "owner:wikidata",
+      "ownership"
+    ],
+    "operator_semantics": "source organisation label only; never ownership"
+  },
+  "derived_topology": {
+    "algorithm": "V8 nearest-substation endpoint snap within squared distance 0.001 degrees, performed deterministically at build time",
+    "source_endpoints": 29130,
+    "changed_endpoints": 17055,
+    "changed_features": 10154,
+    "per_source": {
+      "grid_400kv": {
+        "changed_endpoints": 4528,
+        "changed_features": 2679
+      },
+      "grid_275kv": {
+        "changed_endpoints": 3806,
+        "changed_features": 2212
+      },
+      "grid_220kv": {
+        "changed_endpoints": 150,
+        "changed_features": 93
+      },
+      "grid_132kv": {
+        "changed_endpoints": 7218,
+        "changed_features": 4342
+      },
+      "grid_66kv": {
+        "changed_endpoints": 1353,
+        "changed_features": 828
+      }
+    }
+  },
+  "compute": {
+    "runner": "GitHub Actions 8-shard matrix",
+    "phases": [
+      "p1_foundation",
+      "p2_lazy_context",
+      "p3_official_rebuild",
+      "p4_rail_global",
+      "p4_motorways",
+      "p4_trunk_roads",
+      "p4_primary_roads",
+      "quarantine"
+    ],
+    "double_build": true,
+    "duckdb": "1.3.2",
+    "python": "3.12.13",
+    "runner_image": "ubuntu-24.04",
+    "parquet_compression": "ZSTD",
+    "threads": 1,
+    "cache_key_inputs": [
+      "pinned V8 source SHA-256 and Git blob identities",
+      "workflow and full-SHA Action pins",
+      "compiler and independent verifier blobs",
+      "contracts, ledgers and schema",
+      "hash-locked DuckDB wheel",
+      "Python patch and hosted runner image fingerprint",
+      "phase"
+    ],
+    "external_results_are_candidates_only": true
+  },
+  "outputs": {
+    "partition_schema": "data-gridatlas.v8-parity-features.v1",
+    "geometry_encoding": "canonical GeoJSON JSON",
+    "properties_encoding": "minimised canonical JSON",
+    "browser_strategy": "lazy DuckDB-WASM reconstruction from per-source Parquet",
+    "raw_geojson_published": false
+  },
+  "promotion": {
+    "release_allowed": false,
+    "current_pointer_allowed": false,
+    "pages_publication_allowed": false,
+    "required_next_gates": [
+      "authority and licence decision per active source",
+      "exact gridatlas consumer hash verification",
+      "rendered V8-vs-V9 parity",
+      "compare-and-swap promotion"
+    ]
+  },
+  "sources": [
+    {
+      "source_id": "airports",
+      "phase": "p1_foundation",
+      "wiring": "wired",
+      "configured_urls": [
+        "data/airports.geojson"
+      ],
+      "resolved_path": "repd_grid_atlasv8/data/airports.geojson",
+      "git_blob_sha1": "8ff43da1cde4594966f6d115e1442729dd8e54c1",
+      "bytes": 136906,
+      "sha256": "089990967bd391eaee81acdb5f324a4ba17025f753103358a8a400440853fb87",
+      "expected_features": 810,
+      "geometry_counts": {
+        "Point": 810
+      },
+      "coordinate_tuples": 810,
+      "bbox": [
+        -7.6511354,
+        49.9139024,
+        1.6186808,
+        60.7475983
+      ],
+      "property_key_count": 3,
+      "property_schema_sha256": "e42c0f53ad2e958fb1b99a574d233f3914a0f9d83c23da1021ddfe53ca84091e",
+      "raw_property_pairs": 2430,
+      "retained_property_pairs": 810,
+      "dropped_property_pairs": 1620,
+      "layer_ids": [
+        "air"
+      ],
+      "output_partition": "partitions/airports.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "OSM-derived foundation candidate; reacquire with OSM identifiers and attribution before promotion.",
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "publishable": false
+    },
+    {
+      "source_id": "datacentres",
+      "phase": "p1_foundation",
+      "wiring": "wired",
+      "configured_urls": [
+        "data/datacentres.geojson"
+      ],
+      "resolved_path": "repd_grid_atlasv8/data/datacentres.geojson",
+      "git_blob_sha1": "9457f6dc583bbfdcca40926c353738b321fcb09b",
+      "bytes": 40563,
+      "sha256": "a686a2e00253bbf30c9f5262439bc2332524e8d5cb34481529c6a711c73acab4",
+      "expected_features": 240,
+      "geometry_counts": {
+        "Point": 240
+      },
+      "coordinate_tuples": 240,
+      "bbox": [
+        -6.6854864,
+        50.0559198,
+        1.6918148,
+        57.1525691
+      ],
+      "property_key_count": 2,
+      "property_schema_sha256": "52183cf1551ba5cf681fc2ba0d3ab38f98f52168b89c5edf0c7ae14529e8f2d6",
+      "raw_property_pairs": 480,
+      "retained_property_pairs": 480,
+      "dropped_property_pairs": 0,
+      "layer_ids": [
+        "dc"
+      ],
+      "output_partition": "partitions/datacentres.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "OSM-derived foundation candidate; reacquire with OSM identifiers and attribution before promotion.",
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "publishable": false
+    },
+    {
+      "source_id": "grid_132kv",
+      "phase": "p1_foundation",
+      "wiring": "wired",
+      "configured_urls": [
+        "data/grid_132kv.geojson"
+      ],
+      "resolved_path": "repd_grid_atlasv8/data/grid_132kv.geojson",
+      "git_blob_sha1": "fe7acd7b67ecd4be9d71e4da164e496e3b08b7c0",
+      "bytes": 3410191,
+      "sha256": "9a19c3fef1760ade3a69b0807fd1a049a7138dea09a922e3daaae5741bc2aea9",
+      "expected_features": 6227,
+      "geometry_counts": {
+        "LineString": 6227
+      },
+      "coordinate_tuples": 81327,
+      "bbox": [
+        -6.8480871,
+        50.1572131,
+        2.0202473,
+        58.5750357
+      ],
+      "property_key_count": 73,
+      "property_schema_sha256": "02cd979dbde936a544c63a34cd4876aacdc20769ada58c16d49174c738fa8061",
+      "raw_property_pairs": 35680,
+      "retained_property_pairs": 10426,
+      "dropped_property_pairs": 25254,
+      "layer_ids": [
+        "132"
+      ],
+      "output_partition": "partitions/grid_132kv.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "OSM-derived foundation candidate; reacquire with OSM identifiers and attribution before promotion.",
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "publishable": false
+    },
+    {
+      "source_id": "grid_220kv",
+      "phase": "p1_foundation",
+      "wiring": "wired",
+      "configured_urls": [
+        "data/grid_220kv.geojson"
+      ],
+      "resolved_path": "repd_grid_atlasv8/data/grid_220kv.geojson",
+      "git_blob_sha1": "66d14421c7c26e18cf7fc08175dac5797b534c99",
+      "bytes": 76801,
+      "sha256": "6941b35108e581726ab2d707bdf5f47e68deb870716e966aac17aaf2e9ccc7f3",
+      "expected_features": 126,
+      "geometry_counts": {
+        "LineString": 126
+      },
+      "coordinate_tuples": 1875,
+      "bbox": [
+        -5.4587085,
+        51.9930062,
+        2.5060803,
+        58.2568235
+      ],
+      "property_key_count": 18,
+      "property_schema_sha256": "ea10b3b0969aa15f380dafc35a34d26c9c6f35a70555b824d96c67b60b6889a4",
+      "raw_property_pairs": 755,
+      "retained_property_pairs": 181,
+      "dropped_property_pairs": 574,
+      "layer_ids": [
+        "220"
+      ],
+      "output_partition": "partitions/grid_220kv.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "OSM-derived foundation candidate; reacquire with OSM identifiers and attribution before promotion.",
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "publishable": false
+    },
+    {
+      "source_id": "grid_275kv",
+      "phase": "p1_foundation",
+      "wiring": "wired",
+      "configured_urls": [
+        "data/grid_275kv.geojson"
+      ],
+      "resolved_path": "repd_grid_atlasv8/data/grid_275kv.geojson",
+      "git_blob_sha1": "e1c6ee484a53affbda562cd4e19d9d9f3d8212e2",
+      "bytes": 1271135,
+      "sha256": "5fd19ae0735e94dc1994df70962f877a33915591663b0266f2fe569faada272d",
+      "expected_features": 2935,
+      "geometry_counts": {
+        "LineString": 2935
+      },
+      "coordinate_tuples": 24856,
+      "bbox": [
+        -7.2540716,
+        50.9143933,
+        0.9646356,
+        58.5757398
+      ],
+      "property_key_count": 45,
+      "property_schema_sha256": "c640c5dc6a645ac4adbe926b4900f51d9691fab128489751a3dc81da75e79e97",
+      "raw_property_pairs": 17296,
+      "retained_property_pairs": 4879,
+      "dropped_property_pairs": 12417,
+      "layer_ids": [
+        "275"
+      ],
+      "output_partition": "partitions/grid_275kv.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "OSM-derived foundation candidate; reacquire with OSM identifiers and attribution before promotion.",
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "publishable": false
+    },
+    {
+      "source_id": "grid_400kv",
+      "phase": "p1_foundation",
+      "wiring": "wired",
+      "configured_urls": [
+        "data/grid_400kv.geojson"
+      ],
+      "resolved_path": "repd_grid_atlasv8/data/grid_400kv.geojson",
+      "git_blob_sha1": "41f1e35147445d6a41b8dbc761e57392951d5a93",
+      "bytes": 1802840,
+      "sha256": "0dfe7c681a6c6fe5a182a4ae985eb3ed8a48bc9c14d035a9cfbcaf0c474079bb",
+      "expected_features": 4106,
+      "geometry_counts": {
+        "LineString": 4106
+      },
+      "coordinate_tuples": 37506,
+      "bbox": [
+        -4.9915679,
+        50.3754159,
+        2.0819867,
+        57.5505849
+      ],
+      "property_key_count": 55,
+      "property_schema_sha256": "55c44fb1187bd2db24077a5ed22fbb5b414ea9d19ca67802950f017d9f3c52c3",
+      "raw_property_pairs": 23074,
+      "retained_property_pairs": 6239,
+      "dropped_property_pairs": 16835,
+      "layer_ids": [
+        "400"
+      ],
+      "output_partition": "partitions/grid_400kv.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "OSM-derived foundation candidate; reacquire with OSM identifiers and attribution before promotion.",
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "publishable": false
+    },
+    {
+      "source_id": "grid_66kv",
+      "phase": "p1_foundation",
+      "wiring": "wired",
+      "configured_urls": [
+        "data/grid_66kv.geojson"
+      ],
+      "resolved_path": "repd_grid_atlasv8/data/grid_66kv.geojson",
+      "git_blob_sha1": "29907a71c7a3a63586725986ad4887a3a5006e83",
+      "bytes": 698542,
+      "sha256": "36267c79febb15d28760a70c5c8efcdcb4930320239d9cfd6e620a315ea5eb0c",
+      "expected_features": 1171,
+      "geometry_counts": {
+        "LineString": 1171
+      },
+      "coordinate_tuples": 18341,
+      "bbox": [
+        -3.7581191,
+        51.4534909,
+        0.0638918,
+        57.2400356
+      ],
+      "property_key_count": 26,
+      "property_schema_sha256": "f549c3754d6c16fc1a819f4209452637ce130f49f36c8606498d456fe3310fe7",
+      "raw_property_pairs": 5795,
+      "retained_property_pairs": 1740,
+      "dropped_property_pairs": 4055,
+      "layer_ids": [
+        "66"
+      ],
+      "output_partition": "partitions/grid_66kv.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "OSM-derived foundation candidate; reacquire with OSM identifiers and attribution before promotion.",
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "publishable": false
+    },
+    {
+      "source_id": "grid_substations",
+      "phase": "p1_foundation",
+      "wiring": "wired",
+      "configured_urls": [
+        "data/grid_substations.geojson"
+      ],
+      "resolved_path": "repd_grid_atlasv8/data/grid_substations.geojson",
+      "git_blob_sha1": "11c68163099541ee16b9bfe8e72917ff52f82749",
+      "bytes": 1822645,
+      "sha256": "ec5450aa10b1592e53e73813fe169194de3fd923f7bffba1bbabd057c8c45b8f",
+      "expected_features": 5800,
+      "geometry_counts": {
+        "Point": 5800
+      },
+      "coordinate_tuples": 5800,
+      "bbox": [
+        -8.0868089,
+        49.9138232,
+        1.7397385,
+        60.798537
+      ],
+      "property_key_count": 150,
+      "property_schema_sha256": "bd9cada4924bb85b5286db9a052c73fc5ed6bb98227eeffbe05f3481d7895561",
+      "raw_property_pairs": 38849,
+      "retained_property_pairs": 15608,
+      "dropped_property_pairs": 23241,
+      "layer_ids": [
+        "subs"
+      ],
+      "output_partition": "partitions/grid_substations.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "OSM-derived foundation candidate; reacquire with OSM identifiers and attribution before promotion.",
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "publishable": false
+    },
+    {
+      "source_id": "power_plants",
+      "phase": "p1_foundation",
+      "wiring": "wired",
+      "configured_urls": [
+        "data/power_plants.geojson"
+      ],
+      "resolved_path": "repd_grid_atlasv8/data/power_plants.geojson",
+      "git_blob_sha1": "3d2ebd597da11610a49578048e9cf798a9d3fe32",
+      "bytes": 34134,
+      "sha256": "dde3380a79a9e8d21da54732b1b426dc14a9f23779ccc6f14a812d4f64057e7f",
+      "expected_features": 178,
+      "geometry_counts": {
+        "Point": 178
+      },
+      "coordinate_tuples": 178,
+      "bbox": [
+        -7.2479577,
+        50.3681766,
+        1.7332441,
+        60.4573031
+      ],
+      "property_key_count": 3,
+      "property_schema_sha256": "f24ba63badf0a72b5cd9ae87af616f40a26a740888770c28012e4d690cb7cac5",
+      "raw_property_pairs": 534,
+      "retained_property_pairs": 534,
+      "dropped_property_pairs": 0,
+      "layer_ids": [
+        "gas",
+        "nuc"
+      ],
+      "output_partition": "partitions/power_plants.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "OSM-derived foundation candidate; reacquire with OSM identifiers and attribution before promotion.",
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "publishable": false
+    },
+    {
+      "source_id": "railways",
+      "phase": "p1_foundation",
+      "wiring": "wired",
+      "configured_urls": [
+        "data/railways.geojson"
+      ],
+      "resolved_path": "repd_grid_atlasv8/data/railways.geojson",
+      "git_blob_sha1": "77d92bfdb1dd3f903fddee2fdc033a6ebbc75577",
+      "bytes": 582609,
+      "sha256": "1f424d6f420ec96bbc8f4a323b1d5535d3a535fe8c63c38339539fe3afd97208",
+      "expected_features": 3596,
+      "geometry_counts": {
+        "Point": 3596
+      },
+      "coordinate_tuples": 3596,
+      "bbox": [
+        -7.3128166,
+        50.1211053,
+        1.7499873,
+        58.5897358
+      ],
+      "property_key_count": 2,
+      "property_schema_sha256": "ffeffdddc0aadb93674f833275a5bc2471a4332e49a2be7ba4484032176cd543",
+      "raw_property_pairs": 7192,
+      "retained_property_pairs": 3596,
+      "dropped_property_pairs": 3596,
+      "layer_ids": [
+        "rail"
+      ],
+      "output_partition": "partitions/railways.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "OSM-derived foundation candidate; reacquire with OSM identifiers and attribution before promotion.",
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "publishable": false
+    },
+    {
+      "source_id": "elizabeth_line",
+      "phase": "p2_lazy_context",
+      "wiring": "wired",
+      "configured_urls": [
+        "data/elizabeth_line.geojson"
+      ],
+      "resolved_path": "repd_grid_atlasv8/data/elizabeth_line.geojson",
+      "git_blob_sha1": "1241bcd4bcdb7881cc16e963549b5ca9e9f579c5",
+      "bytes": 9037,
+      "sha256": "ce8e880385cc5383bb8ca4cfca7840d15121e99d6e57de8393f91d675f0e438b",
+      "expected_features": 45,
+      "geometry_counts": {
+        "Point": 45
+      },
+      "coordinate_tuples": 45,
+      "bbox": [
+        -0.972318,
+        51.459089,
+        0.330019,
+        51.63064
+      ],
+      "property_key_count": 4,
+      "property_schema_sha256": "f7a850753d2a3b4e2b3eb69f521b5c5020d7e37b3fe7f3490f66fa3670afe620",
+      "raw_property_pairs": 180,
+      "retained_property_pairs": 135,
+      "dropped_property_pairs": 45,
+      "layer_ids": [
+        "elizabeth"
+      ],
+      "output_partition": "partitions/elizabeth_line.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Small lazy context candidate; reacquire from declared upstream with attribution before promotion.",
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "publishable": false
+    },
+    {
+      "source_id": "hs2",
+      "phase": "p2_lazy_context",
+      "wiring": "wired",
+      "configured_urls": [
+        "data/hs2.geojson"
+      ],
+      "resolved_path": "repd_grid_atlasv8/data/hs2.geojson",
+      "git_blob_sha1": "30eb7f85cef4c5101ffc06b2d97716aafe5ca880",
+      "bytes": 65898,
+      "sha256": "17e2bc8ba148063f9c1bc6af848d40d7183f3b30d6f6096754d7f007607dcb9b",
+      "expected_features": 521,
+      "geometry_counts": {
+        "Point": 521
+      },
+      "coordinate_tuples": 521,
+      "bbox": [
+        -1.887011,
+        51.5537595,
+        -0.0812401,
+        52.7351788
+      ],
+      "property_key_count": 1,
+      "property_schema_sha256": "1c429aa3f7749956917a7a20d9cdb4d0d7f4d9f1a8cd86db1248731238332c44",
+      "raw_property_pairs": 521,
+      "retained_property_pairs": 521,
+      "dropped_property_pairs": 0,
+      "layer_ids": [
+        "hs2"
+      ],
+      "output_partition": "partitions/hs2.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Small lazy context candidate; reacquire from declared upstream with attribution before promotion.",
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "publishable": false
+    },
+    {
+      "source_id": "london_underground",
+      "phase": "p2_lazy_context",
+      "wiring": "wired",
+      "configured_urls": [
+        "data/london_underground.geojson"
+      ],
+      "resolved_path": "repd_grid_atlasv8/data/london_underground.geojson",
+      "git_blob_sha1": "d26f6af62f815c96c1c70900dbf8da3717892ed0",
+      "bytes": 82559,
+      "sha256": "41abcaa6c3a306bb5f7df7078df527aec44703497d18059230a009bdda6e324e",
+      "expected_features": 269,
+      "geometry_counts": {
+        "Point": 269
+      },
+      "coordinate_tuples": 269,
+      "bbox": [
+        -0.6110784,
+        51.4027615,
+        0.2516815,
+        51.705012
+      ],
+      "property_key_count": 3,
+      "property_schema_sha256": "7cb6e1bf9a8f47c204f1d5f593ac4cd5b9b6f93bc0586cbdc658eca24257e3bb",
+      "raw_property_pairs": 807,
+      "retained_property_pairs": 807,
+      "dropped_property_pairs": 0,
+      "layer_ids": [
+        "lu"
+      ],
+      "output_partition": "partitions/london_underground.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Small lazy context candidate; reacquire from declared upstream with attribution before promotion.",
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "publishable": false
+    },
+    {
+      "source_id": "motorway_services",
+      "phase": "p2_lazy_context",
+      "wiring": "wired",
+      "configured_urls": [
+        "data/motorway_services.geojson"
+      ],
+      "resolved_path": "repd_grid_atlasv8/data/motorway_services.geojson",
+      "git_blob_sha1": "92152da3fdc4999ef6589ff31151bfa00cd6fdb5",
+      "bytes": 107192,
+      "sha256": "b99f48691ea527d5fec1132d236f3fdcec8f93f25ca979cd6af70baf665caeb1",
+      "expected_features": 529,
+      "geometry_counts": {
+        "Point": 529
+      },
+      "coordinate_tuples": 529,
+      "bbox": [
+        -8.4087,
+        49.963258,
+        1.754704,
+        57.727824
+      ],
+      "property_key_count": 4,
+      "property_schema_sha256": "f7a850753d2a3b4e2b3eb69f521b5c5020d7e37b3fe7f3490f66fa3670afe620",
+      "raw_property_pairs": 2116,
+      "retained_property_pairs": 1587,
+      "dropped_property_pairs": 529,
+      "layer_ids": [
+        "motorway_services"
+      ],
+      "output_partition": "partitions/motorway_services.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Small lazy context candidate; reacquire from declared upstream with attribution before promotion.",
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "publishable": false
+    },
+    {
+      "source_id": "stadiums",
+      "phase": "p2_lazy_context",
+      "wiring": "wired",
+      "configured_urls": [
+        "data/stadiums.geojson"
+      ],
+      "resolved_path": "repd_grid_atlasv8/data/stadiums.geojson",
+      "git_blob_sha1": "3e1e9b469ec7313bfec96d905bc95a976fa4aa55",
+      "bytes": 42769,
+      "sha256": "24f5e196864000c24550d60a7db2fb1b99f34b52a1d2554c712e91a75c639c0c",
+      "expected_features": 180,
+      "geometry_counts": {
+        "Point": 180
+      },
+      "coordinate_tuples": 180,
+      "bbox": [
+        -9.039329,
+        50.239218,
+        1.309604,
+        57.495147
+      ],
+      "property_key_count": 7,
+      "property_schema_sha256": "a7444946d2c59328c1d53c053862cc7e969a7b0e746c58f1d1bef43e41c45c60",
+      "raw_property_pairs": 1260,
+      "retained_property_pairs": 1080,
+      "dropped_property_pairs": 180,
+      "layer_ids": [
+        "stadiums"
+      ],
+      "output_partition": "partitions/stadiums.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Small lazy context candidate; reacquire from declared upstream with attribution before promotion.",
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "publishable": false
+    },
+    {
+      "source_id": "supermarkets_aldi",
+      "phase": "p2_lazy_context",
+      "wiring": "wired",
+      "configured_urls": [
+        "data/supermarkets_aldi.geojson"
+      ],
+      "resolved_path": "repd_grid_atlasv8/data/supermarkets_aldi.geojson",
+      "git_blob_sha1": "ce26b0f079baedb88272a5ee255ac3af9a3fdeb4",
+      "bytes": 15917,
+      "sha256": "37b3f7290bb2705593b3e2d99d35e8139f58f4809ac8e913da7a2998eb7dcc1c",
+      "expected_features": 45,
+      "geometry_counts": {
+        "Point": 45
+      },
+      "coordinate_tuples": 45,
+      "bbox": [
+        -8.885146,
+        50.79731,
+        1.099084,
+        55.131625
+      ],
+      "property_key_count": 11,
+      "property_schema_sha256": "fa074738a1bc52c2333530701b78f6a6f52b0fbb755f6d6fed254d20da369091",
+      "raw_property_pairs": 495,
+      "retained_property_pairs": 360,
+      "dropped_property_pairs": 135,
+      "layer_ids": [
+        "aldi"
+      ],
+      "output_partition": "partitions/supermarkets_aldi.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Small lazy context candidate; reacquire from declared upstream with attribution before promotion.",
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "publishable": false
+    },
+    {
+      "source_id": "supermarkets_asda",
+      "phase": "p2_lazy_context",
+      "wiring": "wired",
+      "configured_urls": [
+        "data/supermarkets_asda.geojson"
+      ],
+      "resolved_path": "repd_grid_atlasv8/data/supermarkets_asda.geojson",
+      "git_blob_sha1": "064bb331dfe577a5469f76557ef00aa4e8a12aab",
+      "bytes": 117793,
+      "sha256": "627afb99ac697687c0d5927c7e26271b6001c07307c91c129a23d59ad9ff499d",
+      "expected_features": 388,
+      "geometry_counts": {
+        "Point": 388
+      },
+      "coordinate_tuples": 388,
+      "bbox": [
+        -7.632289,
+        50.162552,
+        1.740758,
+        57.803515
+      ],
+      "property_key_count": 11,
+      "property_schema_sha256": "fa074738a1bc52c2333530701b78f6a6f52b0fbb755f6d6fed254d20da369091",
+      "raw_property_pairs": 4268,
+      "retained_property_pairs": 3104,
+      "dropped_property_pairs": 1164,
+      "layer_ids": [
+        "asda"
+      ],
+      "output_partition": "partitions/supermarkets_asda.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Small lazy context candidate; reacquire from declared upstream with attribution before promotion.",
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "publishable": false
+    },
+    {
+      "source_id": "supermarkets_booths",
+      "phase": "p2_lazy_context",
+      "wiring": "wired",
+      "configured_urls": [
+        "data/supermarkets_booths.geojson"
+      ],
+      "resolved_path": "repd_grid_atlasv8/data/supermarkets_booths.geojson",
+      "git_blob_sha1": "c79a71544c788453369419f918f740e41a0324c0",
+      "bytes": 2847,
+      "sha256": "3a7b588ca0d88c7328b7ad85845fb31caf55747a6b0b6d7c36c34a80d90f3d38",
+      "expected_features": 9,
+      "geometry_counts": {
+        "Point": 9
+      },
+      "coordinate_tuples": 9,
+      "bbox": [
+        -3.141669,
+        53.302087,
+        -1.818101,
+        54.602017
+      ],
+      "property_key_count": 11,
+      "property_schema_sha256": "fa074738a1bc52c2333530701b78f6a6f52b0fbb755f6d6fed254d20da369091",
+      "raw_property_pairs": 99,
+      "retained_property_pairs": 72,
+      "dropped_property_pairs": 27,
+      "layer_ids": [
+        "booths"
+      ],
+      "output_partition": "partitions/supermarkets_booths.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Small lazy context candidate; reacquire from declared upstream with attribution before promotion.",
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "publishable": false
+    },
+    {
+      "source_id": "supermarkets_coop",
+      "phase": "p2_lazy_context",
+      "wiring": "wired",
+      "configured_urls": [
+        "data/supermarkets_coop.geojson"
+      ],
+      "resolved_path": "repd_grid_atlasv8/data/supermarkets_coop.geojson",
+      "git_blob_sha1": "d6ca83598a747f3a76480f93e7e494206416bf69",
+      "bytes": 8428,
+      "sha256": "3949a2ccd73c6bd040871f0b5c4101233e51eff6d9c92ba1596080c75cda90ec",
+      "expected_features": 24,
+      "geometry_counts": {
+        "Point": 24
+      },
+      "coordinate_tuples": 24,
+      "bbox": [
+        -6.383707,
+        50.387859,
+        1.704076,
+        58.216143
+      ],
+      "property_key_count": 11,
+      "property_schema_sha256": "fa074738a1bc52c2333530701b78f6a6f52b0fbb755f6d6fed254d20da369091",
+      "raw_property_pairs": 264,
+      "retained_property_pairs": 192,
+      "dropped_property_pairs": 72,
+      "layer_ids": [
+        "coop"
+      ],
+      "output_partition": "partitions/supermarkets_coop.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Small lazy context candidate; reacquire from declared upstream with attribution before promotion.",
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "publishable": false
+    },
+    {
+      "source_id": "supermarkets_costco",
+      "phase": "p2_lazy_context",
+      "wiring": "wired",
+      "configured_urls": [
+        "data/supermarkets_costco.geojson"
+      ],
+      "resolved_path": "repd_grid_atlasv8/data/supermarkets_costco.geojson",
+      "git_blob_sha1": "cb02157f4f6bdbd95dc58f1ad4ae13f47a1de7cb",
+      "bytes": 9694,
+      "sha256": "c635229b3c602d485627eea70c8268054f0e7ba280524ee672715c4ce66eee7e",
+      "expected_features": 30,
+      "geometry_counts": {
+        "Point": 30
+      },
+      "coordinate_tuples": 30,
+      "bbox": [
+        -4.228392,
+        50.915651,
+        0.281615,
+        57.147268
+      ],
+      "property_key_count": 11,
+      "property_schema_sha256": "fa074738a1bc52c2333530701b78f6a6f52b0fbb755f6d6fed254d20da369091",
+      "raw_property_pairs": 330,
+      "retained_property_pairs": 240,
+      "dropped_property_pairs": 90,
+      "layer_ids": [
+        "costco"
+      ],
+      "output_partition": "partitions/supermarkets_costco.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Small lazy context candidate; reacquire from declared upstream with attribution before promotion.",
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "publishable": false
+    },
+    {
+      "source_id": "supermarkets_lidl",
+      "phase": "p2_lazy_context",
+      "wiring": "wired",
+      "configured_urls": [
+        "data/supermarkets_lidl.geojson"
+      ],
+      "resolved_path": "repd_grid_atlasv8/data/supermarkets_lidl.geojson",
+      "git_blob_sha1": "ee7ca9860f02bbe40cea9694b48cf17ea247ea70",
+      "bytes": 63528,
+      "sha256": "4b875659b02903dff1d053bb2b052914c9ef1131955cc06a9ae19aee01b7e20b",
+      "expected_features": 182,
+      "geometry_counts": {
+        "Point": 182
+      },
+      "coordinate_tuples": 182,
+      "bbox": [
+        -9.700267,
+        49.52311,
+        1.821116,
+        55.996977
+      ],
+      "property_key_count": 11,
+      "property_schema_sha256": "fa074738a1bc52c2333530701b78f6a6f52b0fbb755f6d6fed254d20da369091",
+      "raw_property_pairs": 2002,
+      "retained_property_pairs": 1456,
+      "dropped_property_pairs": 546,
+      "layer_ids": [
+        "lidl"
+      ],
+      "output_partition": "partitions/supermarkets_lidl.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Small lazy context candidate; reacquire from declared upstream with attribution before promotion.",
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "publishable": false
+    },
+    {
+      "source_id": "supermarkets_morrisons",
+      "phase": "p2_lazy_context",
+      "wiring": "wired",
+      "configured_urls": [
+        "data/supermarkets_morrisons.geojson"
+      ],
+      "resolved_path": "repd_grid_atlasv8/data/supermarkets_morrisons.geojson",
+      "git_blob_sha1": "166385b99e01838c8a62c6bd304e94533195367a",
+      "bytes": 156119,
+      "sha256": "3de5dc77a2e8b0635582746acaea06515d6080e970b92fc252191eb566451da9",
+      "expected_features": 442,
+      "geometry_counts": {
+        "Point": 442
+      },
+      "coordinate_tuples": 442,
+      "bbox": [
+        -5.514038,
+        50.1278,
+        1.73497,
+        57.693239
+      ],
+      "property_key_count": 11,
+      "property_schema_sha256": "fa074738a1bc52c2333530701b78f6a6f52b0fbb755f6d6fed254d20da369091",
+      "raw_property_pairs": 4862,
+      "retained_property_pairs": 3536,
+      "dropped_property_pairs": 1326,
+      "layer_ids": [
+        "morrisons"
+      ],
+      "output_partition": "partitions/supermarkets_morrisons.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Small lazy context candidate; reacquire from declared upstream with attribution before promotion.",
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "publishable": false
+    },
+    {
+      "source_id": "supermarkets_ms",
+      "phase": "p2_lazy_context",
+      "wiring": "wired",
+      "configured_urls": [
+        "data/supermarkets_ms.geojson"
+      ],
+      "resolved_path": "repd_grid_atlasv8/data/supermarkets_ms.geojson",
+      "git_blob_sha1": "030be558517786d9e61c4a96aa23da86d32381ee",
+      "bytes": 971,
+      "sha256": "49607d056c4283d2a51b74eb4271d795c1569e1e5d5ffab0419800dc106c207d",
+      "expected_features": 3,
+      "geometry_counts": {
+        "Point": 3
+      },
+      "coordinate_tuples": 3,
+      "bbox": [
+        -1.984299,
+        52.393906,
+        -1.065911,
+        53.773924
+      ],
+      "property_key_count": 11,
+      "property_schema_sha256": "fa074738a1bc52c2333530701b78f6a6f52b0fbb755f6d6fed254d20da369091",
+      "raw_property_pairs": 33,
+      "retained_property_pairs": 24,
+      "dropped_property_pairs": 9,
+      "layer_ids": [
+        "ms"
+      ],
+      "output_partition": "partitions/supermarkets_ms.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Small lazy context candidate; reacquire from declared upstream with attribution before promotion.",
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "publishable": false
+    },
+    {
+      "source_id": "supermarkets_sainsburys",
+      "phase": "p2_lazy_context",
+      "wiring": "wired",
+      "configured_urls": [
+        "data/supermarkets_sainsburys.geojson"
+      ],
+      "resolved_path": "repd_grid_atlasv8/data/supermarkets_sainsburys.geojson",
+      "git_blob_sha1": "3dc95e9a4fb8abde922763cc764f0e556f961211",
+      "bytes": 153154,
+      "sha256": "850e501c773ed335899fdbeb661201e9d4302b7287509ad766e8a9b4dc9e5655",
+      "expected_features": 439,
+      "geometry_counts": {
+        "Point": 439
+      },
+      "coordinate_tuples": 439,
+      "bbox": [
+        -7.315228,
+        50.093303,
+        1.730099,
+        57.581287
+      ],
+      "property_key_count": 11,
+      "property_schema_sha256": "fa074738a1bc52c2333530701b78f6a6f52b0fbb755f6d6fed254d20da369091",
+      "raw_property_pairs": 4829,
+      "retained_property_pairs": 3512,
+      "dropped_property_pairs": 1317,
+      "layer_ids": [
+        "sainsburys"
+      ],
+      "output_partition": "partitions/supermarkets_sainsburys.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Small lazy context candidate; reacquire from declared upstream with attribution before promotion.",
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "publishable": false
+    },
+    {
+      "source_id": "supermarkets_tesco",
+      "phase": "p2_lazy_context",
+      "wiring": "wired",
+      "configured_urls": [
+        "data/supermarkets_tesco.geojson"
+      ],
+      "resolved_path": "repd_grid_atlasv8/data/supermarkets_tesco.geojson",
+      "git_blob_sha1": "39fbd2c38d019f1d236936a5e74ef96b20c20ada",
+      "bytes": 225282,
+      "sha256": "c1051a24e71a33dc663bb33c1918f041fe73518d445a4ec978331de7f1076f2d",
+      "expected_features": 727,
+      "geometry_counts": {
+        "Point": 727
+      },
+      "coordinate_tuples": 727,
+      "bbox": [
+        -9.510124,
+        50.105145,
+        1.735246,
+        60.147264
+      ],
+      "property_key_count": 11,
+      "property_schema_sha256": "fa074738a1bc52c2333530701b78f6a6f52b0fbb755f6d6fed254d20da369091",
+      "raw_property_pairs": 7997,
+      "retained_property_pairs": 5816,
+      "dropped_property_pairs": 2181,
+      "layer_ids": [
+        "tesco"
+      ],
+      "output_partition": "partitions/supermarkets_tesco.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Small lazy context candidate; reacquire from declared upstream with attribution before promotion.",
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "publishable": false
+    },
+    {
+      "source_id": "supermarkets_waitrose",
+      "phase": "p2_lazy_context",
+      "wiring": "wired",
+      "configured_urls": [
+        "data/supermarkets_waitrose.geojson"
+      ],
+      "resolved_path": "repd_grid_atlasv8/data/supermarkets_waitrose.geojson",
+      "git_blob_sha1": "1199d61f0b3ee607563fa97fa0487a579a17cd3e",
+      "bytes": 44460,
+      "sha256": "86fd8f771e2400648efcea5e8b4e48f8ed0eccd8def61a7c5b08de674fe23fc2",
+      "expected_features": 128,
+      "geometry_counts": {
+        "Point": 128
+      },
+      "coordinate_tuples": 128,
+      "bbox": [
+        -5.034037,
+        50.272866,
+        1.366076,
+        56.113761
+      ],
+      "property_key_count": 11,
+      "property_schema_sha256": "fa074738a1bc52c2333530701b78f6a6f52b0fbb755f6d6fed254d20da369091",
+      "raw_property_pairs": 1408,
+      "retained_property_pairs": 1024,
+      "dropped_property_pairs": 384,
+      "layer_ids": [
+        "waitrose"
+      ],
+      "output_partition": "partitions/supermarkets_waitrose.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Small lazy context candidate; reacquire from declared upstream with attribution before promotion.",
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "publishable": false
+    },
+    {
+      "source_id": "ev_chargers",
+      "phase": "p3_official_rebuild",
+      "wiring": "wired",
+      "configured_urls": [
+        "data/ev_chargers.geojson"
+      ],
+      "resolved_path": "repd_grid_atlasv8/data/ev_chargers.geojson",
+      "git_blob_sha1": "4aafa0f89343f1819237cb2031357280ded4ef5a",
+      "bytes": 259812,
+      "sha256": "0ed91fd038ff1884218e091991a29d0db4261c19abae5741778c16abdd4b5a19",
+      "expected_features": 1044,
+      "geometry_counts": {
+        "Point": 1044
+      },
+      "coordinate_tuples": 1044,
+      "bbox": [
+        -7.627545,
+        50.16219,
+        1.735329,
+        57.895568
+      ],
+      "property_key_count": 6,
+      "property_schema_sha256": "9d1beeb6241f15ff303b69a4a801a28ecece75ebe6b52a5c85b7254bc5ef825c",
+      "raw_property_pairs": 6264,
+      "retained_property_pairs": 6264,
+      "dropped_property_pairs": 0,
+      "layer_ids": [
+        "ev"
+      ],
+      "output_partition": "partitions/ev_chargers.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Replace parity blob from official/provider source; preserve attribution and identifiers.",
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "publishable": false
+    },
+    {
+      "source_id": "heavy_emitters_uk",
+      "phase": "p3_official_rebuild",
+      "wiring": "wired",
+      "configured_urls": [
+        "/heavy_emitters_uk.json"
+      ],
+      "resolved_path": "heavy_emitters_uk.json",
+      "git_blob_sha1": "a7a7bc052f06eaec25e3256a481d8dc34914c141",
+      "bytes": 722142,
+      "sha256": "9d603ac9a7dd5b831b94c01b1e25b4f0a434e299489a680d9b4461ce5f1a63f3",
+      "expected_features": 2458,
+      "geometry_counts": {
+        "Point": 2458
+      },
+      "coordinate_tuples": 2458,
+      "bbox": [
+        -7.573181,
+        50.082071,
+        2.391514,
+        60.953748
+      ],
+      "property_key_count": 8,
+      "property_schema_sha256": "8596f7ba6e53a9076f18384288bd3015828c2495e61d69a68d4673470e834fd6",
+      "raw_property_pairs": 19664,
+      "retained_property_pairs": 17206,
+      "dropped_property_pairs": 2458,
+      "layer_ids": [
+        "naei_co2"
+      ],
+      "output_partition": "partitions/heavy_emitters_uk.parquet",
+      "source_scope": "root-absolute",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Replace parity blob from official/provider source; preserve attribution and identifiers.",
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "publishable": false
+    },
+    {
+      "source_id": "repd_master_v8_oracle",
+      "phase": "p3_official_rebuild",
+      "wiring": "wired",
+      "configured_urls": [
+        "/dist/repd_master.json"
+      ],
+      "resolved_path": "dist/repd_master.json",
+      "git_blob_sha1": "e221065a7b144a9e4b691cf282e23a68c5661e45",
+      "bytes": 4256963,
+      "sha256": "ca5da437ddb832f7e4e8d84bba1f2f6d40df6285089a43156452fdda7eebe0fe",
+      "expected_features": 10784,
+      "geometry_counts": {
+        "Point": 10784
+      },
+      "coordinate_tuples": 10784,
+      "bbox": [
+        -8.093027,
+        50.045512,
+        2.329999,
+        60.704105
+      ],
+      "property_key_count": 10,
+      "property_schema_sha256": "e18c6285ce1980438d53c9b97d0ac9a347c01bc9466ee9c44bd5bfed132721af",
+      "raw_property_pairs": 107840,
+      "retained_property_pairs": 75488,
+      "dropped_property_pairs": 32352,
+      "layer_ids": [
+        "act",
+        "bess",
+        "bess_operational",
+        "biomass",
+        "caes",
+        "flywheel",
+        "geothermal",
+        "hydro",
+        "hydrogen",
+        "solar",
+        "solar_operational",
+        "solar_roof",
+        "tidal",
+        "wind",
+        "wind_offshore_operational",
+        "wind_onshore_operational"
+      ],
+      "output_partition": "partitions/repd_master_v8_oracle.parquet",
+      "source_scope": "root-absolute",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Replace parity blob from official/provider source; preserve attribution and identifiers.",
+      "disposition": "ORACLE_ONLY_REPLACED_BY_OFFICIAL_REPD_V9",
+      "publishable": false
+    },
+    {
+      "source_id": "uk_motorways",
+      "phase": "p4_motorways",
+      "wiring": "wired",
+      "configured_urls": [
+        "/uk_motorways.geojson"
+      ],
+      "resolved_path": "uk_motorways.geojson",
+      "git_blob_sha1": "3ef38c4f461fae186f46a62ffb677a46cae2db40",
+      "bytes": 11490282,
+      "sha256": "d268e0009db2154a9fd35b5c6e72ba10ebac5a3b200c626506d1779017f06d46",
+      "expected_features": 17713,
+      "geometry_counts": {
+        "LineString": 17713
+      },
+      "coordinate_tuples": 151355,
+      "bbox": [
+        -6.7452908,
+        50.6779082,
+        1.1622323,
+        56.3884631
+      ],
+      "property_key_count": 229,
+      "property_schema_sha256": "734c3ea9dc43b028e6a9bd702907f860de3e46b790d11f564e72fa73fb53fd99",
+      "raw_property_pairs": 247055,
+      "retained_property_pairs": 21406,
+      "dropped_property_pairs": 225649,
+      "layer_ids": [
+        "motorways"
+      ],
+      "output_partition": "partitions/uk_motorways.parquet",
+      "source_scope": "root-absolute",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Heavy OSM-derived roads; partitioned Parquet/PMTiles only.",
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "publishable": false
+    },
+    {
+      "source_id": "uk_primary_roads",
+      "phase": "p4_primary_roads",
+      "wiring": "wired",
+      "configured_urls": [
+        "/uk_primary_roads.geojson"
+      ],
+      "resolved_path": "uk_primary_roads.geojson",
+      "git_blob_sha1": "eb667fade4ecf48357ffeba41c6f29abaf6f2548",
+      "bytes": 79708290,
+      "sha256": "ee2c8c822eaabd0386fb6aa05b00af9391ca864348c73fcdd9b851fb95cc325f",
+      "expected_features": 163790,
+      "geometry_counts": {
+        "LineString": 163790
+      },
+      "coordinate_tuples": 1268704,
+      "bbox": [
+        -8.0941571,
+        49.911897,
+        1.7516112,
+        60.7852592
+      ],
+      "property_key_count": 1084,
+      "property_schema_sha256": "17ed0ff016bf48b656d79e66bdc233a5ffcf3059866bd1402aeb57fb6cdc0060",
+      "raw_property_pairs": 1477502,
+      "retained_property_pairs": 160603,
+      "dropped_property_pairs": 1316899,
+      "layer_ids": [
+        "primary_roads"
+      ],
+      "output_partition": "partitions/uk_primary_roads.parquet",
+      "source_scope": "root-absolute",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Heavy OSM-derived roads; partitioned Parquet/PMTiles only.",
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "publishable": false
+    },
+    {
+      "source_id": "eurostar",
+      "phase": "p4_rail_global",
+      "wiring": "wired",
+      "configured_urls": [
+        "data/eurostar.geojson"
+      ],
+      "resolved_path": "repd_grid_atlasv8/data/eurostar.geojson",
+      "git_blob_sha1": "cc7ee381d91cf8c4661247dcd3fb22bfdac5c276",
+      "bytes": 4259078,
+      "sha256": "31a6e952420908c83bd3f2e034181917e990be2439d058355176b6702177104a",
+      "expected_features": 47,
+      "geometry_counts": {
+        "MultiLineString": 22,
+        "Point": 25
+      },
+      "coordinate_tuples": 184835,
+      "bbox": [
+        -0.1291156,
+        43.3027932,
+        7.4592664,
+        52.3954857
+      ],
+      "property_key_count": 4,
+      "property_schema_sha256": "f7a850753d2a3b4e2b3eb69f521b5c5020d7e37b3fe7f3490f66fa3670afe620",
+      "raw_property_pairs": 188,
+      "retained_property_pairs": 141,
+      "dropped_property_pairs": 47,
+      "layer_ids": [
+        "eurostar_route",
+        "eurostar_station"
+      ],
+      "output_partition": "partitions/eurostar.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Heavy OSM-derived context; partitioned Parquet/PMTiles only.",
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "publishable": false
+    },
+    {
+      "source_id": "global_hydrocarbons",
+      "phase": "p4_rail_global",
+      "wiring": "wired",
+      "configured_urls": [
+        "data/global_hydrocarbons.geojson"
+      ],
+      "resolved_path": "repd_grid_atlasv8/data/global_hydrocarbons.geojson",
+      "git_blob_sha1": "11ddddb0a7169be05d8fbd60e10d769fa5082fd9",
+      "bytes": 781466,
+      "sha256": "fcd7d20120500f8b34cf2e0f6d16a2d098aa06c8dc6575439c4181b8cddf7835",
+      "expected_features": 3656,
+      "geometry_counts": {
+        "Point": 3656
+      },
+      "coordinate_tuples": 3656,
+      "bbox": [
+        -151.514168,
+        -53.2990205,
+        174.271666,
+        71.3110817
+      ],
+      "property_key_count": 5,
+      "property_schema_sha256": "e34c73168d353cc8ca11ce494892021dd2c42b02444958dae024e743deb47955",
+      "raw_property_pairs": 18280,
+      "retained_property_pairs": 14624,
+      "dropped_property_pairs": 3656,
+      "layer_ids": [
+        "global_hydrocarbons"
+      ],
+      "output_partition": "partitions/global_hydrocarbons.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Heavy OSM-derived context; partitioned Parquet/PMTiles only.",
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "publishable": false
+    },
+    {
+      "source_id": "global_ports",
+      "phase": "p4_rail_global",
+      "wiring": "wired",
+      "configured_urls": [
+        "data/global_ports.geojson"
+      ],
+      "resolved_path": "repd_grid_atlasv8/data/global_ports.geojson",
+      "git_blob_sha1": "f5c12e8e23acca1e72e65d2a4433322e50fc2e01",
+      "bytes": 10186700,
+      "sha256": "c203829f74cdf50d34a755f0a959c6ce5298098fe46f81e9bc6d46d2d5f57710",
+      "expected_features": 45148,
+      "geometry_counts": {
+        "Point": 45148
+      },
+      "coordinate_tuples": 45148,
+      "bbox": [
+        -179.9854832,
+        -77.8454879,
+        179.9999986,
+        80.7738763
+      ],
+      "property_key_count": 5,
+      "property_schema_sha256": "020d8750e651b35459a2f9f3be84c667e5720bbd24d895b99e99a4c77bfa44b9",
+      "raw_property_pairs": 225740,
+      "retained_property_pairs": 180592,
+      "dropped_property_pairs": 45148,
+      "layer_ids": [
+        "global_ports_major",
+        "global_ports_minor"
+      ],
+      "output_partition": "partitions/global_ports.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Heavy OSM-derived context; partitioned Parquet/PMTiles only.",
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "publishable": false
+    },
+    {
+      "source_id": "subsea_data_cables",
+      "phase": "p4_rail_global",
+      "wiring": "wired",
+      "configured_urls": [
+        "data/subsea_data_cables.geojson"
+      ],
+      "resolved_path": "repd_grid_atlasv8/data/subsea_data_cables.geojson",
+      "git_blob_sha1": "7016bb409407acec042d986065e0b9bc391ddbfa",
+      "bytes": 3346221,
+      "sha256": "805859c84994606bde30fe8187d4b9f0355086cbde2c0115dd5a5ed83c6a5bcf",
+      "expected_features": 7479,
+      "geometry_counts": {
+        "LineString": 7478,
+        "MultiLineString": 1
+      },
+      "coordinate_tuples": 85114,
+      "bbox": [
+        -177.0,
+        -52.671594,
+        176.1886897,
+        79.0211894
+      ],
+      "property_key_count": 4,
+      "property_schema_sha256": "f7a850753d2a3b4e2b3eb69f521b5c5020d7e37b3fe7f3490f66fa3670afe620",
+      "raw_property_pairs": 29916,
+      "retained_property_pairs": 22437,
+      "dropped_property_pairs": 7479,
+      "layer_ids": [
+        "subsea_data_cables"
+      ],
+      "output_partition": "partitions/subsea_data_cables.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Heavy OSM-derived context; partitioned Parquet/PMTiles only.",
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "publishable": false
+    },
+    {
+      "source_id": "uk_mainline_railways",
+      "phase": "p4_rail_global",
+      "wiring": "wired",
+      "configured_urls": [
+        "/uk_mainline_railways.geojson"
+      ],
+      "resolved_path": "uk_mainline_railways.geojson",
+      "git_blob_sha1": "0c4df76359adc89db870341d0c9517813ef131e9",
+      "bytes": 55053387,
+      "sha256": "d9fc18e080acba24b4e6bc0ec967d4632b861263210d69cebd0d4de71166f88a",
+      "expected_features": 89933,
+      "geometry_counts": {
+        "LineString": 89933
+      },
+      "coordinate_tuples": 697695,
+      "bbox": [
+        -7.3155871,
+        50.1206441,
+        1.780482,
+        58.5902167
+      ],
+      "property_key_count": 318,
+      "property_schema_sha256": "169051137cc8abd08b83ad1b87586614e7d8f22daa0a4c735042709eb2c68577",
+      "raw_property_pairs": 1229762,
+      "retained_property_pairs": 224845,
+      "dropped_property_pairs": 1004917,
+      "layer_ids": [
+        "mainline_rail"
+      ],
+      "output_partition": "partitions/uk_mainline_railways.parquet",
+      "source_scope": "root-absolute",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Heavy OSM-derived context; partitioned Parquet/PMTiles only.",
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "publishable": false
+    },
+    {
+      "source_id": "uk_trunk_roads",
+      "phase": "p4_trunk_roads",
+      "wiring": "wired",
+      "configured_urls": [
+        "/uk_trunk_roads.geojson"
+      ],
+      "resolved_path": "uk_trunk_roads.geojson",
+      "git_blob_sha1": "712844ecd0689936c5b1c0a132cf8ef7a383b51a",
+      "bytes": 67527843,
+      "sha256": "52ce52729db2eb7960e02b5dc9cdfa4bf549d0c28e48438df80b965b86335ffd",
+      "expected_features": 130228,
+      "geometry_counts": {
+        "LineString": 130228
+      },
+      "coordinate_tuples": 978479,
+      "bbox": [
+        -8.0980662,
+        50.091831,
+        1.7563432,
+        58.612392
+      ],
+      "property_key_count": 874,
+      "property_schema_sha256": "1a094ae80ab771157b2ec5419d195e335cfe6e8d7aad14a5006001abf341255c",
+      "raw_property_pairs": 1371639,
+      "retained_property_pairs": 151486,
+      "dropped_property_pairs": 1220153,
+      "layer_ids": [
+        "trunk_roads"
+      ],
+      "output_partition": "partitions/uk_trunk_roads.parquet",
+      "source_scope": "root-absolute",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Heavy OSM-derived roads; partitioned Parquet/PMTiles only.",
+      "disposition": "PARITY_CANDIDATE_NEEDS_REACQUISITION_AND_LICENCE_PROOF",
+      "publishable": false
+    },
+    {
+      "source_id": "deep_subsea_illustrative",
+      "phase": "quarantine",
+      "wiring": "unwired",
+      "configured_urls": [],
+      "resolved_path": "repd_grid_atlasv8/data/deep_subsea_illustrative.geojson",
+      "git_blob_sha1": "d71efce38d72f00c41953d1015815e7bd146a031",
+      "bytes": 2875,
+      "sha256": "b77e4d4c0d1be5d7d2a98f9fc95bd573e1bd5c33c17dcbe6a4207970d43d7d59",
+      "expected_features": 4,
+      "geometry_counts": {
+        "LineString": 4
+      },
+      "coordinate_tuples": 22,
+      "bbox": [
+        -157.85,
+        -36.84,
+        174.76,
+        43.29
+      ],
+      "property_key_count": 4,
+      "property_schema_sha256": "efbbdd6a2fd2d2a59862af2eef1be8da742284fae110643da829b204e09c4eeb",
+      "raw_property_pairs": 16,
+      "retained_property_pairs": 16,
+      "dropped_property_pairs": 0,
+      "layer_ids": [],
+      "output_partition": "partitions/deep_subsea_illustrative.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Compile for evidence only; no V9 layer activation.",
+      "disposition": "QUARANTINED_UNWIRED",
+      "publishable": false
+    },
+    {
+      "source_id": "grid_11kv_ukpn",
+      "phase": "quarantine",
+      "wiring": "wired",
+      "configured_urls": [
+        "data/grid_11kv_ukpn.geojson"
+      ],
+      "resolved_path": "repd_grid_atlasv8/data/grid_11kv_ukpn.geojson",
+      "git_blob_sha1": "c35d58c0085a488d9c2bcb5b9a75a601723a609b",
+      "bytes": 3125509,
+      "sha256": "8edca03ddf50635feb80c1564f5c596808600502c75e5da9b5238a10573f5c54",
+      "expected_features": 15126,
+      "geometry_counts": {
+        "Point": 15126
+      },
+      "coordinate_tuples": 15126,
+      "bbox": [
+        -1.499916,
+        50.500104,
+        1.799313,
+        52.799845
+      ],
+      "property_key_count": 4,
+      "property_schema_sha256": "ee359b3ed1b4b8edcd64581d1f54166237374b03d7b8590fe102082faa85bd4d",
+      "raw_property_pairs": 60504,
+      "retained_property_pairs": 60504,
+      "dropped_property_pairs": 0,
+      "layer_ids": [
+        "11kv"
+      ],
+      "output_partition": "partitions/grid_11kv_ukpn.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Compile for evidence only; no V9 layer activation.",
+      "disposition": "QUARANTINED_SYNTHETIC_UKPN_11KV_IDENTITY",
+      "publishable": false
+    },
+    {
+      "source_id": "grid_33kv_east_of_england",
+      "phase": "quarantine",
+      "wiring": "unwired",
+      "configured_urls": [],
+      "resolved_path": "repd_grid_atlasv8/data/grid_33kv_East_of_England.geojson",
+      "git_blob_sha1": "3330550ff74bb782366dec72276037030dfd5cf8",
+      "bytes": 131462,
+      "sha256": "3b20dadce4e6e9ec68c05b95dae1258f43eaf5dacf7f48f8dc49338eaf7767e5",
+      "expected_features": 277,
+      "geometry_counts": {
+        "LineString": 277
+      },
+      "coordinate_tuples": 4065,
+      "bbox": [
+        -0.1665972,
+        51.4976,
+        1.7189493,
+        53.0486401
+      ],
+      "property_key_count": 1,
+      "property_schema_sha256": "9d1ae7646b1b27f7b68989a10a035f5a7e5f0b73d9ed3226e08602a3ba361678",
+      "raw_property_pairs": 277,
+      "retained_property_pairs": 277,
+      "dropped_property_pairs": 0,
+      "layer_ids": [],
+      "output_partition": "partitions/grid_33kv_east_of_england.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Compile for evidence only; no V9 layer activation.",
+      "disposition": "QUARANTINED_UNWIRED",
+      "publishable": false
+    },
+    {
+      "source_id": "grid_33kv_london_area",
+      "phase": "quarantine",
+      "wiring": "unwired",
+      "configured_urls": [],
+      "resolved_path": "repd_grid_atlasv8/data/grid_33kv_London_Area.geojson",
+      "git_blob_sha1": "58541ba3db7181e4161b50b92d51ae43af024eac",
+      "bytes": 43734,
+      "sha256": "f5c292ce2c9519716d2935775099426309c4851b42798a177f084bc1f8215466",
+      "expected_features": 75,
+      "geometry_counts": {
+        "LineString": 75
+      },
+      "coordinate_tuples": 1417,
+      "bbox": [
+        -0.5080533,
+        51.1511215,
+        0.3593691,
+        51.6987224
+      ],
+      "property_key_count": 1,
+      "property_schema_sha256": "9d1ae7646b1b27f7b68989a10a035f5a7e5f0b73d9ed3226e08602a3ba361678",
+      "raw_property_pairs": 75,
+      "retained_property_pairs": 75,
+      "dropped_property_pairs": 0,
+      "layer_ids": [],
+      "output_partition": "partitions/grid_33kv_london_area.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Compile for evidence only; no V9 layer activation.",
+      "disposition": "QUARANTINED_UNWIRED",
+      "publishable": false
+    },
+    {
+      "source_id": "grid_33kv_north_east_england",
+      "phase": "quarantine",
+      "wiring": "unwired",
+      "configured_urls": [],
+      "resolved_path": "repd_grid_atlasv8/data/grid_33kv_North_East_England.geojson",
+      "git_blob_sha1": "3704e885a3a77777f3d30406f3d007e2a4a646bc",
+      "bytes": 27200,
+      "sha256": "89357a8873a88e2783d799cdb64c74c21154b0b0e101239103fac849d8ba7233",
+      "expected_features": 37,
+      "geometry_counts": {
+        "LineString": 37
+      },
+      "coordinate_tuples": 897,
+      "bbox": [
+        -1.7022366,
+        54.0821226,
+        -0.4141817,
+        55.1501659
+      ],
+      "property_key_count": 1,
+      "property_schema_sha256": "9d1ae7646b1b27f7b68989a10a035f5a7e5f0b73d9ed3226e08602a3ba361678",
+      "raw_property_pairs": 37,
+      "retained_property_pairs": 37,
+      "dropped_property_pairs": 0,
+      "layer_ids": [],
+      "output_partition": "partitions/grid_33kv_north_east_england.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Compile for evidence only; no V9 layer activation.",
+      "disposition": "QUARANTINED_UNWIRED",
+      "publishable": false
+    },
+    {
+      "source_id": "grid_33kv_north_west_england",
+      "phase": "quarantine",
+      "wiring": "unwired",
+      "configured_urls": [],
+      "resolved_path": "repd_grid_atlasv8/data/grid_33kv_North_West_England.geojson",
+      "git_blob_sha1": "a93d98d23a0d5c0cd7683ca8e31df41a7a6ec6af",
+      "bytes": 161753,
+      "sha256": "474ec6e05132c39e08e564e0d6e717995a9a7ed107dfb631e5a29168d8ea40aa",
+      "expected_features": 389,
+      "geometry_counts": {
+        "LineString": 389
+      },
+      "coordinate_tuples": 4617,
+      "bbox": [
+        -3.5537334,
+        52.9724568,
+        -1.9720021,
+        54.9528857
+      ],
+      "property_key_count": 1,
+      "property_schema_sha256": "9d1ae7646b1b27f7b68989a10a035f5a7e5f0b73d9ed3226e08602a3ba361678",
+      "raw_property_pairs": 389,
+      "retained_property_pairs": 389,
+      "dropped_property_pairs": 0,
+      "layer_ids": [],
+      "output_partition": "partitions/grid_33kv_north_west_england.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Compile for evidence only; no V9 layer activation.",
+      "disposition": "QUARANTINED_UNWIRED",
+      "publishable": false
+    },
+    {
+      "source_id": "grid_33kv_scotland_north",
+      "phase": "quarantine",
+      "wiring": "unwired",
+      "configured_urls": [],
+      "resolved_path": "repd_grid_atlasv8/data/grid_33kv_Scotland_North.geojson",
+      "git_blob_sha1": "3b05d3c111880092e325279f5f4ec5549d2eac61",
+      "bytes": 220709,
+      "sha256": "8a6bc8ab51115ad68630898989998f677f590f4e03deb26645a84d336724c6cb",
+      "expected_features": 254,
+      "geometry_counts": {
+        "LineString": 254
+      },
+      "coordinate_tuples": 7477,
+      "bbox": [
+        -7.3551589,
+        56.5085291,
+        -1.372304,
+        58.927279
+      ],
+      "property_key_count": 1,
+      "property_schema_sha256": "9d1ae7646b1b27f7b68989a10a035f5a7e5f0b73d9ed3226e08602a3ba361678",
+      "raw_property_pairs": 254,
+      "retained_property_pairs": 254,
+      "dropped_property_pairs": 0,
+      "layer_ids": [],
+      "output_partition": "partitions/grid_33kv_scotland_north.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Compile for evidence only; no V9 layer activation.",
+      "disposition": "QUARANTINED_UNWIRED",
+      "publishable": false
+    },
+    {
+      "source_id": "grid_33kv_scotland_south",
+      "phase": "quarantine",
+      "wiring": "unwired",
+      "configured_urls": [],
+      "resolved_path": "repd_grid_atlasv8/data/grid_33kv_Scotland_South.geojson",
+      "git_blob_sha1": "a0cc0464d9811f89e155e738ef180b5bc18eee9a",
+      "bytes": 76647,
+      "sha256": "1ec82c92cb76fc8395c8b14b04995630ab4a247e0e68a427e1b4394f5177c150",
+      "expected_features": 158,
+      "geometry_counts": {
+        "LineString": 158
+      },
+      "coordinate_tuples": 2299,
+      "bbox": [
+        -5.5151273,
+        54.7767483,
+        -1.4131,
+        56.447912
+      ],
+      "property_key_count": 1,
+      "property_schema_sha256": "9d1ae7646b1b27f7b68989a10a035f5a7e5f0b73d9ed3226e08602a3ba361678",
+      "raw_property_pairs": 158,
+      "retained_property_pairs": 158,
+      "dropped_property_pairs": 0,
+      "layer_ids": [],
+      "output_partition": "partitions/grid_33kv_scotland_south.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Compile for evidence only; no V9 layer activation.",
+      "disposition": "QUARANTINED_UNWIRED",
+      "publishable": false
+    },
+    {
+      "source_id": "grid_33kv_south_east_england",
+      "phase": "quarantine",
+      "wiring": "unwired",
+      "configured_urls": [],
+      "resolved_path": "repd_grid_atlasv8/data/grid_33kv_South_East_England.geojson",
+      "git_blob_sha1": "049e5c17acab26ca0f87a25d40993bfc540579f9",
+      "bytes": 233997,
+      "sha256": "51f3ee2f19b586307d9fa98d2f8a06c14a938d8b34819faaf90ed7970973abbe",
+      "expected_features": 499,
+      "geometry_counts": {
+        "LineString": 499
+      },
+      "coordinate_tuples": 7086,
+      "bbox": [
+        -1.5517849,
+        50.635159,
+        0.5145826,
+        51.5177463
+      ],
+      "property_key_count": 1,
+      "property_schema_sha256": "9d1ae7646b1b27f7b68989a10a035f5a7e5f0b73d9ed3226e08602a3ba361678",
+      "raw_property_pairs": 499,
+      "retained_property_pairs": 499,
+      "dropped_property_pairs": 0,
+      "layer_ids": [],
+      "output_partition": "partitions/grid_33kv_south_east_england.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Compile for evidence only; no V9 layer activation.",
+      "disposition": "QUARANTINED_UNWIRED",
+      "publishable": false
+    },
+    {
+      "source_id": "grid_33kv_south_west_england",
+      "phase": "quarantine",
+      "wiring": "unwired",
+      "configured_urls": [],
+      "resolved_path": "repd_grid_atlasv8/data/grid_33kv_South_West_England.geojson",
+      "git_blob_sha1": "98a371259092f9c2480e1f14101af850300fc551",
+      "bytes": 1013020,
+      "sha256": "ae86bc2effe5561e981bdaf6c20fa1631a7da75ce47b9d5a880d27d586e3a06a",
+      "expected_features": 1070,
+      "geometry_counts": {
+        "LineString": 1070
+      },
+      "coordinate_tuples": 34736,
+      "bbox": [
+        -6.3141507,
+        49.8979518,
+        -2.0041328,
+        51.5427177
+      ],
+      "property_key_count": 1,
+      "property_schema_sha256": "9d1ae7646b1b27f7b68989a10a035f5a7e5f0b73d9ed3226e08602a3ba361678",
+      "raw_property_pairs": 1070,
+      "retained_property_pairs": 1070,
+      "dropped_property_pairs": 0,
+      "layer_ids": [],
+      "output_partition": "partitions/grid_33kv_south_west_england.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Compile for evidence only; no V9 layer activation.",
+      "disposition": "QUARANTINED_UNWIRED",
+      "publishable": false
+    },
+    {
+      "source_id": "grid_33kv_wales_north",
+      "phase": "quarantine",
+      "wiring": "unwired",
+      "configured_urls": [],
+      "resolved_path": "repd_grid_atlasv8/data/grid_33kv_Wales_North.geojson",
+      "git_blob_sha1": "739a1bd2a45b3f9db0e843a82669dc4a05d14fb3",
+      "bytes": 113989,
+      "sha256": "eae330ef232a6eea62c86f160fd92ae0b01989341f2e5e4aaf6e4189b58b49c5",
+      "expected_features": 248,
+      "geometry_counts": {
+        "LineString": 248
+      },
+      "coordinate_tuples": 3365,
+      "bbox": [
+        -4.5433881,
+        52.4914452,
+        -2.7235587,
+        53.5020523
+      ],
+      "property_key_count": 1,
+      "property_schema_sha256": "9d1ae7646b1b27f7b68989a10a035f5a7e5f0b73d9ed3226e08602a3ba361678",
+      "raw_property_pairs": 248,
+      "retained_property_pairs": 248,
+      "dropped_property_pairs": 0,
+      "layer_ids": [],
+      "output_partition": "partitions/grid_33kv_wales_north.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Compile for evidence only; no V9 layer activation.",
+      "disposition": "QUARANTINED_UNWIRED",
+      "publishable": false
+    },
+    {
+      "source_id": "grid_33kv_wales_south",
+      "phase": "quarantine",
+      "wiring": "unwired",
+      "configured_urls": [],
+      "resolved_path": "repd_grid_atlasv8/data/grid_33kv_Wales_South.geojson",
+      "git_blob_sha1": "11a7fc71f49c6759596c4d1798fe201e4f2a57dc",
+      "bytes": 1165527,
+      "sha256": "bfd7cfd936c6c8845055b558c8fb23d00cc822a66fe839abf37ce4827ee74fc5",
+      "expected_features": 2133,
+      "geometry_counts": {
+        "LineString": 2133
+      },
+      "coordinate_tuples": 36113,
+      "bbox": [
+        -5.2534792,
+        51.1703351,
+        -2.3408875,
+        52.5001944
+      ],
+      "property_key_count": 1,
+      "property_schema_sha256": "9d1ae7646b1b27f7b68989a10a035f5a7e5f0b73d9ed3226e08602a3ba361678",
+      "raw_property_pairs": 2133,
+      "retained_property_pairs": 2133,
+      "dropped_property_pairs": 0,
+      "layer_ids": [],
+      "output_partition": "partitions/grid_33kv_wales_south.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Compile for evidence only; no V9 layer activation.",
+      "disposition": "QUARANTINED_UNWIRED",
+      "publishable": false
+    },
+    {
+      "source_id": "grid_33kv_yorkshire",
+      "phase": "quarantine",
+      "wiring": "unwired",
+      "configured_urls": [],
+      "resolved_path": "repd_grid_atlasv8/data/grid_33kv_Yorkshire.geojson",
+      "git_blob_sha1": "97b8660aad96f660a2455f2bdeccce7370cd157b",
+      "bytes": 278029,
+      "sha256": "e490a8300369823b49cd7ebcc235c538a8f563448cf43d13ef4d2a7164c6a2fd",
+      "expected_features": 608,
+      "geometry_counts": {
+        "LineString": 608
+      },
+      "coordinate_tuples": 8233,
+      "bbox": [
+        -1.603278,
+        52.9065264,
+        0.517699,
+        54.4805473
+      ],
+      "property_key_count": 1,
+      "property_schema_sha256": "9d1ae7646b1b27f7b68989a10a035f5a7e5f0b73d9ed3226e08602a3ba361678",
+      "raw_property_pairs": 608,
+      "retained_property_pairs": 608,
+      "dropped_property_pairs": 0,
+      "layer_ids": [],
+      "output_partition": "partitions/grid_33kv_yorkshire.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Compile for evidence only; no V9 layer activation.",
+      "disposition": "QUARANTINED_UNWIRED",
+      "publishable": false
+    },
+    {
+      "source_id": "industrial_offtakers",
+      "phase": "quarantine",
+      "wiring": "wired",
+      "configured_urls": [
+        "data/industrial_offtakers.geojson"
+      ],
+      "resolved_path": "repd_grid_atlasv8/data/industrial_offtakers.geojson",
+      "git_blob_sha1": "ed80f5be9c3257cd2853da3cf60e7f9dc54e319f",
+      "bytes": 1193462,
+      "sha256": "c4b3fff1c1da07cf1638e3f1d619ac70ec36be9093a9ca1512329a78ec713919",
+      "expected_features": 5878,
+      "geometry_counts": {
+        "Point": 5878
+      },
+      "coordinate_tuples": 5878,
+      "bbox": [
+        -8.0923571,
+        49.9139913,
+        1.7350109,
+        60.4646726
+      ],
+      "property_key_count": 3,
+      "property_schema_sha256": "7cb6e1bf9a8f47c204f1d5f593ac4cd5b9b6f93bc0586cbdc658eca24257e3bb",
+      "raw_property_pairs": 17634,
+      "retained_property_pairs": 17634,
+      "dropped_property_pairs": 0,
+      "layer_ids": [
+        "ind"
+      ],
+      "output_partition": "partitions/industrial_offtakers.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Compile for evidence only; no V9 layer activation.",
+      "disposition": "QUARANTINED_OUTPUT_NOT_REPRODUCIBLE_FROM_ADJACENT_FETCHER",
+      "publishable": false
+    },
+    {
+      "source_id": "supermarkets_farmfoods",
+      "phase": "quarantine",
+      "wiring": "unwired",
+      "configured_urls": [],
+      "resolved_path": "repd_grid_atlasv8/data/supermarkets_farmfoods.geojson",
+      "git_blob_sha1": "3aa0a428cee3b762abafa05845c0b1ce2d2760a9",
+      "bytes": 42,
+      "sha256": "ed778c73ea51338d6576fb5992b189f2b94d9f3d5e199f46c1af520d6b0b3e6c",
+      "expected_features": 0,
+      "geometry_counts": {},
+      "coordinate_tuples": 0,
+      "bbox": null,
+      "property_key_count": 0,
+      "property_schema_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "raw_property_pairs": 0,
+      "retained_property_pairs": 0,
+      "dropped_property_pairs": 0,
+      "layer_ids": [],
+      "output_partition": "partitions/supermarkets_farmfoods.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Compile for evidence only; no V9 layer activation.",
+      "disposition": "QUARANTINED_UNWIRED",
+      "publishable": false
+    },
+    {
+      "source_id": "supermarkets_iceland",
+      "phase": "quarantine",
+      "wiring": "unwired",
+      "configured_urls": [],
+      "resolved_path": "repd_grid_atlasv8/data/supermarkets_iceland.geojson",
+      "git_blob_sha1": "3aa0a428cee3b762abafa05845c0b1ce2d2760a9",
+      "bytes": 42,
+      "sha256": "ed778c73ea51338d6576fb5992b189f2b94d9f3d5e199f46c1af520d6b0b3e6c",
+      "expected_features": 0,
+      "geometry_counts": {},
+      "coordinate_tuples": 0,
+      "bbox": null,
+      "property_key_count": 0,
+      "property_schema_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "raw_property_pairs": 0,
+      "retained_property_pairs": 0,
+      "dropped_property_pairs": 0,
+      "layer_ids": [],
+      "output_partition": "partitions/supermarkets_iceland.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Compile for evidence only; no V9 layer activation.",
+      "disposition": "QUARANTINED_UNWIRED",
+      "publishable": false
+    },
+    {
+      "source_id": "supermarkets_spar",
+      "phase": "quarantine",
+      "wiring": "unwired",
+      "configured_urls": [],
+      "resolved_path": "repd_grid_atlasv8/data/supermarkets_spar.geojson",
+      "git_blob_sha1": "3aa0a428cee3b762abafa05845c0b1ce2d2760a9",
+      "bytes": 42,
+      "sha256": "ed778c73ea51338d6576fb5992b189f2b94d9f3d5e199f46c1af520d6b0b3e6c",
+      "expected_features": 0,
+      "geometry_counts": {},
+      "coordinate_tuples": 0,
+      "bbox": null,
+      "property_key_count": 0,
+      "property_schema_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "raw_property_pairs": 0,
+      "retained_property_pairs": 0,
+      "dropped_property_pairs": 0,
+      "layer_ids": [],
+      "output_partition": "partitions/supermarkets_spar.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Compile for evidence only; no V9 layer activation.",
+      "disposition": "QUARANTINED_UNWIRED",
+      "publishable": false
+    },
+    {
+      "source_id": "uk_metros_trams_local_unwired",
+      "phase": "quarantine",
+      "wiring": "unwired",
+      "configured_urls": [],
+      "resolved_path": "repd_grid_atlasv8/data/uk_metros_trams.geojson",
+      "git_blob_sha1": "2c8297b41d5e09ed032f2c76d260ea5b886fb768",
+      "bytes": 1649975,
+      "sha256": "6d0516fcb84e164a21647bf206af01a124a414879ef923224701e09cc33a9dcd",
+      "expected_features": 5267,
+      "geometry_counts": {
+        "Point": 5267
+      },
+      "coordinate_tuples": 5267,
+      "bbox": [
+        -4.0322333,
+        50.7050906,
+        0.9745763,
+        57.2006528
+      ],
+      "property_key_count": 3,
+      "property_schema_sha256": "7cb6e1bf9a8f47c204f1d5f593ac4cd5b9b6f93bc0586cbdc658eca24257e3bb",
+      "raw_property_pairs": 15801,
+      "retained_property_pairs": 15801,
+      "dropped_property_pairs": 0,
+      "layer_ids": [],
+      "output_partition": "partitions/uk_metros_trams_local_unwired.parquet",
+      "source_scope": "atlas-local",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Compile for evidence only; no V9 layer activation.",
+      "disposition": "QUARANTINED_UNWIRED",
+      "publishable": false
+    },
+    {
+      "source_id": "uk_metros_trams_root",
+      "phase": "quarantine",
+      "wiring": "wired",
+      "configured_urls": [
+        "/uk_metros_trams.geojson"
+      ],
+      "resolved_path": "uk_metros_trams.geojson",
+      "git_blob_sha1": "ec20aafcea3e7a386ff18a6aef3b865cf626bf4d",
+      "bytes": 4697463,
+      "sha256": "535e07fea6898614013bf3067794c1cd4c0488083631d9a70e86798cfbf00692",
+      "expected_features": 7829,
+      "geometry_counts": {
+        "LineString": 7829
+      },
+      "coordinate_tuples": 68431,
+      "bbox": [
+        -5.81032,
+        50.7050011,
+        1.6872595,
+        56.1324762
+      ],
+      "property_key_count": 166,
+      "property_schema_sha256": "ed9822ff936ed30117affacb05dac690a5663b29ffbaa37936a9d8967432fbdf",
+      "raw_property_pairs": 91796,
+      "retained_property_pairs": 21409,
+      "dropped_property_pairs": 70387,
+      "layer_ids": [
+        "dlr",
+        "metro",
+        "tram"
+      ],
+      "output_partition": "partitions/uk_metros_trams_root.parquet",
+      "source_scope": "root-absolute",
+      "authority_state": "UNVERIFIED",
+      "licence_state": "UNVERIFIED",
+      "provenance_note": "Compile for evidence only; no V9 layer activation.",
+      "disposition": "QUARANTINED_GEOMETRY_MISMATCH",
+      "publishable": false
+    }
+  ]
+}

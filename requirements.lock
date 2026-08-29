@@ -1,1 +1,2 @@
-duckdb==1.3.2
+duckdb==1.3.2 \
+    --hash=sha256:36abdfe0d1704fe09b08d233165f312dad7d7d0ecaaca5fb3bb869f4838a2d0b

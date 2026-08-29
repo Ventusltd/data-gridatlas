@@ -1,0 +1,31 @@
+{
+  "schema": "data-gridatlas.repository-boundary.v2",
+  "generation": "202608291015",
+  "expected_tracked_files": [
+    ".github/workflows/202608290904-bootstrap-verify-data-gridatlas.yml",
+    ".github/workflows/202608291015-build-v8-transplant-candidate.yml",
+    ".gitignore",
+    "README.md",
+    "atman/202608290904-verify-bootstrap.py",
+    "atman/202608291015-verify-v8-transplant.py",
+    "compiler/202608290904-build-dependency-catalog.py",
+    "compiler/202608291015-build-v8-transplant.py",
+    "contracts/202608290904-data-gridatlas-bootstrap.json",
+    "contracts/202608290904-gridatlas-consumer.json",
+    "contracts/202608290904-v8-dependency-ledger.json",
+    "contracts/202608290904-v8-file-ledger.json",
+    "contracts/202608290904-v8-quarantine.json",
+    "contracts/202608291015-repository-boundary.json",
+    "contracts/202608291015-v8-layer-config.json",
+    "contracts/202608291015-v8-runtime-dependencies.json",
+    "contracts/202608291015-v8-transplant-plan.json",
+    "requirements.lock",
+    "schemas/202608291015-v8-transplant-parquet.json"
+  ],
+  "maximum_file_bytes": 1000000,
+  "maximum_repository_bytes": 3000000,
+  "forbidden_suffixes": [".geojson", ".csv", ".tsv", ".xlsx", ".parquet", ".duckdb", ".zip", ".tar", ".gz"],
+  "forbidden_roots": ["data", "dist", "releases", "state", "work", "build-a", "build-b", "build-cache", "build-evidence"],
+  "historical_workflow_rule": "Timestamped predecessor workflows may trigger only on their own timestamped source inputs.",
+  "candidate_rule": "Generated V8 parity payloads are Actions artifacts only; no source-tree payload or Pages data publication."
+}
