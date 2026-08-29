@@ -1,0 +1,598 @@
+name: 202608291237 Publish live Data Grid Atlas V9
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/202608291237-publish-live-data-gridatlas.yml'
+      - 'atman/202608291237-verify-live-data-release.py'
+      - 'compiler/202608291237-materialise-live-data-release.py'
+      - 'contracts/202608291237-live-data-release.json'
+      - '202608291237-data-gridatlas/**'
+
+permissions: {}
+
+concurrency:
+  group: data-gridatlas-live-202608291237
+  cancel-in-progress: false
+
+env:
+  RELEASE_ID: 202608291237-data-gridatlas
+  RELEASE_CONTRACT: contracts/202608291237-live-data-release.json
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+
+jobs:
+  classify:
+    name: Classify immutable source or release commit
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    outputs:
+      mode: ${{ steps.classify.outputs.mode }}
+    steps:
+      - name: Checkout exact triggering commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 2
+          persist-credentials: false
+
+      - name: Classify by immutable folder presence
+        id: classify
+        run: |
+          test "$GITHUB_EVENT_NAME" = push
+          test "$GITHUB_REF" = refs/heads/main
+          if test -d "$RELEASE_ID"; then
+            printf 'mode=release\n' >> "$GITHUB_OUTPUT"
+          elif test -e "$RELEASE_ID"; then
+            echo 'release path exists but is not a directory' >&2
+            exit 1
+          else
+            printf 'mode=source\n' >> "$GITHUB_OUTPUT"
+          fi
+
+  materialise_verify_stage:
+    name: Materialise, double-verify and stage exact child commit
+    needs: classify
+    if: needs.classify.outputs.mode == 'source'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      actions: read
+      contents: write
+    steps:
+      - name: Checkout exact successor source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 2
+          persist-credentials: true
+
+      - name: Enforce source compare-and-swap
+        env:
+          EXECUTED_WORKFLOW_SHA: ${{ github.workflow_sha }}
+        run: |
+          test "$GITHUB_REF" = refs/heads/main
+          test "$EXECUTED_WORKFLOW_SHA" = "$GITHUB_SHA"
+          git fetch --no-tags --depth=1 origin main:refs/remotes/origin/main
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          test "$(git rev-parse origin/main)" = "$GITHUB_SHA"
+          test ! -e "$RELEASE_ID"
+          test -z "$(git status --porcelain --untracked-files=all)"
+
+      - name: Configure pinned Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12.13'
+
+      - name: Install locked DuckDB engine
+        run: python -m pip install --disable-pip-version-check --require-hashes -r requirements.lock
+
+      - name: Resolve completed candidate contract
+        id: candidate
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          contract = json.loads(Path(os.environ['RELEASE_CONTRACT']).read_text(encoding='utf-8'))
+          candidate = contract['candidate']
+          unresolved = []
+          def walk(value, path='candidate'):
+              if isinstance(value, dict):
+                  for key, item in value.items():
+                      walk(item, f'{path}.{key}')
+              elif isinstance(value, list):
+                  for index, item in enumerate(value):
+                      walk(item, f'{path}[{index}]')
+              elif isinstance(value, str) and value.startswith('__NEW_CANDIDATE_'):
+                  unresolved.append(f'{path}={value}')
+          walk(candidate)
+          if unresolved:
+              raise SystemExit('candidate run is not yet receipted: ' + ', '.join(unresolved))
+          if candidate['workflow_run_id'] != 33250896568:
+              raise SystemExit('unexpected candidate workflow run')
+          outputs = {
+              'run_id': candidate['workflow_run_id'],
+              'artifact_id': candidate['artifact_id'],
+              'artifact_name': candidate['artifact_name'],
+              'artifact_digest': candidate['artifact_digest'],
+              'artifact_archive_bytes': candidate['artifact_archive_bytes'],
+              'source_commit': candidate['source_commit'],
+          }
+          with Path(os.environ['GITHUB_OUTPUT']).open('a', encoding='utf-8') as handle:
+              for key, value in outputs.items():
+                  handle.write(f'{key}={value}\n')
+          PY
+
+      - name: Verify exact immutable candidate receipt
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EXPECTED_RUN_ID: ${{ steps.candidate.outputs.run_id }}
+          EXPECTED_ARTIFACT_ID: ${{ steps.candidate.outputs.artifact_id }}
+          EXPECTED_ARTIFACT_NAME: ${{ steps.candidate.outputs.artifact_name }}
+          EXPECTED_ARTIFACT_DIGEST: ${{ steps.candidate.outputs.artifact_digest }}
+          EXPECTED_ARTIFACT_BYTES: ${{ steps.candidate.outputs.artifact_archive_bytes }}
+          EXPECTED_SOURCE_COMMIT: ${{ steps.candidate.outputs.source_commit }}
+        run: |
+          mkdir -p work
+          curl --fail --silent --show-error --location \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H 'X-GitHub-Api-Version: 2022-11-28' \
+            "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/artifacts/$EXPECTED_ARTIFACT_ID" \
+            --output work/candidate-artifact-receipt.json
+          curl --fail --silent --show-error --location \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H 'X-GitHub-Api-Version: 2022-11-28' \
+            "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/runs/$EXPECTED_RUN_ID" \
+            --output work/candidate-workflow-run-receipt.json
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          item = json.loads(Path('work/candidate-artifact-receipt.json').read_text(encoding='utf-8'))
+          expected = {
+              'id': int(os.environ['EXPECTED_ARTIFACT_ID']),
+              'name': os.environ['EXPECTED_ARTIFACT_NAME'],
+              'digest': os.environ['EXPECTED_ARTIFACT_DIGEST'],
+              'size_in_bytes': int(os.environ['EXPECTED_ARTIFACT_BYTES']),
+              'expired': False,
+          }
+          for key, value in expected.items():
+              if item.get(key) != value:
+                  raise SystemExit(f'artifact receipt mismatch: {key}')
+          run = item.get('workflow_run') or {}
+          if run.get('id') != int(os.environ['EXPECTED_RUN_ID']):
+              raise SystemExit('artifact workflow run mismatch')
+          if run.get('head_sha') != os.environ['EXPECTED_SOURCE_COMMIT']:
+              raise SystemExit('artifact source commit mismatch')
+          workflow = json.loads(Path('work/candidate-workflow-run-receipt.json').read_text(encoding='utf-8'))
+          expected_workflow = {
+              'id': int(os.environ['EXPECTED_RUN_ID']),
+              'path': '.github/workflows/202608291015-build-v8-transplant-candidate.yml',
+              'event': 'push',
+              'head_branch': 'main',
+              'head_sha': os.environ['EXPECTED_SOURCE_COMMIT'],
+              'status': 'completed',
+              'conclusion': 'success',
+              'run_attempt': 1,
+          }
+          for key, value in expected_workflow.items():
+              if workflow.get(key) != value:
+                  raise SystemExit(f'candidate workflow provenance mismatch: {key}')
+          PY
+
+      - name: Download exact candidate by immutable artifact ID
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131
+        with:
+          artifact-ids: ${{ steps.candidate.outputs.artifact_id }}
+          path: work/verified-candidate
+          github-token: ${{ github.token }}
+          repository: Ventusltd/data-gridatlas
+          run-id: ${{ steps.candidate.outputs.run_id }}
+
+      - name: Materialise deterministic live releases A and B
+        run: |
+          python compiler/202608291237-materialise-live-data-release.py \
+            --repository . \
+            --candidate work/verified-candidate/candidate \
+            --proof work/verified-candidate/work/full-candidate-verification.json \
+            --source-commit "$GITHUB_SHA" \
+            --output "work/release-a/$RELEASE_ID"
+          python compiler/202608291237-materialise-live-data-release.py \
+            --repository . \
+            --candidate work/verified-candidate/candidate \
+            --proof work/verified-candidate/work/full-candidate-verification.json \
+            --source-commit "$GITHUB_SHA" \
+            --output "work/release-b/$RELEASE_ID"
+          (cd work/release-a && find . -type f -print0 | sort -z | xargs -0 sha256sum) > work/release-a.sha256
+          (cd work/release-b && find . -type f -print0 | sort -z | xargs -0 sha256sum) > work/release-b.sha256
+          diff --unified work/release-a.sha256 work/release-b.sha256
+          (cd "work/release-a/$RELEASE_ID" && sha256sum --check sha256sums.txt)
+
+      - name: Independently verify both release trees
+        run: |
+          python atman/202608291237-verify-live-data-release.py \
+            --repository . \
+            --release "work/release-a/$RELEASE_ID" \
+            --source-commit "$GITHUB_SHA" \
+            --output work/release-a-verification.json
+          python atman/202608291237-verify-live-data-release.py \
+            --repository . \
+            --release "work/release-b/$RELEASE_ID" \
+            --source-commit "$GITHUB_SHA" \
+            --output work/release-b-verification.json
+          diff --unified work/release-a-verification.json work/release-b-verification.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          proof = json.loads(Path('work/release-a-verification.json').read_text(encoding='utf-8'))
+          if proof.get('classification') != 'VERIFIED_IMMUTABLE_LIVE_DATA_RELEASE' or proof.get('failed') != 0:
+              raise SystemExit(f'live release rejected: {proof}')
+          PY
+
+      - name: Create and CAS-push exact child to staging only
+        run: |
+          test ! -e "$RELEASE_ID"
+          cp -a "work/release-a/$RELEASE_ID" "$RELEASE_ID"
+          git add -- "$RELEASE_ID"
+          test -n "$(git diff --cached --name-only)"
+          python - <<'PY'
+          import os, subprocess
+          release = os.environ['RELEASE_ID'] + '/'
+          paths = subprocess.check_output(['git', 'diff', '--cached', '--name-only'], text=True).splitlines()
+          if not paths or any(not path.startswith(release) for path in paths):
+              raise SystemExit(f'staged boundary violation: {paths}')
+          PY
+          git fetch --no-tags --depth=1 origin main:refs/remotes/origin/main
+          test "$(git rev-parse origin/main)" = "$GITHUB_SHA"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          SOURCE_DATE="$(git show -s --format=%cI "$GITHUB_SHA")"
+          export GIT_AUTHOR_DATE="$SOURCE_DATE"
+          export GIT_COMMITTER_DATE="$SOURCE_DATE"
+          git commit -m "202608291237: publish immutable Data Grid Atlas V9 data"
+          test "$(git rev-parse HEAD^)" = "$GITHUB_SHA"
+          test "$(git show -s --format=%P HEAD)" = "$GITHUB_SHA"
+          git fetch --no-tags --depth=1 origin main:refs/remotes/origin/main
+          test "$(git rev-parse origin/main)" = "$GITHUB_SHA"
+          STAGING_REF='refs/heads/ci/202608291237-data-gridatlas'
+          REMOTE_STAGING="$(git ls-remote --heads origin "$STAGING_REF" | awk '{print $1}')"
+          if test -n "$REMOTE_STAGING"; then
+            test "$REMOTE_STAGING" = "$(git rev-parse HEAD)"
+          else
+            git push origin "HEAD:$STAGING_REF"
+          fi
+          test "$(git ls-remote --heads origin "$STAGING_REF" | awk '{print $1}')" = "$(git rev-parse HEAD)"
+          python - <<'PY'
+          import hashlib, json, os, subprocess
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          release_id = os.environ['RELEASE_ID']
+          source_commit = os.environ['GITHUB_SHA']
+          staged_commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
+          parent = subprocess.check_output(['git', 'show', '-s', '--format=%P', 'HEAD'], text=True).strip()
+          changed = subprocess.check_output(
+              ['git', 'diff', '--name-only', source_commit, staged_commit], text=True
+          ).splitlines()
+          if parent != source_commit or not changed or any(
+              not path.startswith(release_id + '/') for path in changed
+          ):
+              raise SystemExit(f'staged child boundary mismatch: parent={parent} paths={changed}')
+          def digest(path):
+              return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+          proof = {
+              'schema': 'data-gridatlas.staged-live-release-commit-proof.v1',
+              'classification': 'VERIFIED_STAGED_IMMUTABLE_LIVE_DATA_RELEASE',
+              'recorded_at': datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z'),
+              'repository': os.environ['GITHUB_REPOSITORY'],
+              'source_commit': source_commit,
+              'staged_commit': staged_commit,
+              'staged_commit_parent': parent,
+              'staged_tree': subprocess.check_output(['git', 'rev-parse', 'HEAD^{tree}'], text=True).strip(),
+              'staging_ref': 'refs/heads/ci/202608291237-data-gridatlas',
+              'main_mutated_by_workflow': False,
+              'release_id': release_id,
+              'changed_files': len(changed),
+              'release_sha256': digest(f'{release_id}/release.json'),
+              'ledger_sha256': digest(f'{release_id}/sha256sums.txt'),
+              'candidate_run_id': 33250896568,
+              'candidate_artifact_id': 9714380586,
+              'failed': 0,
+          }
+          Path('work/staged-commit-proof.json').write_text(
+              json.dumps(proof, sort_keys=True, indent=2) + '\n', encoding='utf-8'
+          )
+          print(json.dumps(proof, sort_keys=True))
+          PY
+
+      - name: Retain independent staging proof
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: data-gridatlas-202608291237-live-staging-proof-${{ github.sha }}
+          path: |
+            work/candidate-artifact-receipt.json
+            work/candidate-workflow-run-receipt.json
+            work/release-a-verification.json
+            work/release-b-verification.json
+            work/release-a.sha256
+            work/release-b.sha256
+            work/staged-commit-proof.json
+          if-no-files-found: error
+          retention-days: 30
+          compression-level: 0
+
+  verify_release_and_public_pages:
+    name: Verify promoted child, dynamic Pages, hashes, ranges and CORS
+    needs: classify
+    if: needs.classify.outputs.mode == 'release'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      actions: read
+      contents: read
+    steps:
+      - name: Checkout exact externally promoted release commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 2
+          persist-credentials: false
+
+      - name: Configure pinned Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12.13'
+
+      - name: Install locked DuckDB engine
+        run: python -m pip install --disable-pip-version-check --require-hashes -r requirements.lock
+
+      - name: Prove and independently verify checked-in release
+        id: local_release
+        run: |
+          test "$GITHUB_EVENT_NAME" = push
+          test "$GITHUB_REF" = refs/heads/main
+          test -d "$RELEASE_ID"
+          test "$(git show -s --format=%P HEAD | wc -w)" -eq 1
+          PARENT_COMMIT="$(git rev-parse HEAD^)"
+          STAGED_COMMIT="$(git ls-remote --heads origin refs/heads/ci/202608291237-data-gridatlas | awk '{print $1}')"
+          test -n "$STAGED_COMMIT"
+          test "$STAGED_COMMIT" = "$GITHUB_SHA"
+          python - <<'PY'
+          import json, os, subprocess
+          from pathlib import Path
+
+          release_id = os.environ['RELEASE_ID']
+          changed = subprocess.check_output(
+              ['git', 'diff', '--name-only', 'HEAD^', 'HEAD'], text=True
+          ).splitlines()
+          if not changed or any(not path.startswith(release_id + '/') for path in changed):
+              raise SystemExit(f'promoted commit boundary mismatch: {changed}')
+          release = json.loads(Path(release_id, 'release.json').read_text(encoding='utf-8'))
+          parent = subprocess.check_output(['git', 'rev-parse', 'HEAD^'], text=True).strip()
+          if release.get('packaging_source_commit') != parent:
+              raise SystemExit('release packaging source is not the sole commit parent')
+          PY
+          (cd "$RELEASE_ID" && sha256sum --check sha256sums.txt)
+          python atman/202608291237-verify-live-data-release.py \
+            --repository . \
+            --release "$RELEASE_ID" \
+            --source-commit "$PARENT_COMMIT" \
+            --output work/checked-in-release-verification.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          proof = json.loads(Path('work/checked-in-release-verification.json').read_text(encoding='utf-8'))
+          if proof.get('classification') != 'VERIFIED_IMMUTABLE_LIVE_DATA_RELEASE' or proof.get('failed') != 0:
+              raise SystemExit(f'checked-in live release rejected: {proof}')
+          PY
+          printf 'packaging_source_commit=%s\n' "$PARENT_COMMIT" >> "$GITHUB_OUTPUT"
+          printf 'release_sha256=%s\n' "$(sha256sum "$RELEASE_ID/release.json" | cut -d' ' -f1)" >> "$GITHUB_OUTPUT"
+          printf 'ledger_sha256=%s\n' "$(sha256sum "$RELEASE_ID/sha256sums.txt" | cut -d' ' -f1)" >> "$GITHUB_OUTPUT"
+
+      - name: Poll exact dynamic Pages deployment and verify every published byte
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EXPECTED_RELEASE_COMMIT: ${{ github.sha }}
+          EXPECTED_PACKAGING_SOURCE_COMMIT: ${{ steps.local_release.outputs.packaging_source_commit }}
+          EXPECTED_RELEASE_SHA256: ${{ steps.local_release.outputs.release_sha256 }}
+          EXPECTED_LEDGER_SHA256: ${{ steps.local_release.outputs.ledger_sha256 }}
+        run: |
+          python - <<'PY'
+          import hashlib, json, os, time
+          from datetime import datetime, timezone
+          from pathlib import Path
+          from urllib.parse import quote
+          from urllib.request import Request, urlopen
+
+          Path('work').mkdir(parents=True, exist_ok=True)
+          repository = os.environ['GITHUB_REPOSITORY']
+          release_commit = os.environ['EXPECTED_RELEASE_COMMIT']
+          token = os.environ['GH_TOKEN']
+          base = 'https://ventusltd.github.io/data-gridatlas/202608291237-data-gridatlas/'
+          api_headers = {
+              'Accept': 'application/vnd.github+json',
+              'Authorization': f'Bearer {token}',
+              'X-GitHub-Api-Version': '2022-11-28',
+          }
+
+          pages_run = None
+          runs_url = f'https://api.github.com/repos/{repository}/actions/runs?head_sha={release_commit}&per_page=100'
+          for attempt in range(60):
+              request = Request(runs_url, headers=api_headers)
+              with urlopen(request, timeout=30) as response:
+                  runs = json.load(response).get('workflow_runs', [])
+              matches = [
+                  run for run in runs
+                  if run.get('path') == 'dynamic/pages/pages-build-deployment'
+                  and run.get('head_sha') == release_commit
+              ]
+              if len(matches) > 1:
+                  raise SystemExit(f'ambiguous dynamic Pages runs: {[run.get("id") for run in matches]}')
+              if matches:
+                  pages_run = matches[0]
+                  if pages_run.get('status') == 'completed':
+                      if pages_run.get('conclusion') != 'success':
+                          raise SystemExit(f'dynamic Pages deployment failed: {pages_run}')
+                      break
+              if attempt == 59:
+                  raise SystemExit('dynamic Pages deployment did not complete')
+              time.sleep(5)
+
+          expected_pages = {
+              'path': 'dynamic/pages/pages-build-deployment',
+              'event': 'dynamic',
+              'head_branch': 'main',
+              'head_sha': release_commit,
+              'status': 'completed',
+              'conclusion': 'success',
+              'run_attempt': 1,
+          }
+          for key, value in expected_pages.items():
+              if pages_run.get(key) != value:
+                  raise SystemExit(f'dynamic Pages provenance mismatch: {key}')
+          with open('work/pages-workflow-run.json', 'w', encoding='utf-8') as handle:
+              json.dump(pages_run, handle, sort_keys=True, indent=2)
+              handle.write('\n')
+
+          def fetch(relative, headers=None, timeout=60):
+              request_headers = {'Accept-Encoding': 'identity'}
+              request_headers.update(headers or {})
+              request = Request(base + quote(relative, safe='/'), headers=request_headers)
+              with urlopen(request, timeout=timeout) as response:
+                  return response.status, response.headers, response.read()
+
+          release_bytes = None
+          for attempt in range(60):
+              try:
+                  status, headers, payload = fetch('release.json', timeout=20)
+                  if status == 200 and hashlib.sha256(payload).hexdigest() == os.environ['EXPECTED_RELEASE_SHA256']:
+                      if headers.get('Access-Control-Allow-Origin') != '*':
+                          raise SystemExit('public release CORS mismatch')
+                      if headers.get('Content-Encoding') not in (None, 'identity'):
+                          raise SystemExit('public release encoding mismatch')
+                      release_bytes = payload
+                      break
+              except Exception:
+                  pass
+              if attempt == 59:
+                  raise SystemExit('public release did not converge')
+              time.sleep(5)
+
+          release = json.loads(release_bytes)
+          if release.get('classification') != 'LIVE_IMMUTABLE_DATA_RELEASE' or release.get('current_pointer') is not False:
+              raise SystemExit('public release classification mismatch')
+          if release.get('packaging_source_commit') != os.environ['EXPECTED_PACKAGING_SOURCE_COMMIT']:
+              raise SystemExit('public release packaging source mismatch')
+          status, ledger_headers, ledger_bytes = fetch('sha256sums.txt')
+          if status != 200 or hashlib.sha256(ledger_bytes).hexdigest() != os.environ['EXPECTED_LEDGER_SHA256']:
+              raise SystemExit('public SHA-256 ledger mismatch')
+          if ledger_headers.get('Access-Control-Allow-Origin') != '*':
+              raise SystemExit('public ledger CORS mismatch')
+          if ledger_headers.get('Content-Encoding') not in (None, 'identity'):
+              raise SystemExit('public ledger encoding mismatch')
+
+          entries = []
+          for line in ledger_bytes.decode('utf-8').splitlines():
+              expected, relative = line.split('  ', 1)
+              entries.append((relative, expected))
+          if not entries:
+              raise SystemExit('empty public SHA-256 ledger')
+
+          full_cors = 0
+          full_identity = 0
+          fully_hashed_bytes = 0
+          for relative, expected in entries:
+              request = Request(
+                  base + quote(relative, safe='/'),
+                  headers={'Accept-Encoding': 'identity'},
+              )
+              digest = hashlib.sha256()
+              with urlopen(request, timeout=120) as response:
+                  if response.status != 200:
+                      raise SystemExit(f'public read failed: {relative}:{response.status}')
+                  if response.headers.get('Access-Control-Allow-Origin') != '*':
+                      raise SystemExit(f'public CORS mismatch: {relative}')
+                  full_cors += 1
+                  if response.headers.get('Content-Encoding') not in (None, 'identity'):
+                      raise SystemExit(f'public encoding mismatch: {relative}')
+                  full_identity += 1
+                  while True:
+                      chunk = response.read(1024 * 1024)
+                      if not chunk:
+                          break
+                      digest.update(chunk)
+                      fully_hashed_bytes += len(chunk)
+              if digest.hexdigest() != expected:
+                  raise SystemExit(f'public hash mismatch: {relative}')
+
+          parquet_paths = [relative for relative, _ in entries if relative.endswith('.parquet')]
+          if len(parquet_paths) != 65:
+              raise SystemExit(f'public Parquet closure mismatch: {len(parquet_paths)}')
+          sizes = {item['path']: item['bytes'] for item in release['files']}
+          prefix_ranges = suffix_ranges = range_cors = range_identity = 0
+          for relative in parquet_paths:
+              size = sizes[relative]
+              status, headers, payload = fetch(relative, headers={'Range': 'bytes=0-3'}, timeout=30)
+              if status != 206 or payload != b'PAR1' or headers.get('Content-Range') != f'bytes 0-3/{size}':
+                  raise SystemExit(f'public prefix range mismatch: {relative}:{status}:{headers.get("Content-Range")}:{payload!r}')
+              if headers.get('Access-Control-Allow-Origin') != '*':
+                  raise SystemExit(f'public prefix CORS mismatch: {relative}')
+              if headers.get('Content-Encoding') not in (None, 'identity'):
+                  raise SystemExit(f'public prefix encoding mismatch: {relative}')
+              prefix_ranges += 1
+              range_cors += 1
+              range_identity += 1
+
+              status, headers, payload = fetch(relative, headers={'Range': 'bytes=-4'}, timeout=30)
+              expected_range = f'bytes {size - 4}-{size - 1}/{size}'
+              if status != 206 or payload != b'PAR1' or headers.get('Content-Range') != expected_range:
+                  raise SystemExit(f'public suffix range mismatch: {relative}:{status}:{headers.get("Content-Range")}:{payload!r}')
+              if headers.get('Access-Control-Allow-Origin') != '*':
+                  raise SystemExit(f'public suffix CORS mismatch: {relative}')
+              if headers.get('Content-Encoding') not in (None, 'identity'):
+                  raise SystemExit(f'public suffix encoding mismatch: {relative}')
+              suffix_ranges += 1
+              range_cors += 1
+              range_identity += 1
+
+          attestation = {
+              'schema': 'data-gridatlas.public-pages-attestation.v1',
+              'classification': 'VERIFIED_PUBLIC_LIVE_DATA_RELEASE',
+              'attested_at': datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z'),
+              'release_id': '202608291237-data-gridatlas',
+              'release_commit': release_commit,
+              'pages_workflow_run_id': pages_run['id'],
+              'pages_workflow_run_attempt': pages_run['run_attempt'],
+              'pages_workflow_path': pages_run['path'],
+              'pages_workflow_url': pages_run['html_url'],
+              'page_url': base,
+              'release_sha256': os.environ['EXPECTED_RELEASE_SHA256'],
+              'ledger_sha256': os.environ['EXPECTED_LEDGER_SHA256'],
+              'hashed_files': len(entries),
+              'fully_hashed_bytes': fully_hashed_bytes,
+              'full_cors_verified_files': full_cors,
+              'full_identity_encoding_files': full_identity,
+              'prefix_range_verified_parquet_files': prefix_ranges,
+              'suffix_range_verified_parquet_files': suffix_ranges,
+              'range_cors_verified_responses': range_cors,
+              'range_identity_encoding_responses': range_identity,
+              'failed': 0,
+          }
+          with open('work/public-pages-attestation.json', 'w', encoding='utf-8') as handle:
+              json.dump(attestation, handle, sort_keys=True, indent=2)
+              handle.write('\n')
+          print(json.dumps(attestation, sort_keys=True))
+          PY
+
+      - name: Upload public Pages attestation
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: data-gridatlas-202608291237-public-pages-attestation-${{ github.sha }}
+          path: |
+            work/checked-in-release-verification.json
+            work/pages-workflow-run.json
+            work/public-pages-attestation.json
+          if-no-files-found: error
+          retention-days: 30
+          compression-level: 0

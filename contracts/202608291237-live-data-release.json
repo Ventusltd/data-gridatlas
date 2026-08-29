@@ -1,0 +1,65 @@
+{
+  "schema": "data-gridatlas.live-data-release-contract.v1",
+  "release_id": "202608291237-data-gridatlas",
+  "incepted_at": "2026-08-29T12:37:29+01:00",
+  "repository": "Ventusltd/data-gridatlas",
+  "candidate": {
+    "workflow_run_id": 33250896568,
+    "artifact_id": 9714380586,
+    "artifact_name": "data-gridatlas-202608291015-verified-candidate-61096ee84570fd78f7c87b7b4abe25cb521eeba6-run-33250896568-attempt-1",
+    "artifact_archive_bytes": 98317765,
+    "artifact_digest": "sha256:fb32089353927a383f25c641c05b01e3f3c8237ca32d6171fc40679b6de9bc98",
+    "source_commit": "61096ee84570fd78f7c87b7b4abe25cb521eeba6",
+    "candidate_manifest_sha256": "3246dbdaa042ae8352ec9b7128cb6c2fe65e4f1aba0534302510661828df2526",
+    "candidate_proof_sha256": "8510dedd1ddb9fe9373719078ccf1407d9f79c4cdd1b5608f1f309fa2c6da2a5",
+    "candidate_files": 75,
+    "candidate_bytes": 98243147,
+    "proof_classification": "VERIFIED_FULL_V8_TRANSPLANT_CANDIDATE"
+  },
+  "oracle": {
+    "repository": "Ventusltd/globalgrid2050",
+    "commit": "f2f343a92ee972cc74ed23b4b99d8a22896791ad",
+    "tree_sha1": "2a8ecce66fdb06fbeac1d58443b2d67ba17aedb9",
+    "immutable": true
+  },
+  "closure": {
+    "sources": 56,
+    "layers": 60,
+    "features": 541282,
+    "layer_membership_rows": 526388,
+    "coordinate_tuples": 3812791,
+    "raw_geojson_outputs": 0
+  },
+  "publication": {
+    "branch": "main",
+    "repository_path": "202608291237-data-gridatlas",
+    "pages_url": "https://ventusltd.github.io/data-gridatlas/202608291237-data-gridatlas/",
+    "immutable": true,
+    "root_index_forbidden": true,
+    "current_pointer": false,
+    "current_pointer_deferred_until_consumer_proof": true,
+    "include_all_candidate_partitions": true,
+    "authority_licence_and_quarantine_labels_preserved": true
+  },
+  "contract_snapshots": [
+    "contracts/202608290904-v8-quarantine.json",
+    "contracts/202608291015-v8-layer-config.json",
+    "contracts/202608291015-v8-runtime-dependencies.json",
+    "contracts/202608291015-v8-transplant-plan.json",
+    "schemas/202608291015-v8-transplant-parquet.json"
+  ],
+  "layout": {
+    "required_top_level_files": [
+      "browser-layer-registry.json",
+      "index.html",
+      "readme.md",
+      "release.json",
+      "sha256sums.txt"
+    ],
+    "required_top_level_directories": [
+      "contracts",
+      "data",
+      "proof"
+    ]
+  }
+}
