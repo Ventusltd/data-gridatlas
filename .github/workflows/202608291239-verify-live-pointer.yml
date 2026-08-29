@@ -1,0 +1,332 @@
+name: 202608291239 Verify live Data Grid Atlas pointer
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/202608291239-verify-live-pointer.yml'
+      - 'releases/current.json'
+      - 'state/live-set.json'
+
+permissions: {}
+
+concurrency:
+  group: data-gridatlas-live-pointer-202608291239
+  cancel-in-progress: false
+
+env:
+  APP_BUILD_MANIFEST_SHA256: 889986bc8fda3c8086525eaa05d75eabd446e6d91d3015c4fa2d27ded6cac7d6
+  APP_INDEX_SHA256: 023f758ff54bb522f1f4e0de00bfc52e42b5232c5e9d60b362930d3d3d77bfda
+  APP_POINTER_COMMIT: 936a31f703d31bd975af22d7349708d68a143d56
+  APP_POINTER_SHA256: 29628a9ba376b24a72248fac7e9333e0487a33e86ad50d309a7b868932fea4d6
+  APP_PUBLICATION_COMMIT: 1898184ccbf52ca836cf1482362fc5933baf3e8d
+  APP_RELEASE_ID: 202608291239-atlas-v9
+  APP_RELEASE_MANIFEST_SHA256: 7c903a395e14e880bd76bd6e8a11fc68aafc2418bd351467d3538cefe3da90cc
+  DATA_BROWSER_REGISTRY_SHA256: 9b2169bcfd47bf51f0aaf8350487de19578e32358e191b961385a149a4637e1b
+  DATA_INDEX_SHA256: c9343edec682c790e6889ef0a2977e3ab7848aec42573e259c906e9e8aceefa4
+  DATA_LEDGER_SHA256: 93c2639b9442244dc3b94b0079d16fdbfd0ba2153dc4601404fcb3fb1fb504d5
+  DATA_MANIFEST_SHA256: 3246dbdaa042ae8352ec9b7128cb6c2fe65e4f1aba0534302510661828df2526
+  DATA_RELEASE_COMMIT: 32459230b958ff6ddbdb24365f56da83ab1cdc93
+  DATA_RELEASE_ID: 202608291237-data-gridatlas
+  DATA_RELEASE_SHA256: 19684ac3e86fac4346fab121a948bab0aa857108564fec5be242484d2baefd06
+  POINTER_SHA256: 08664a2fab1f2a6442a866b43abe3748fe4418e6bf0892630850a6edfd3f2283
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+
+jobs:
+  verify_pointer_and_public_pages:
+    name: Verify exact pointer, Pages bytes and app binding
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      actions: read
+      contents: read
+    steps:
+      - name: Checkout exact externally promoted pointer commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 2
+          persist-credentials: false
+
+      - name: Prove exact parent, diff and byte-identical pointers
+        env:
+          EXECUTED_WORKFLOW_SHA: ${{ github.workflow_sha }}
+        run: |
+          set -eu
+          test "$GITHUB_EVENT_NAME" = push
+          test "$GITHUB_REF" = refs/heads/main
+          test "$EXECUTED_WORKFLOW_SHA" = "$GITHUB_SHA"
+          test "$(git show -s --format=%P HEAD | wc -w)" -eq 1
+          test "$(git rev-parse HEAD^)" = "$DATA_RELEASE_COMMIT"
+          test -z "$(git status --porcelain --untracked-files=all)"
+          mkdir -p work
+          git diff --name-only "$DATA_RELEASE_COMMIT" "$GITHUB_SHA" | LC_ALL=C sort > work/actual-paths.txt
+          cat > work/expected-paths.txt <<'EOF'
+          .github/workflows/202608291239-verify-live-pointer.yml
+          releases/current.json
+          state/live-set.json
+          EOF
+          cmp --silent work/expected-paths.txt work/actual-paths.txt
+          cmp --silent state/live-set.json releases/current.json
+          test "$(sha256sum state/live-set.json | cut -d' ' -f1)" = "$POINTER_SHA256"
+          test "$(sha256sum releases/current.json | cut -d' ' -f1)" = "$POINTER_SHA256"
+          python - <<'PY'
+          import json, os, re
+          from pathlib import Path
+
+          pointer = json.loads(Path('state/live-set.json').read_text(encoding='utf-8'))
+          commit_pattern = re.compile(r'[0-9a-f]{40}')
+          def validate_commit_fields(value, path='pointer'):
+              if isinstance(value, dict):
+                  for key, item in value.items():
+                      item_path = f'{path}.{key}'
+                      if key == 'commit' or key.endswith('_commit'):
+                          if not isinstance(item, str) or commit_pattern.fullmatch(item) is None:
+                              raise SystemExit(f'malformed commit at {item_path}: {item!r}')
+                      validate_commit_fields(item, item_path)
+              elif isinstance(value, list):
+                  for index, item in enumerate(value):
+                      validate_commit_fields(item, f'{path}[{index}]')
+          validate_commit_fields(pointer)
+          for env_name in (
+              'APP_POINTER_COMMIT',
+              'APP_PUBLICATION_COMMIT',
+              'DATA_RELEASE_COMMIT',
+          ):
+              if commit_pattern.fullmatch(os.environ[env_name]) is None:
+                  raise SystemExit(f'malformed workflow commit: {env_name}')
+          exact = {
+              'schema': 'data-gridatlas.live-set.v1',
+              'classification': 'VERIFIED_LIVE_DATA_GRIDATLAS_V9',
+              'generation': '202608291239',
+          }
+          for key, expected in exact.items():
+              if pointer.get(key) != expected:
+                  raise SystemExit(f'pointer mismatch: {key}')
+          current = pointer.get('current') or {}
+          expected_current = {
+              'release_id': os.environ['DATA_RELEASE_ID'],
+              'publication_commit': os.environ['DATA_RELEASE_COMMIT'],
+              'release_sha256': os.environ['DATA_RELEASE_SHA256'],
+              'browser_registry_sha256': os.environ['DATA_BROWSER_REGISTRY_SHA256'],
+              'live_url': 'https://ventusltd.github.io/data-gridatlas/202608291237-data-gridatlas/',
+          }
+          for key, expected in expected_current.items():
+              if current.get(key) != expected:
+                  raise SystemExit(f'data binding mismatch: {key}')
+          consumer = pointer.get('consumer') or {}
+          expected_consumer = {
+              'release_id': os.environ['APP_RELEASE_ID'],
+              'publication_commit': os.environ['APP_PUBLICATION_COMMIT'],
+              'app_pointer_commit': os.environ['APP_POINTER_COMMIT'],
+              'release_manifest_sha256': os.environ['APP_RELEASE_MANIFEST_SHA256'],
+              'live_url': 'https://ventusltd.github.io/gridatlas/202608291239-atlas-v9/',
+          }
+          for key, expected in expected_consumer.items():
+              if consumer.get(key) != expected:
+                  raise SystemExit(f'app binding mismatch: {key}')
+          verification = pointer.get('verification') or {}
+          if verification.get('promotion_eligible') is not True:
+              raise SystemExit('pointer is not promotion eligible')
+          if verification.get('initial_v8_parquet_requests') != 0:
+              raise SystemExit('initial V8 Parquet request invariant failed')
+          PY
+
+      - name: Poll exact Pages deployment and prove public cross-repository bytes
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          import os
+          import time
+          from datetime import datetime, timezone
+          from pathlib import Path
+          from urllib.request import Request, urlopen
+
+          work = Path('work')
+          work.mkdir(parents=True, exist_ok=True)
+          repository = os.environ['GITHUB_REPOSITORY']
+          pointer_commit = os.environ['GITHUB_SHA']
+          token = os.environ['GH_TOKEN']
+          api_headers = {
+              'Accept': 'application/vnd.github+json',
+              'Authorization': f'Bearer {token}',
+              'X-GitHub-Api-Version': '2022-11-28',
+          }
+
+          pages_run = None
+          runs_url = f'https://api.github.com/repos/{repository}/actions/runs?head_sha={pointer_commit}&per_page=100'
+          for attempt in range(60):
+              request = Request(runs_url, headers=api_headers)
+              with urlopen(request, timeout=30) as response:
+                  runs = json.load(response).get('workflow_runs', [])
+              matches = [
+                  run for run in runs
+                  if run.get('path') == 'dynamic/pages/pages-build-deployment'
+                  and run.get('head_sha') == pointer_commit
+              ]
+              if len(matches) > 1:
+                  raise SystemExit(f'ambiguous dynamic Pages runs: {[run.get("id") for run in matches]}')
+              if matches:
+                  pages_run = matches[0]
+                  if pages_run.get('status') == 'completed':
+                      if pages_run.get('conclusion') != 'success':
+                          raise SystemExit(f'dynamic Pages deployment failed: {pages_run}')
+                      break
+              if attempt == 59:
+                  raise SystemExit('dynamic Pages deployment did not complete')
+              time.sleep(5)
+
+          expected_pages = {
+              'path': 'dynamic/pages/pages-build-deployment',
+              'event': 'dynamic',
+              'head_branch': 'main',
+              'head_sha': pointer_commit,
+              'status': 'completed',
+              'conclusion': 'success',
+              'run_attempt': 1,
+          }
+          for key, expected in expected_pages.items():
+              if pages_run.get(key) != expected:
+                  raise SystemExit(f'dynamic Pages provenance mismatch: {key}')
+          (work / 'pages-workflow-run.json').write_text(
+              json.dumps(pages_run, sort_keys=True, indent=2) + '\n', encoding='utf-8'
+          )
+
+          def fetch(url, *, cors=False, timeout=30):
+              request = Request(url, headers={'Accept-Encoding': 'identity', 'User-Agent': 'data-gridatlas-pointer-verifier'})
+              with urlopen(request, timeout=timeout) as response:
+                  payload = response.read()
+                  if response.status != 200:
+                      raise RuntimeError(f'HTTP {response.status}: {url}')
+                  if response.headers.get('Content-Encoding') not in (None, 'identity'):
+                      raise RuntimeError(f'encoded response: {url}')
+                  if cors and response.headers.get('Access-Control-Allow-Origin') != '*':
+                      raise RuntimeError(f'CORS mismatch: {url}')
+                  return payload
+
+          def require_sha(payload, expected, label):
+              actual = hashlib.sha256(payload).hexdigest()
+              if actual != expected:
+                  raise SystemExit(f'{label} SHA-256 mismatch: {actual}')
+
+          expected_pointer = Path('state/live-set.json').read_bytes()
+          data_root = 'https://ventusltd.github.io/data-gridatlas/'
+          public_pointer_urls = [
+              data_root + 'state/live-set.json',
+              data_root + 'releases/current.json',
+          ]
+          public_pointers = None
+          last_error = None
+          for attempt in range(60):
+              try:
+                  payloads = [fetch(url, cors=True, timeout=20) for url in public_pointer_urls]
+                  if all(payload == expected_pointer for payload in payloads):
+                      public_pointers = payloads
+                      break
+                  last_error = 'public pointer bytes have not converged'
+              except Exception as exc:
+                  last_error = repr(exc)
+              if attempt == 59:
+                  raise SystemExit(f'public pointers did not converge: {last_error}')
+              time.sleep(5)
+          for payload in public_pointers:
+              require_sha(payload, os.environ['POINTER_SHA256'], 'public data pointer')
+
+          data_release = data_root + os.environ['DATA_RELEASE_ID'] + '/'
+          data_checks = {
+              'release.json': os.environ['DATA_RELEASE_SHA256'],
+              'browser-layer-registry.json': os.environ['DATA_BROWSER_REGISTRY_SHA256'],
+              'data/manifest.json': os.environ['DATA_MANIFEST_SHA256'],
+              'sha256sums.txt': os.environ['DATA_LEDGER_SHA256'],
+              'index.html': os.environ['DATA_INDEX_SHA256'],
+          }
+          for relative, expected in data_checks.items():
+              require_sha(fetch(data_release + relative, cors=True), expected, f'public data {relative}')
+
+          app_root = 'https://ventusltd.github.io/gridatlas/'
+          app_pointer_urls = [
+              app_root + 'state/live-set.json',
+              app_root + 'releases/current-v3.json',
+          ]
+          app_pointers = [fetch(url, cors=True) for url in app_pointer_urls]
+          if app_pointers[0] != app_pointers[1]:
+              raise SystemExit('public app pointers are not byte-identical')
+          require_sha(app_pointers[0], os.environ['APP_POINTER_SHA256'], 'public app pointer')
+          app_pointer = json.loads(app_pointers[0])
+          if app_pointer.get('classification') != 'VERIFIED_LIVE_ATLAS_V9':
+              raise SystemExit('public app pointer classification mismatch')
+          current_app = app_pointer.get('current') or {}
+          if current_app.get('publication_commit') != os.environ['APP_PUBLICATION_COMMIT']:
+              raise SystemExit('public app publication commit mismatch')
+          if current_app.get('data_release_commit') != os.environ['DATA_RELEASE_COMMIT']:
+              raise SystemExit('public app data release commit mismatch')
+
+          app_release = app_root + os.environ['APP_RELEASE_ID'] + '/'
+          app_release_manifest = fetch(app_release + 'release-manifest.json', cors=True)
+          app_build_manifest = fetch(app_release + 'build-manifest.json', cors=True)
+          app_index = fetch(app_release + 'index.html', cors=True)
+          deep_link_index = fetch(app_release + '?repd_ref=16135', cors=True)
+          require_sha(app_release_manifest, os.environ['APP_RELEASE_MANIFEST_SHA256'], 'public app release manifest')
+          require_sha(app_build_manifest, os.environ['APP_BUILD_MANIFEST_SHA256'], 'public app build manifest')
+          require_sha(app_index, os.environ['APP_INDEX_SHA256'], 'public app index')
+          require_sha(deep_link_index, os.environ['APP_INDEX_SHA256'], 'public app deep-link index')
+
+          raw_app_pointer = fetch(
+              'https://raw.githubusercontent.com/Ventusltd/gridatlas/'
+              + os.environ['APP_POINTER_COMMIT'] + '/state/live-set.json'
+          )
+          if raw_app_pointer != app_pointers[0]:
+              raise SystemExit('public app pointer differs from pinned pointer commit')
+          raw_release_manifest = fetch(
+              'https://raw.githubusercontent.com/Ventusltd/gridatlas/'
+              + os.environ['APP_PUBLICATION_COMMIT'] + '/'
+              + os.environ['APP_RELEASE_ID'] + '/release-manifest.json'
+          )
+          if raw_release_manifest != app_release_manifest:
+              raise SystemExit('public app release differs from pinned publication commit')
+
+          attestation = {
+              'schema': 'data-gridatlas.public-stable-pointer-attestation.v1',
+              'classification': 'VERIFIED_PUBLIC_STABLE_DATA_POINTER',
+              'attested_at': datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z'),
+              'repository': repository,
+              'pointer_commit': pointer_commit,
+              'pointer_parent': os.environ['DATA_RELEASE_COMMIT'],
+              'pointer_sha256': os.environ['POINTER_SHA256'],
+              'public_pointer_urls': public_pointer_urls,
+              'pages_workflow_run_id': pages_run['id'],
+              'pages_workflow_run_attempt': pages_run['run_attempt'],
+              'pages_workflow_url': pages_run['html_url'],
+              'data_release_id': os.environ['DATA_RELEASE_ID'],
+              'data_release_sha256': os.environ['DATA_RELEASE_SHA256'],
+              'app_pointer_commit': os.environ['APP_POINTER_COMMIT'],
+              'app_pointer_sha256': os.environ['APP_POINTER_SHA256'],
+              'app_publication_commit': os.environ['APP_PUBLICATION_COMMIT'],
+              'app_release_id': os.environ['APP_RELEASE_ID'],
+              'app_release_manifest_sha256': os.environ['APP_RELEASE_MANIFEST_SHA256'],
+              'deep_link_index_verified': True,
+              'main_mutated_by_workflow': False,
+              'failed': 0,
+          }
+          (work / 'public-stable-pointer-attestation.json').write_text(
+              json.dumps(attestation, sort_keys=True, indent=2) + '\n', encoding='utf-8'
+          )
+          print(json.dumps(attestation, sort_keys=True))
+          PY
+
+      - name: Retain public stable-pointer attestation
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: data-gridatlas-202608291239-public-stable-pointer-${{ github.sha }}
+          path: |
+            state/live-set.json
+            work/actual-paths.txt
+            work/expected-paths.txt
+            work/pages-workflow-run.json
+            work/public-stable-pointer-attestation.json
+          if-no-files-found: error
+          retention-days: 30
+          compression-level: 0

@@ -1,0 +1,72 @@
+{
+  "classification": "VERIFIED_LIVE_DATA_GRIDATLAS_V9",
+  "consumer": {
+    "app_pointer_commit": "936a31f703d31bd975af22d7349708d68a143d56",
+    "app_pointer_final_attestation": {
+      "artifact_digest": "sha256:e80278cdfcf9c8b479f680762185519e8de683f9e5b8297f25c241de61e6c488",
+      "artifact_id": 9715140542,
+      "workflow_run_id": 33253661157
+    },
+    "app_public_browser_claim_sha256": "a398b9e39174d5b8efd1fea9eb906b53aaf84642917fea6126d8d797f1e7eea8",
+    "build_manifest_sha256": "889986bc8fda3c8086525eaa05d75eabd446e6d91d3015c4fa2d27ded6cac7d6",
+    "generation": "202608291239",
+    "live_url": "https://ventusltd.github.io/gridatlas/202608291239-atlas-v9/",
+    "pointer_sha256": "29628a9ba376b24a72248fac7e9333e0487a33e86ad50d309a7b868932fea4d6",
+    "publication_commit": "1898184ccbf52ca836cf1482362fc5933baf3e8d",
+    "query_contract": {
+      "golden_value": "16135",
+      "parameter": "repd_ref",
+      "postcode": "MK430ZY"
+    },
+    "release_id": "202608291239-atlas-v9",
+    "release_manifest_sha256": "7c903a395e14e880bd76bd6e8a11fc68aafc2418bd351467d3538cefe3da90cc",
+    "route": "/gridatlas/202608291239-atlas-v9/",
+    "source_commit": "ac00b9f326187a1e3bfabb5b45397210850c6052"
+  },
+  "current": {
+    "browser_registry_sha256": "9b2169bcfd47bf51f0aaf8350487de19578e32358e191b961385a149a4637e1b",
+    "candidate_source_commit": "61096ee84570fd78f7c87b7b4abe25cb521eeba6",
+    "data_manifest_sha256": "3246dbdaa042ae8352ec9b7128cb6c2fe65e4f1aba0534302510661828df2526",
+    "index_sha256": "c9343edec682c790e6889ef0a2977e3ab7848aec42573e259c906e9e8aceefa4",
+    "ledger_sha256": "93c2639b9442244dc3b94b0079d16fdbfd0ba2153dc4601404fcb3fb1fb504d5",
+    "live_url": "https://ventusltd.github.io/data-gridatlas/202608291237-data-gridatlas/",
+    "packaging_source_commit": "9f1e9a574d5183da6406f552b65ed4e36eef8f10",
+    "publication_commit": "32459230b958ff6ddbdb24365f56da83ab1cdc93",
+    "release_id": "202608291237-data-gridatlas",
+    "release_sha256": "19684ac3e86fac4346fab121a948bab0aa857108564fec5be242484d2baefd06",
+    "route": "/data-gridatlas/202608291237-data-gridatlas/"
+  },
+  "generation": "202608291239",
+  "predecessor": {
+    "classification": "FIRST_VERIFIED_STABLE_DATA_POINTER",
+    "pointer": null
+  },
+  "rollback": {
+    "app_commit": "514fce2f3605ae53267c5ee955b301604a91b2fd",
+    "app_route": "/gridatlas/",
+    "data_commit": "f2f343a92ee972cc74ed23b4b99d8a22896791ad",
+    "data_repository": "Ventusltd/globalgrid2050",
+    "root_index_sha256": "4d059a6963ee73378b21bf378a3590292bbced0bba6f3cacf4acd9c6bc695533"
+  },
+  "schema": "data-gridatlas.live-set.v1",
+  "verification": {
+    "app_pointer_verified_at": "2026-08-29T12:55:01Z",
+    "app_pointer_workflow_run_id": 33253661157,
+    "data_pages_run_id": 33251731542,
+    "data_pages_verified_at": "2026-08-29T12:08:48Z",
+    "data_public_attestation": {
+      "artifact_digest": "sha256:e47c1e526249242962ccacde67532ee8061ed42286145db9b1b8a7145c8f5414",
+      "artifact_id": 9714577621,
+      "workflow_run_id": 33251731969
+    },
+    "feature_count": 541282,
+    "initial_v8_parquet_requests": 0,
+    "layer_count": 60,
+    "membership_count": 526388,
+    "parquet_files": 65,
+    "promotion_eligible": true,
+    "public_cors_and_identity": true,
+    "public_prefix_and_suffix_ranges": true,
+    "source_count": 56
+  }
+}
