@@ -1,0 +1,77 @@
+{
+  "schema": "data-gridatlas.repository-boundary.v3",
+  "generation": "202608291410",
+  "required_source_files": [
+    ".github/workflows/202608290904-bootstrap-verify-data-gridatlas.yml",
+    ".github/workflows/202608291015-build-v8-transplant-candidate.yml",
+    ".github/workflows/202608291237-publish-live-data-gridatlas.yml",
+    ".github/workflows/202608291239-verify-live-pointer.yml",
+    ".github/workflows/202608291410-publish-repd-routing.yml",
+    ".gitignore",
+    "README.md",
+    "atman/202608290904-verify-bootstrap.py",
+    "atman/202608291015-verify-v8-transplant.py",
+    "atman/202608291237-verify-live-data-release.py",
+    "atman/202608291410-verify-repd-routing-release.py",
+    "atman/202608291410-verify-repository-boundary.py",
+    "compiler/202608290904-build-dependency-catalog.py",
+    "compiler/202608291015-build-v8-transplant.py",
+    "compiler/202608291237-materialise-live-data-release.py",
+    "compiler/202608291410-build-repd-routing-release.py",
+    "contracts/202608290904-data-gridatlas-bootstrap.json",
+    "contracts/202608290904-gridatlas-consumer.json",
+    "contracts/202608290904-v8-dependency-ledger.json",
+    "contracts/202608290904-v8-file-ledger.json",
+    "contracts/202608290904-v8-quarantine.json",
+    "contracts/202608291015-repository-boundary.json",
+    "contracts/202608291015-v8-layer-config.json",
+    "contracts/202608291015-v8-runtime-dependencies.json",
+    "contracts/202608291015-v8-transplant-plan.json",
+    "contracts/202608291237-live-data-release.json",
+    "contracts/202608291410-repd-routing-release.json",
+    "contracts/202608291410-repository-boundary.json",
+    "requirements.lock",
+    "schemas/202608291015-v8-transplant-parquet.json"
+  ],
+  "pointer_files": [
+    "releases/current.json",
+    "state/live-set.json"
+  ],
+  "pointer_sha256": "08664a2fab1f2a6442a866b43abe3748fe4418e6bf0892630850a6edfd3f2283",
+  "release_roots_by_mode": {
+    "source": [
+      "202608291237-data-gridatlas"
+    ],
+    "release": [
+      "202608291237-data-gridatlas",
+      "202608291410-repd-routing"
+    ]
+  },
+  "release_ledgers": {
+    "202608291237-data-gridatlas": {
+      "files": 86,
+      "maximum_file_bytes": 40000000,
+      "maximum_release_bytes": 150000000
+    },
+    "202608291410-repd-routing": {
+      "files": 4,
+      "maximum_file_bytes": 1000000,
+      "maximum_release_bytes": 1100000
+    }
+  },
+  "maximum_source_file_bytes": 1000000,
+  "maximum_source_bytes": 5000000,
+  "forbidden_source_suffixes": [
+    ".csv",
+    ".duckdb",
+    ".geojson",
+    ".gz",
+    ".parquet",
+    ".tar",
+    ".tsv",
+    ".xlsx",
+    ".zip"
+  ],
+  "historical_contracts_immutable": true,
+  "multiple_timestamp_release_roots_verified_independently": true
+}

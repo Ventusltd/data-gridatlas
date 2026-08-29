@@ -1,0 +1,355 @@
+name: 202608291410 Publish REPD routing dependency
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/202608291410-publish-repd-routing.yml'
+      - 'contracts/202608291410-repd-routing-release.json'
+      - 'contracts/202608291410-repository-boundary.json'
+      - 'compiler/202608291410-build-repd-routing-release.py'
+      - 'atman/202608291410-verify-repd-routing-release.py'
+      - 'atman/202608291410-verify-repository-boundary.py'
+      - '202608291410-repd-routing/**'
+  workflow_dispatch:
+    inputs:
+      expected_main_sha:
+        description: Exact main commit to classify
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: data-gridatlas-202608291410-repd-routing
+  cancel-in-progress: false
+
+env:
+  RELEASE_ID: 202608291410-repd-routing
+  RELEASE_CONTRACT: contracts/202608291410-repd-routing-release.json
+  BOUNDARY_CONTRACT: contracts/202608291410-repository-boundary.json
+  STAGE_BRANCH: ci/202608291410-repd-routing
+
+jobs:
+  classify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      mode: ${{ steps.phase.outputs.mode }}
+      source_commit: ${{ steps.phase.outputs.source_commit }}
+      current_commit: ${{ steps.phase.outputs.current_commit }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ inputs.expected_main_sha || github.sha }}
+          fetch-depth: 3
+          persist-credentials: false
+      - id: phase
+        env:
+          EXPECTED_MAIN_SHA: ${{ inputs.expected_main_sha || github.sha }}
+          EXECUTED_WORKFLOW_SHA: ${{ github.workflow_sha }}
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REF" = refs/heads/main
+          test "$EXECUTED_WORKFLOW_SHA" = "$EXPECTED_MAIN_SHA"
+          test "$(git rev-parse HEAD)" = "$EXPECTED_MAIN_SHA"
+          git fetch --no-tags origin main:refs/remotes/origin/main
+          test "$(git rev-parse origin/main)" = "$EXPECTED_MAIN_SHA"
+          source_parent="$(jq -r .source_parent_commit "$RELEASE_CONTRACT")"
+          test "$source_parent" = fd1c49eece37d1a8035d8fcdc6c08d20a5cdbd13
+          test "$(jq -r .release_id "$RELEASE_CONTRACT")" = "$RELEASE_ID"
+          if test ! -e "$RELEASE_ID"; then
+            mode=source
+            source_commit="$EXPECTED_MAIN_SHA"
+            test "$(git show -s --format=%P HEAD | wc -w)" = 1
+            test "$(git rev-parse HEAD^)" = "$source_parent"
+            mapfile -t changed < <(git diff-tree --no-commit-id --name-only -r HEAD | sort)
+            expected=(
+              .github/workflows/202608291410-publish-repd-routing.yml
+              atman/202608291410-verify-repd-routing-release.py
+              atman/202608291410-verify-repository-boundary.py
+              compiler/202608291410-build-repd-routing-release.py
+              contracts/202608291410-repd-routing-release.json
+              contracts/202608291410-repository-boundary.json
+            )
+            test "${#changed[@]}" = 6
+            test "${changed[*]}" = "${expected[*]}"
+          else
+            mode=release
+            source_commit="$(git rev-parse HEAD^)"
+            test "$(git show -s --format=%P HEAD | wc -w)" = 1
+            test "$(git show -s --format=%P "$source_commit" | wc -w)" = 1
+            test "$(git rev-parse "$source_commit^")" = "$source_parent"
+            git fetch --no-tags origin "$STAGE_BRANCH:refs/remotes/origin/$STAGE_BRANCH"
+            test "$(git rev-parse HEAD)" = "$(git rev-parse "refs/remotes/origin/$STAGE_BRANCH")"
+            test "$(jq -r .source_commit "$RELEASE_ID/release.json")" = "$source_commit"
+            mapfile -t changed < <(git diff-tree --no-commit-id --name-only -r HEAD | sort)
+            expected=(
+              "$RELEASE_ID/index.html"
+              "$RELEASE_ID/projects.json"
+              "$RELEASE_ID/release.json"
+              "$RELEASE_ID/sha256sums.txt"
+            )
+            test "${#changed[@]}" = 4
+            test "${changed[*]}" = "${expected[*]}"
+          fi
+          python3 atman/202608291410-verify-repository-boundary.py \
+            --repository . \
+            --contract "$BOUNDARY_CONTRACT" \
+            --mode "$mode"
+          echo "mode=$mode" >> "$GITHUB_OUTPUT"
+          echo "source_commit=$source_commit" >> "$GITHUB_OUTPUT"
+          echo "current_commit=$EXPECTED_MAIN_SHA" >> "$GITHUB_OUTPUT"
+
+  build_verify:
+    needs: classify
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ needs.classify.outputs.current_commit }}
+          fetch-depth: 3
+          persist-credentials: false
+      - name: Fetch and bind exact working-V8 routing source
+        run: |
+          set -euo pipefail
+          mkdir -p work/source
+          source_repository="$(jq -r .source.repository "$RELEASE_CONTRACT")"
+          source_revision="$(jq -r .source.commit "$RELEASE_CONTRACT")"
+          source_path="$(jq -r .source.path "$RELEASE_CONTRACT")"
+          source_bytes="$(jq -r .source.bytes "$RELEASE_CONTRACT")"
+          source_sha256="$(jq -r .source.sha256 "$RELEASE_CONTRACT")"
+          url="https://raw.githubusercontent.com/$source_repository/$source_revision/$source_path"
+          curl --fail --location --retry 6 --retry-all-errors --max-time 120 "$url" -o work/source/projects.json
+          test "$(stat -c %s work/source/projects.json)" = "$source_bytes"
+          test "$(sha256sum work/source/projects.json | cut -d' ' -f1)" = "$source_sha256"
+      - name: Deterministic A/B compile and exhaustive set verification
+        env:
+          SOURCE_GIT_COMMIT: ${{ needs.classify.outputs.source_commit }}
+        run: |
+          set -euo pipefail
+          source_time="$(git show -s --format=%cI "$SOURCE_GIT_COMMIT")"
+          source_parent="$(git rev-parse "$SOURCE_GIT_COMMIT^")"
+          for build in a b; do
+            python3 compiler/202608291410-build-repd-routing-release.py \
+              --contract "$RELEASE_CONTRACT" \
+              --source work/source/projects.json \
+              --source-commit "$SOURCE_GIT_COMMIT" \
+              --source-parent-commit "$source_parent" \
+              --source-committed-at "$source_time" \
+              --output "work/build-$build/$RELEASE_ID"
+            python3 atman/202608291410-verify-repd-routing-release.py \
+              --contract "$RELEASE_CONTRACT" \
+              --release "work/build-$build/$RELEASE_ID" \
+              --source-commit "$SOURCE_GIT_COMMIT" \
+              --source-committed-at "$source_time"
+          done
+          diff --recursive --no-dereference work/build-a work/build-b
+          test "$(find work/build-a/$RELEASE_ID -type f | wc -l)" = 4
+          if test "${{ needs.classify.outputs.mode }}" = release; then
+            diff --recursive --no-dereference "work/build-a/$RELEASE_ID" "$RELEASE_ID"
+          fi
+          echo "### Working V8 routing parity" >> "$GITHUB_STEP_SUMMARY"
+          echo "- 7,680 exact REPD identities" >> "$GITHUB_STEP_SUMMARY"
+          echo "- 7,652 MAP / 28 NO MAP" >> "$GITHUB_STEP_SUMMARY"
+          echo "- deterministic A/B build and exhaustive set hashes: PASS" >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: repd-routing-${{ needs.classify.outputs.source_commit }}
+          path: work/build-a/202608291410-repd-routing
+          if-no-files-found: error
+          retention-days: 30
+
+  stage_release:
+    needs: [classify, build_verify]
+    if: needs.classify.outputs.mode == 'source'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ needs.classify.outputs.source_commit }}
+          fetch-depth: 3
+      - uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131
+        with:
+          name: repd-routing-${{ needs.classify.outputs.source_commit }}
+          path: work/accepted/202608291410-repd-routing
+      - name: Stage exact one-parent folder commit on CI branch only
+        env:
+          SOURCE_GIT_COMMIT: ${{ needs.classify.outputs.source_commit }}
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$SOURCE_GIT_COMMIT"
+          git fetch --no-tags origin main:refs/remotes/origin/main
+          test "$(git rev-parse origin/main)" = "$SOURCE_GIT_COMMIT"
+          test ! -e "$RELEASE_ID"
+          cp -a "work/accepted/$RELEASE_ID" "$RELEASE_ID"
+          source_time="$(git show -s --format=%cI "$SOURCE_GIT_COMMIT")"
+          python3 atman/202608291410-verify-repd-routing-release.py \
+            --contract "$RELEASE_CONTRACT" \
+            --release "$RELEASE_ID" \
+            --source-commit "$SOURCE_GIT_COMMIT" \
+            --source-committed-at "$source_time"
+          git add -- "$RELEASE_ID"
+          test "$(git diff --cached --name-only | wc -l)" = 4
+          python3 atman/202608291410-verify-repository-boundary.py \
+            --repository . \
+            --contract "$BOUNDARY_CONTRACT" \
+            --mode release
+          git config user.name data-gridatlas-stage-bot
+          git config user.email data-gridatlas-stage-bot@users.noreply.github.com
+          stage_date="$source_time"
+          GIT_AUTHOR_DATE="$stage_date" GIT_COMMITTER_DATE="$stage_date" git commit -m '202608291410: stage immutable REPD routing data'
+          stage_commit="$(git rev-parse HEAD)"
+          test "$(git rev-parse HEAD^)" = "$SOURCE_GIT_COMMIT"
+          remote_old="$(git ls-remote --heads origin "refs/heads/$STAGE_BRANCH" | cut -f1)"
+          if test -n "$remote_old"; then
+            test "$remote_old" = "$stage_commit"
+          else
+            git push origin "$stage_commit:refs/heads/$STAGE_BRANCH"
+          fi
+          echo "### REPD routing stage" >> "$GITHUB_STEP_SUMMARY"
+          echo "- source: \`$SOURCE_GIT_COMMIT\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "- stage: \`$stage_commit\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "- main unchanged; GitHub App promotion required" >> "$GITHUB_STEP_SUMMARY"
+
+  verify_public:
+    needs: [classify, build_verify]
+    if: needs.classify.outputs.mode == 'release'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ needs.classify.outputs.current_commit }}
+          fetch-depth: 3
+          persist-credentials: false
+      - name: Wait for successful Pages deployment of exact commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_COMMIT: ${{ needs.classify.outputs.current_commit }}
+        run: |
+          set -euo pipefail
+          mkdir -p work/public
+          for attempt in {1..60}; do
+            response="$(curl --fail --silent --show-error --retry 3 --retry-all-errors --max-time 30 --header "Authorization: Bearer $GH_TOKEN" --header 'X-GitHub-Api-Version: 2022-11-28' "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/runs?head_sha=$RELEASE_COMMIT&per_page=100")"
+            matches="$(jq -c --arg sha "$RELEASE_COMMIT" '[.workflow_runs[] | select(.path=="dynamic/pages/pages-build-deployment" and .head_sha==$sha)]' <<<"$response")"
+            test "$(jq 'length' <<<"$matches")" -le 1
+            conclusion=""
+            if test "$(jq 'length' <<<"$matches")" = 1; then
+              status="$(jq -r '.[0].status' <<<"$matches")"
+              conclusion="$(jq -r '.[0].conclusion // ""' <<<"$matches")"
+              if test "$status" = completed; then
+                test "$conclusion" = success
+                test "$(jq -r '.[0].head_branch' <<<"$matches")" = main
+                test "$(jq -r '.[0].event' <<<"$matches")" = dynamic
+                test "$(jq -r '.[0].run_attempt' <<<"$matches")" = 1
+                jq '.[0]' <<<"$matches" > work/public/pages-run.json
+              fi
+            fi
+            if test "$conclusion" = success; then break; fi
+            test "$attempt" != 60
+            sleep 10
+          done
+      - name: Verify every public byte, CORS and range transport
+        env:
+          RELEASE_COMMIT: ${{ needs.classify.outputs.current_commit }}
+        run: |
+          set -euo pipefail
+          base="https://ventusltd.github.io/data-gridatlas/$RELEASE_ID"
+          for relative in index.html projects.json release.json sha256sums.txt; do
+            expected_bytes="$(stat -c %s "$RELEASE_ID/$relative")"
+            expected_sha="$(sha256sum "$RELEASE_ID/$relative" | cut -d' ' -f1)"
+            for attempt in {1..20}; do
+              if curl --fail --location --silent --show-error --retry 3 --retry-all-errors --max-time 30 --header 'Accept-Encoding: identity' --dump-header "work-$relative.headers" "$base/$relative?commit=${{ needs.classify.outputs.current_commit }}&attempt=$attempt" -o "work-$relative" \
+                && test "$(stat -c %s "work-$relative")" = "$expected_bytes" \
+                && test "$(sha256sum "work-$relative" | cut -d' ' -f1)" = "$expected_sha" \
+                && grep -Eiq '^access-control-allow-origin:[[:space:]]*\*' "work-$relative.headers" \
+                && { ! grep -Eiq '^content-encoding:' "work-$relative.headers" || grep -Eiq '^content-encoding:[[:space:]]*identity' "work-$relative.headers"; }; then break; fi
+              test "$attempt" != 20
+              sleep 3
+            done
+          done
+          for range_name in prefix suffix; do
+            if test "$range_name" = prefix; then
+              range='0-99'
+              expected_content_range='bytes 0-99/979338'
+              expected_range_bytes=100
+            else
+              range='-100'
+              expected_content_range='bytes 979238-979337/979338'
+              expected_range_bytes=100
+            fi
+            status="$(curl --fail --location --silent --show-error --retry 3 --retry-all-errors --max-time 30 --output "work-range-$range_name.bin" --dump-header "work-range-$range_name.headers" --write-out '%{http_code}' --header 'Accept-Encoding: identity' --header "Range: bytes=$range" "$base/projects.json?range=${{ needs.classify.outputs.current_commit }}-$range_name")"
+            test "$status" = 206
+            test "$(stat -c %s "work-range-$range_name.bin")" = "$expected_range_bytes"
+            grep -Eiq '^access-control-allow-origin:[[:space:]]*\*' "work-range-$range_name.headers"
+            grep -Eiq "^content-range:[[:space:]]*$expected_content_range" "work-range-$range_name.headers"
+            ! grep -Eiq '^content-encoding:' "work-range-$range_name.headers" || grep -Eiq '^content-encoding:[[:space:]]*identity' "work-range-$range_name.headers"
+            if test "$range_name" = prefix; then
+              cmp --silent <(head -c 100 "$RELEASE_ID/projects.json") "work-range-$range_name.bin"
+            else
+              cmp --silent <(tail -c 100 "$RELEASE_ID/projects.json") "work-range-$range_name.bin"
+            fi
+          done
+          python3 - <<'PY'
+          import hashlib
+          import json
+          import os
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          release_id = os.environ["RELEASE_ID"]
+          root = Path(release_id)
+          files = {}
+          for name in ("index.html", "projects.json", "release.json", "sha256sums.txt"):
+              payload = (root / name).read_bytes()
+              files[name] = {"bytes": len(payload), "sha256": hashlib.sha256(payload).hexdigest()}
+          pages_run = json.loads(Path("work/public/pages-run.json").read_text(encoding="utf-8"))
+          attestation = {
+              "schema": "data-gridatlas.repd-routing-public-attestation.v1",
+              "classification": "VERIFIED_PUBLIC_REPD_ROUTING_RELEASE",
+              "verified_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+              "release_id": release_id,
+              "release_commit": os.environ["RELEASE_COMMIT"],
+              "source_commit": json.loads((root / "release.json").read_text(encoding="utf-8"))["source_commit"],
+              "stage_branch": os.environ["STAGE_BRANCH"],
+              "pages_run_id": pages_run["id"],
+              "pages_run_attempt": pages_run["run_attempt"],
+              "pages_workflow_path": pages_run["path"],
+              "public_url": f"https://ventusltd.github.io/data-gridatlas/{release_id}/",
+              "files": files,
+              "cors_all_files": True,
+              "projects_prefix_range_exact": True,
+              "projects_suffix_range_exact": True,
+              "map_identities": 7652,
+              "no_map_identities": 28,
+              "failed": 0,
+          }
+          Path("work/public/public-attestation.json").write_text(
+              json.dumps(attestation, sort_keys=True, indent=2) + "\n", encoding="utf-8"
+          )
+          print(json.dumps(attestation, sort_keys=True))
+          PY
+          echo "### Public REPD routing data" >> "$GITHUB_STEP_SUMMARY"
+          echo "- $base/" >> "$GITHUB_STEP_SUMMARY"
+          echo "- 7,652 MAP / 28 NO MAP identities" >> "$GITHUB_STEP_SUMMARY"
+          echo "- exact bytes, CORS and HTTP range: PASS" >> "$GITHUB_STEP_SUMMARY"
+      - name: Retain exact public routing proof
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: repd-routing-public-${{ needs.classify.outputs.current_commit }}
+          path: |
+            work/public/pages-run.json
+            work/public/public-attestation.json
+            work-*.headers
+            work-range-*.headers
+            work-range-*.bin
+          if-no-files-found: error
+          retention-days: 30
+          compression-level: 0
