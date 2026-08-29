@@ -1,0 +1,91 @@
+{
+  "schema": "data-gridatlas.v8-quarantine.v1",
+  "generation": "202608290904",
+  "default_disposition": "QUARANTINE_UNTIL_PROVEN",
+  "classes": [
+    {
+      "id": "nested_workflows",
+      "count": 18,
+      "disposition": "DO_NOT_COPY",
+      "reason": "Nested V8 workflows are inert at their current path and target root outputs if relocated unchanged."
+    },
+    {
+      "id": "v8_scripts",
+      "count": 34,
+      "disposition": "REFERENCE_ONLY",
+      "reason": "Refresh scripts require source, authority, licence, schema and output-boundary review."
+    },
+    {
+      "id": "v8_application_files",
+      "count": 3,
+      "disposition": "DO_NOT_COPY",
+      "reason": "V9 must not inherit the monolithic V8 engine, page or stylesheet."
+    }
+  ],
+  "unwired_atlas_data": [
+    "deep_subsea_illustrative.geojson",
+    "grid_33kv_East_of_England.geojson",
+    "grid_33kv_London_Area.geojson",
+    "grid_33kv_North_East_England.geojson",
+    "grid_33kv_North_West_England.geojson",
+    "grid_33kv_Scotland_North.geojson",
+    "grid_33kv_Scotland_South.geojson",
+    "grid_33kv_South_East_England.geojson",
+    "grid_33kv_South_West_England.geojson",
+    "grid_33kv_Wales_North.geojson",
+    "grid_33kv_Wales_South.geojson",
+    "grid_33kv_Yorkshire.geojson",
+    "supermarkets_farmfoods.geojson",
+    "supermarkets_iceland.geojson",
+    "supermarkets_spar.geojson",
+    "uk_metros_trams.geojson"
+  ],
+  "root_absolute_dependencies": [
+    "/uk_metros_trams.geojson",
+    "/uk_mainline_railways.geojson",
+    "/uk_motorways.geojson",
+    "/uk_trunk_roads.geojson",
+    "/uk_primary_roads.geojson",
+    "/heavy_emitters_uk.json",
+    "/dist/repd_master.json"
+  ],
+  "known_defects": [
+    {
+      "id": "metro_tram_geometry_mismatch",
+      "configured_path": "uk_metros_trams.geojson",
+      "configured_geometry": "LineString",
+      "configured_features": 7829,
+      "layer_ids": ["dlr", "metro", "tram"],
+      "layer_geometry": "point",
+      "selected_incompatible_features": {"dlr": 609, "metro": 1128, "tram": 0},
+      "unused_candidate_path": "repd_grid_atlasv8/data/uk_metros_trams.geojson",
+      "unused_candidate_geometry": "Point",
+      "unused_candidate_features": 5267,
+      "disposition": "DO_NOT_SILENTLY_SWAP"
+    },
+    {
+      "id": "browser_side_topology_mutation",
+      "layer_ids": ["400", "275", "220", "132", "66"],
+      "disposition": "MOVE_TO_DETERMINISTIC_BUILD",
+      "reason": "V8 snaps line endpoints to substations in the browser."
+    },
+    {
+      "id": "unversioned_fetch_without_hash",
+      "disposition": "REPLACE_WITH_PINNED_ACQUISITION",
+      "reason": "V8 runtime fetches have a timeout and queue but no content identity enforcement."
+    }
+  ],
+  "deep_link_dependency": {
+    "path": "/uk_renewables_pipeline/v9/data/v9.1/build_manifest.json",
+    "sha256": "67976a1bbcaf383ed7121b13060db3b864db9ce33dfc721a88b59c8ca8b8e06c",
+    "partition_count": 18,
+    "feature_count": 7652,
+    "disposition": "ORACLE_ONLY; V9 REPD is compiled from official DESNZ source"
+  },
+  "external_runtime": [
+    "MapLibre GL JS/CSS 3.6.2 via jsDelivr",
+    "CARTO dark-matter style",
+    "Esri World Imagery tiles",
+    "Google News and Images outbound search links"
+  ]
+}

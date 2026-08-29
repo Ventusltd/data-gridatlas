@@ -1,0 +1,79 @@
+{
+  "schema": "data-gridatlas.bootstrap-contract.v1",
+  "generation": "202608290904",
+  "inception": "2026-08-29T09:04:00+01:00",
+  "classification": "INVENTORY_ONLY",
+  "repository": "Ventusltd/data-gridatlas",
+  "roles": {
+    "data_repository": "source contracts, deterministic transforms, immutable data releases and manifests",
+    "application_repository": "UI, rendered tests and deployment",
+    "v8": "immutable parity and dependency oracle only"
+  },
+  "v8_oracle": {
+    "repository": "Ventusltd/globalgrid2050",
+    "commit": "f2f343a92ee972cc74ed23b4b99d8a22896791ad",
+    "commit_tree_sha1": "2a8ecce66fdb06fbeac1d58443b2d67ba17aedb9",
+    "subtree_path": "repd_grid_atlasv8",
+    "subtree_sha1": "9e5489f52facde2292b785b75635f4347bbcf85a",
+    "subtree_files": 104,
+    "subtree_bytes": 39541206,
+    "class_summary": {
+      ".github": {"files": 18, "bytes": 22162},
+      "data": {"files": 49, "bytes": 39253305},
+      "root": {"files": 3, "bytes": 126580},
+      "scripts": {"files": 34, "bytes": 139159}
+    },
+    "v8_untouched": true
+  },
+  "consumer": {
+    "repository": "Ventusltd/gridatlas",
+    "observed_commit": "514fce2f3605ae53267c5ee955b301604a91b2fd",
+    "contract": "contracts/202608290904-gridatlas-consumer.json"
+  },
+  "inventory_invariants": {
+    "groups": 11,
+    "layer_entries": 60,
+    "unique_configured_urls": 40,
+    "preload_layer_entries": 12,
+    "unique_preload_sources": 11,
+    "atlas_data_files": 49,
+    "wired_atlas_data_files": 33,
+    "unwired_atlas_data_files": 16,
+    "root_absolute_dependencies": 7,
+    "raw_payloads_copied": 0
+  },
+  "build": {
+    "python": "3.12",
+    "duckdb": "1.3.2",
+    "threads": 1,
+    "parquet_compression": "ZSTD",
+    "outputs": ["files.parquet", "layers.parquet", "quarantine.parquet", "manifest.json"],
+    "publication": "Actions artifact only"
+  },
+  "promotion": {
+    "release_allowed": false,
+    "current_pointer_allowed": false,
+    "pages_publication_allowed": false,
+    "raw_dumps_allowed": false,
+    "next_gate": "verified bootstrap artifact and exact consumer contract"
+  },
+  "source_boundary": {
+    "expected_tracked_files": [
+      ".github/workflows/202608290904-bootstrap-verify-data-gridatlas.yml",
+      ".gitignore",
+      "README.md",
+      "atman/202608290904-verify-bootstrap.py",
+      "compiler/202608290904-build-dependency-catalog.py",
+      "contracts/202608290904-data-gridatlas-bootstrap.json",
+      "contracts/202608290904-gridatlas-consumer.json",
+      "contracts/202608290904-v8-dependency-ledger.json",
+      "contracts/202608290904-v8-file-ledger.json",
+      "contracts/202608290904-v8-quarantine.json",
+      "requirements.lock"
+    ],
+    "maximum_file_bytes": 1000000,
+    "maximum_repository_bytes": 2000000,
+    "forbidden_suffixes": [".geojson", ".csv", ".tsv", ".xlsx", ".parquet", ".duckdb", ".zip", ".tar", ".gz"],
+    "forbidden_roots": ["data", "dist", "releases", "state", "work", "build-a", "build-b"]
+  }
+}

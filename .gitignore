@@ -1,0 +1,10 @@
+work/
+build-a/
+build-b/
+.cache/
+__pycache__/
+*.py[cod]
+*.duckdb
+*.duckdb.wal
+*.tmp
+node_modules/

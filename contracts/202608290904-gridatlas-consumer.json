@@ -1,0 +1,25 @@
+{
+  "schema": "data-gridatlas.consumer-contract.v1",
+  "generation": "202608290904",
+  "consumer": "Ventusltd/gridatlas",
+  "observed_commit": "514fce2f3605ae53267c5ee955b301604a91b2fd",
+  "accepted_release": {
+    "path_pattern": "releases/<generation>/manifest.json",
+    "immutable": true,
+    "required_file_fields": ["path", "bytes", "sha256", "schema", "rows"],
+    "required_compression": "ZSTD",
+    "floating_raw_urls": false
+  },
+  "truth": {
+    "proximity_establishes_identity": false,
+    "v8_establishes_v9_truth": false,
+    "ownership_may_be_inferred": false,
+    "relationship_labels_must_match_source": true
+  },
+  "promotion_order": [
+    "immutable release",
+    "consumer hash verification",
+    "rendered browser verification",
+    "compare-and-swap current pointer"
+  ]
+}
