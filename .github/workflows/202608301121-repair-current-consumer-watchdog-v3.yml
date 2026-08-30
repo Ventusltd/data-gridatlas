@@ -1,0 +1,129 @@
+name: 202608301121 Repair current GridAtlas consumer watchdog V3
+run-name: Prove current and historical GridAtlas consumer lineage from ${{ github.sha }}
+
+on:
+  push:
+    branches:
+      - 'ci/202608301102-consumer-pointer-watchdog-repair'
+    paths:
+      - '.github/workflows/202608301121-repair-current-consumer-watchdog-v3.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: data-gridatlas-202608301121-consumer-watchdog-repair-v3
+  cancel-in-progress: false
+
+env:
+  BASE_MAIN: d9b36afa81d9ee112320b80d38e87a3fd549d6bb
+  TARGET: atman/202608291507-current-integrity.py
+  CONTRACT: contracts/202608291507-automation.json
+  SOURCE_WORKFLOW: .github/workflows/202608301102-repair-current-consumer-watchdog.yml
+
+jobs:
+  repair:
+    name: Prove and promote one source-only consumer repair
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - name: Checkout exact isolated repair branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 40
+          persist-credentials: true
+
+      - name: Build corrected successor from retained failed evidence
+        run: |
+          set -euo pipefail
+          git fetch --no-tags origin main:refs/remotes/origin/main
+          test "$(git rev-parse origin/main)" = "$BASE_MAIN"
+          test -f "$SOURCE_WORKFLOW"
+          test -f "$TARGET"
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          import textwrap
+
+          workflow = Path('.github/workflows/202608301102-repair-current-consumer-watchdog.yml').read_text(encoding='utf-8')
+          match = re.search(
+              r"(?ms)^          addition = r'''\n(?P<body>.*?)^          '''\n^          Path\('/tmp/patched-current-integrity.py'\)",
+              workflow,
+          )
+          assert match is not None, 'retained embedded successor not found'
+          addition = textwrap.dedent(match.group('body'))
+          before = '    require(status == 200 and raw_current_payload == current_payload, "public current pointer differs from promotion commit")'
+          replacement_lines = [
+              '    require(status == 200, "declared promotion pointer is unavailable")',
+              '    promotion_pointer = json.loads(',
+              '        raw_current_payload,',
+              '        object_pairs_hook=reject_duplicate_keys,',
+              '    )',
+              '    promotion_current = promotion_pointer.get("current") or {}',
+              '    require(',
+              '        promotion_current.get("release_id") == release_id,',
+              '        "declared promotion pointer release mismatch",',
+              '    )',
+              '    promotion_verification = promotion_pointer.get("verification") or {}',
+              '    require(',
+              '        promotion_verification.get("commit_lineage_attested") is True,',
+              '        "declared promotion pointer lineage is not attested",',
+              '    )',
+              '    require(',
+              '        verification.get("commit_lineage_attested") is True,',
+              '        "current pointer lineage is not attested",',
+              '    )',
+              '    lineage = verification.get("commit_lineage") or {}',
+              '    require(',
+              '        lineage.get("promotion_commit") == promotion_commit,',
+              '        "current pointer lineage promotion mismatch",',
+              '    )',
+          ]
+          after = '\n'.join(replacement_lines)
+          assert addition.count(before) == 1, 'expected one impossible self-reference check'
+          addition = addition.replace(before, after)
+
+          source = Path('atman/202608291507-current-integrity.py').read_text(encoding='utf-8')
+          anchor = '\ndef run_full_release_verifier(state: dict, output: Path) -> dict:'
+          assert source.count(anchor) == 1
+          assert '_verify_current_and_historical_consumer' not in source
+          Path('/tmp/patched-current-integrity.py').write_text(
+              source.replace(anchor, addition + anchor),
+              encoding='utf-8',
+              newline='\n',
+          )
+          PY
+
+          git reset --hard origin/main
+          cp /tmp/patched-current-integrity.py "$TARGET"
+          python3 -m py_compile "$TARGET"
+          git diff --check
+          test "$(git diff --name-only)" = "$TARGET"
+
+          expected_pointer="$(jq -r .baseline.pointer_sha256 "$CONTRACT")"
+          python3 "$TARGET" probe \
+            --repository . \
+            --contract "$CONTRACT" \
+            --expected-head "$BASE_MAIN" \
+            --expected-pointer-sha256 "$expected_pointer" \
+            --mode consumer \
+            --output "$RUNNER_TEMP/current-consumer-proof.json"
+          test "$(jq -r .classification "$RUNNER_TEMP/current-consumer-proof.json")" = VERIFIED_WATCHDOG_PROBE
+          test "$(jq -r .proof.verified "$RUNNER_TEMP/current-consumer-proof.json")" = true
+          test "$(jq -r .proof.identity_rule "$RUNNER_TEMP/current-consumer-proof.json")" = EXACT_REPD_REF_ONLY
+          test "$(jq -r .proof.historical_release_id "$RUNNER_TEMP/current-consumer-proof.json")" = 202608291239-atlas-v9
+          test "$(jq -r .proof.release_id "$RUNNER_TEMP/current-consumer-proof.json")" = 202608300453-atlas-v9
+
+      - name: Compare-and-swap one source repair onto main
+        run: |
+          set -euo pipefail
+          git fetch --no-tags origin main:refs/remotes/origin/main
+          test "$(git rev-parse origin/main)" = "$BASE_MAIN"
+          git add "$TARGET"
+          test "$(git diff --cached --name-only)" = "$TARGET"
+          git config user.name data-gridatlas-consumer-watchdog-repair-bot
+          git config user.email actions@users.noreply.github.com
+          git commit -m '202608301121: follow promoted GridAtlas pointer and preserve historical proof'
+          git push origin HEAD:main
