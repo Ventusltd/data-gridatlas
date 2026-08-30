@@ -1,0 +1,254 @@
+name: 202608301102 Repair current GridAtlas consumer watchdog
+run-name: Prove and publish current-plus-historical consumer probe from ${{ github.sha }}
+
+on:
+  push:
+    branches:
+      - 'ci/202608301102-consumer-pointer-watchdog-repair'
+    paths:
+      - '.github/workflows/202608301102-repair-current-consumer-watchdog.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: data-gridatlas-202608301102-consumer-watchdog-repair
+  cancel-in-progress: false
+
+env:
+  BASE_MAIN: d9b36afa81d9ee112320b80d38e87a3fd549d6bb
+  TARGET: atman/202608291507-current-integrity.py
+  CONTRACT: contracts/202608291507-automation.json
+
+jobs:
+  repair:
+    name: Patch stale consumer equality rule without touching data releases
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - name: Checkout isolated repair branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 40
+          persist-credentials: true
+
+      - name: Build and prove bounded consumer-probe successor
+        run: |
+          set -euo pipefail
+          git fetch --no-tags origin main:refs/remotes/origin/main
+          test "$(git rev-parse origin/main)" = "$BASE_MAIN"
+          test -f "$TARGET"
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path('atman/202608291507-current-integrity.py')
+          text = path.read_text(encoding='utf-8')
+          anchor = '\ndef run_full_release_verifier(state: dict, output: Path) -> dict:'
+          assert text.count(anchor) == 1
+          assert '_verify_current_and_historical_consumer' not in text
+          addition = r'''
+          _historical_verify_consumer = verify_consumer
+
+
+          def _verify_current_and_historical_consumer(state: dict) -> dict:
+              contract = state["contract"]
+              expected = contract["consumer"]
+              root = contract["public"]["app_root"]
+              query = expected["query"]
+
+              # Preserve the exact historical consumer attestation at its pinned Git commit.
+              historical_pointer_url = (
+                  "https://raw.githubusercontent.com/"
+                  + expected["repository"]
+                  + "/"
+                  + expected["pointer_commit"]
+                  + "/state/live-set.json"
+              )
+              status, _, historical_payload = fetch(historical_pointer_url)
+              require(status == 200, "historical app pointer is unavailable")
+              require(
+                  bytes_sha256(historical_payload) == expected["pointer_sha256"],
+                  "historical app pointer SHA-256 mismatch",
+              )
+              historical_pointer = json.loads(
+                  historical_payload,
+                  object_pairs_hook=reject_duplicate_keys,
+              )
+              require(historical_pointer.get("schema") == "gridatlas.live-set.v3", "historical pointer schema mismatch")
+              require(historical_pointer.get("classification") == "VERIFIED_LIVE_ATLAS_V9", "historical pointer classification mismatch")
+              historical_current = historical_pointer.get("current") or {}
+              require(historical_current.get("release_id") == expected["release_id"], "historical release binding mismatch")
+
+              historical_release = root + expected["release_id"] + "/"
+              historical_checks = {
+                  "release-manifest.json": expected["release_manifest_sha256"],
+                  "build-manifest.json": expected["build_manifest_sha256"],
+                  "index.html": expected["index_sha256"],
+              }
+              historical_index = None
+              for relative, digest in historical_checks.items():
+                  url = historical_release + relative
+                  status, headers, payload = fetch(url)
+                  require_public_response(status, headers, 200, url)
+                  require(bytes_sha256(payload) == digest, f"historical app release mismatch: {relative}")
+                  if relative == "index.html":
+                      historical_index = payload
+              historical_deep_link = (
+                  historical_release
+                  + "?"
+                  + quote(query["parameter"])
+                  + "="
+                  + quote(query["value"])
+              )
+              status, headers, payload = fetch(historical_deep_link)
+              require_public_response(status, headers, 200, historical_deep_link)
+              require(payload == historical_index, "historical deep-link index differs")
+
+              # Follow the promoted live pointer instead of requiring it to equal an older v3 pointer.
+              current_pointer_url = root + "state/live-set.json"
+              status, headers, current_payload = fetch(current_pointer_url)
+              require_public_response(status, headers, 200, current_pointer_url)
+              current_pointer = json.loads(
+                  current_payload,
+                  object_pairs_hook=reject_duplicate_keys,
+              )
+              require(str(current_pointer.get("schema", "")).startswith("gridatlas.live-set."), "current pointer schema mismatch")
+              require(str(current_pointer.get("classification", "")).startswith("VERIFIED_LIVE_"), "current pointer classification mismatch")
+              verification = current_pointer.get("verification") or {}
+              require(verification.get("promotion_eligible") is True, "current app pointer is not promotion eligible")
+              require(int(verification.get("failed_gates", -1)) == 0, "current app pointer has failed gates")
+
+              current = current_pointer.get("current") or {}
+              release_id = str(current.get("release_id") or "")
+              require(re.fullmatch(r"\d{12}-atlas-v9", release_id) is not None, "unsafe current app release ID")
+              release_url = root + release_id + "/"
+              require(current.get("live_url") == release_url, "current app live URL mismatch")
+              receiver = current.get("deep_link_receiver") or {}
+              require(receiver.get("identity_parameter") == query["parameter"], "current query parameter mismatch")
+              require(receiver.get("identity_rule") == "EXACT_REPD_REF_ONLY", "current identity rule mismatch")
+              require(receiver.get("automatic_search") is True, "current automatic search gate failed")
+              require(receiver.get("automatic_fly_to") is True, "current automatic fly-to gate failed")
+
+              manifests = current.get("manifests") or {}
+              required_manifest_keys = {
+                  "release-manifest.json": "release_sha256",
+                  "build-manifest.json": "build_sha256",
+              }
+              for key in ["release_sha256", "build_sha256", "sha256sums_sha256"]:
+                  require(HEX64.fullmatch(str(manifests.get(key) or "")) is not None, f"malformed current manifest digest: {key}")
+
+              ledger_url = release_url + "sha256sums.txt"
+              status, ledger_headers, ledger_payload = fetch(ledger_url)
+              require_public_response(status, ledger_headers, 200, ledger_url)
+              require(bytes_sha256(ledger_payload) == manifests["sha256sums_sha256"], "current ledger SHA-256 mismatch")
+              ledger: dict[str, str] = {}
+              for number, raw in enumerate(ledger_payload.decode("utf-8").splitlines(), 1):
+                  if not raw.strip():
+                      continue
+                  digest, separator, relative = raw.partition("  ")
+                  require(separator == "  ", f"bad current ledger line: {number}")
+                  require(HEX64.fullmatch(digest) is not None, f"bad current ledger digest: {number}")
+                  require(relative and not relative.startswith("/") and ".." not in Path(relative).parts, f"unsafe current ledger path: {number}")
+                  ledger[relative] = digest
+
+              current_index = None
+              for relative, manifest_key in required_manifest_keys.items():
+                  require(ledger.get(relative) == manifests[manifest_key], f"current pointer/ledger mismatch: {relative}")
+                  url = release_url + relative
+                  status, file_headers, file_payload = fetch(url)
+                  require_public_response(status, file_headers, 200, url)
+                  require(bytes_sha256(file_payload) == manifests[manifest_key], f"current app release mismatch: {relative}")
+                  parsed = json.loads(file_payload, object_pairs_hook=reject_duplicate_keys)
+                  require(parsed.get("release_id") == release_id, f"current release identity mismatch: {relative}")
+
+              if manifests.get("deep_link_sha256"):
+                  require(HEX64.fullmatch(str(manifests["deep_link_sha256"])) is not None, "malformed deep-link manifest digest")
+                  require(ledger.get("deep-link-receiver-manifest.json") == manifests["deep_link_sha256"], "deep-link pointer/ledger mismatch")
+                  deep_manifest_url = release_url + "deep-link-receiver-manifest.json"
+                  status, deep_headers, deep_payload = fetch(deep_manifest_url)
+                  require_public_response(status, deep_headers, 200, deep_manifest_url)
+                  require(bytes_sha256(deep_payload) == manifests["deep_link_sha256"], "current deep-link manifest mismatch")
+
+              require(HEX64.fullmatch(str(ledger.get("index.html") or "")) is not None, "current index absent from ledger")
+              index_url = release_url + "index.html"
+              status, index_headers, current_index = fetch(index_url)
+              require_public_response(status, index_headers, 200, index_url)
+              require(bytes_sha256(current_index) == ledger["index.html"], "current index SHA-256 mismatch")
+
+              current_deep_link = (
+                  release_url
+                  + "?"
+                  + quote(query["parameter"])
+                  + "="
+                  + quote(query["value"])
+              )
+              status, deep_headers, deep_payload = fetch(current_deep_link)
+              require_public_response(status, deep_headers, 200, current_deep_link)
+              require(deep_payload == current_index, "current deep-link index differs from release index")
+
+              promotion_commit = str(current.get("promotion_commit") or "")
+              require(HEX40.fullmatch(promotion_commit) is not None, "malformed current promotion commit")
+              raw_current_url = (
+                  "https://raw.githubusercontent.com/"
+                  + expected["repository"]
+                  + "/"
+                  + promotion_commit
+                  + "/state/live-set.json"
+              )
+              status, _, raw_current_payload = fetch(raw_current_url)
+              require(status == 200 and raw_current_payload == current_payload, "public current pointer differs from promotion commit")
+
+              return {
+                  "pointer_urls": [historical_pointer_url, current_pointer_url],
+                  "historical_pointer_sha256": expected["pointer_sha256"],
+                  "historical_release_id": expected["release_id"],
+                  "historical_deep_link": historical_deep_link,
+                  "pointer_sha256": bytes_sha256(current_payload),
+                  "release_id": release_id,
+                  "deep_link": current_deep_link,
+                  "golden_value": query["value"],
+                  "identity_rule": receiver.get("identity_rule"),
+                  "verified": True,
+              }
+
+
+          verify_consumer = _verify_current_and_historical_consumer
+          '''
+          Path('/tmp/patched-current-integrity.py').write_text(
+              text.replace(anchor, addition + anchor),
+              encoding='utf-8',
+              newline='\n',
+          )
+          PY
+
+          git reset --hard origin/main
+          cp /tmp/patched-current-integrity.py "$TARGET"
+          python3 -m py_compile "$TARGET"
+          git diff --check
+          test "$(git diff --name-only)" = "$TARGET"
+
+          expected_pointer="$(jq -r .baseline.pointer_sha256 "$CONTRACT")"
+          python3 "$TARGET" probe \
+            --repository . \
+            --contract "$CONTRACT" \
+            --expected-head "$BASE_MAIN" \
+            --expected-pointer-sha256 "$expected_pointer" \
+            --mode consumer \
+            --output "$RUNNER_TEMP/current-consumer-proof.json"
+          test "$(jq -r .classification "$RUNNER_TEMP/current-consumer-proof.json")" = VERIFIED_WATCHDOG_PROBE
+          test "$(jq -r .proof.verified "$RUNNER_TEMP/current-consumer-proof.json")" = true
+          test "$(jq -r .proof.identity_rule "$RUNNER_TEMP/current-consumer-proof.json")" = EXACT_REPD_REF_ONLY
+
+      - name: Compare-and-swap source-only repair onto main
+        run: |
+          set -euo pipefail
+          git fetch --no-tags origin main:refs/remotes/origin/main
+          test "$(git rev-parse origin/main)" = "$BASE_MAIN"
+          git add "$TARGET"
+          test "$(git diff --cached --name-only)" = "$TARGET"
+          git config user.name data-gridatlas-consumer-watchdog-repair-bot
+          git config user.email actions@users.noreply.github.com
+          git commit -m '202608301102: follow promoted GridAtlas pointer while preserving historical consumer proof'
+          git push origin HEAD:main
