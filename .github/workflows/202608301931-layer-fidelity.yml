@@ -118,7 +118,10 @@ jobs:
           data_dir = Path(os.environ['DATA_DIR'])
           artifacts = json.loads((data_dir / 'manifest.json').read_text(encoding='utf-8'))['artifacts']
           artifact_paths = {str(item['path']).lower(): item for item in artifacts}
-          special = {'repd_master': 'repd_master_v8_oracle'}
+          special = {
+              'repd_master': 'repd_master_v8_oracle',
+              'uk_metros_trams': 'uk_metros_trams_root',
+          }
 
           for source in table['sources']:
               stem = special.get(source['stem'].lower(), source['stem'].lower())
@@ -256,7 +259,7 @@ jobs:
 
       - name: Upload SARIF
         if: always()
-        uses: github/codeql-action/upload-sarif@6f5948dfacef28e207b48d0905cf90c03365536d
+        uses: github/codeql-action/upload-sarif@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4
         with:
           sarif_file: fidelity.sarif
           category: data-gridatlas-layer-fidelity
