@@ -1,0 +1,398 @@
+name: 202608301931 Layer fidelity, V8 origin vs V9 delivery
+
+on:
+  push:
+    paths:
+      - '*/data/**'
+      - 'state/live-set.json'
+      - 'tools/202608301930-fidelity.py'
+      - '.github/workflows/202608301931-layer-fidelity.yml'
+  schedule:
+    - cron: '23 3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+
+concurrency:
+  group: data-gridatlas-layer-fidelity
+  cancel-in-progress: false
+
+jobs:
+  offline:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - name: Checkout complete data-gridatlas history
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Checkout complete GridAtlas history
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          repository: Ventusltd/gridatlas
+          path: gridatlas
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Install the hash-locked DuckDB runtime
+        run: python3 -m pip install --require-hashes -r requirements.lock
+
+      - name: Resolve current releases and extract the immutable shell layer table
+        id: releases
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          import posixpath
+          import re
+
+          data_state = json.loads(Path('state/live-set.json').read_text(encoding='utf-8'))
+          data_release = data_state['current']['release_id']
+          data_dir = Path(data_release) / 'data'
+          if not (data_dir / 'manifest.json').is_file():
+              raise SystemExit(f'data manifest missing: {data_dir / "manifest.json"}')
+
+          current = json.loads(Path('gridatlas/atlas/current.json').read_text(encoding='utf-8'))
+          shell_rel = str(current['shell']['index']).removeprefix('./')
+          shell = Path('gridatlas/atlas') / shell_rel
+          if not shell.is_file():
+              raise SystemExit(f'immutable shell missing: {shell}')
+
+          text = shell.read_text(encoding='utf-8')
+          matches = re.findall(r'id:\s*"([^"]+)"[^}]*?url:\s*"([^"]+)"', text)
+          if not matches:
+              raise SystemExit('no layer id/url pairs found in immutable shell')
+
+          grouped = {}
+          for layer_id, url in matches:
+              record = grouped.setdefault(url, {'url': url, 'layer_ids': [], 'stem': Path(url).stem})
+              record['layer_ids'].append(layer_id)
+              if url.startswith('/'):
+                  origin_path = url.lstrip('/')
+              else:
+                  origin_path = posixpath.normpath(posixpath.join('repd_grid_atlasv8', url))
+              record['origin_path'] = origin_path
+
+          payload = {
+              'schema': 'data-gridatlas.layer-source-table.v1',
+              'gridatlas_generation': current['generation'],
+              'gridatlas_release_id': current['release_id'],
+              'gridatlas_shell': str(shell),
+              'data_release_id': data_release,
+              'data_dir': str(data_dir),
+              'v8_commit': data_state['rollback']['data_commit'],
+              'sources': sorted(grouped.values(), key=lambda row: row['url']),
+          }
+          Path('layers.json').write_text(json.dumps(payload, indent=2) + '\n', encoding='utf-8')
+          with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as output:
+              output.write(f"data_release={data_release}\n")
+              output.write(f"data_dir={data_dir}\n")
+              output.write(f"gridatlas_release={current['release_id']}\n")
+              output.write(f"v8_commit={payload['v8_commit']}\n")
+          print(json.dumps({k: payload[k] for k in ('gridatlas_generation', 'gridatlas_release_id', 'data_release_id', 'v8_commit')}, indent=2))
+          print(len(payload['sources']), 'unique source URLs from', len(matches), 'layers')
+          PY
+
+      - name: Fetch pinned V8 origins and compare every Parquet-backed source
+        env:
+          V8_COMMIT: ${{ steps.releases.outputs.v8_commit }}
+          DATA_DIR: ${{ steps.releases.outputs.data_dir }}
+        run: |
+          set -euo pipefail
+          mkdir -p origin reports
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          import subprocess
+          import urllib.request
+
+          table = json.loads(Path('layers.json').read_text(encoding='utf-8'))
+          data_dir = Path(os.environ['DATA_DIR'])
+          artifacts = json.loads((data_dir / 'manifest.json').read_text(encoding='utf-8'))['artifacts']
+          artifact_paths = {str(item['path']).lower(): item for item in artifacts}
+          special = {'repd_master': 'repd_master_v8_oracle'}
+
+          for source in table['sources']:
+              stem = special.get(source['stem'].lower(), source['stem'].lower())
+              expected = f'partitions/{stem}.parquet'
+              report_path = Path('reports') / f'{stem}.json'
+              artifact = artifact_paths.get(expected)
+              if not artifact:
+                  report_path.write_text(json.dumps({
+                      'schema': 'data-gridatlas.layer-fidelity.v1',
+                      'layer': stem,
+                      'layer_ids': source['layer_ids'],
+                      'source_url': source['url'],
+                      'fidelity': 'NO_PARTITION',
+                      'expected_partition': expected,
+                  }, sort_keys=True), encoding='utf-8')
+                  continue
+
+              origin_path = Path('origin') / f'{stem}.geojson'
+              origin_url = (
+                  'https://raw.githubusercontent.com/Ventusltd/globalgrid2050/'
+                  f"{os.environ['V8_COMMIT']}/{source['origin_path']}"
+              )
+              try:
+                  urllib.request.urlretrieve(origin_url, origin_path)
+              except Exception as error:
+                  report_path.write_text(json.dumps({
+                      'schema': 'data-gridatlas.layer-fidelity.v1',
+                      'layer': stem,
+                      'layer_ids': source['layer_ids'],
+                      'source_url': source['url'],
+                      'origin_url': origin_url,
+                      'fidelity': 'NO_ORIGIN',
+                      'error': str(error),
+                  }, sort_keys=True), encoding='utf-8')
+                  continue
+
+              completed = subprocess.run(
+                  [
+                      'python3', 'tools/202608301930-fidelity.py',
+                      str(data_dir / artifact['path']), str(origin_path),
+                  ],
+                  capture_output=True,
+                  text=True,
+                  check=False,
+              )
+              try:
+                  report = json.loads((completed.stdout or '').strip())
+              except json.JSONDecodeError:
+                  report = {
+                      'schema': 'data-gridatlas.layer-fidelity.v1',
+                      'layer': stem,
+                      'fidelity': 'ERROR',
+                      'error': (completed.stderr or completed.stdout)[-1000:],
+                  }
+              report.update({
+                  'layer_ids': source['layer_ids'],
+                  'source_url': source['url'],
+                  'origin_url': origin_url,
+                  'partition_manifest': artifact,
+                  'comparator_exit_code': completed.returncode,
+              })
+              report_path.write_text(json.dumps(report, indent=2, sort_keys=True) + '\n', encoding='utf-8')
+          PY
+
+      - name: Judge fidelity and publish delivery-budget warnings
+        id: judge
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import glob
+          import json
+          import os
+          from pathlib import Path
+
+          reports = [json.loads(Path(path).read_text(encoding='utf-8')) for path in sorted(glob.glob('reports/*.json'))]
+          fidelity_bad = [row for row in reports if row.get('fidelity') != 'PASS']
+          over_budget = [row for row in reports if row.get('fidelity') == 'PASS' and float(row.get('on_demand_budget_s_at_20mbit', 0)) > 15]
+
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a', encoding='utf-8') as summary:
+              summary.write('## V8 origin vs V9 partition fidelity\n\n')
+              summary.write('| source | layers | origin | rows | hash | projected | coords | dropped keys | static s@20Mbit | on-demand s@20Mbit | verdict |\n')
+              summary.write('|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---|\n')
+              for row in reports:
+                  fidelity = row.get('fidelity', 'ERROR')
+                  verdict = fidelity
+                  if fidelity == 'PASS' and row in over_budget:
+                      verdict = 'FIDELITY PASS / DELIVERY OVER BUDGET'
+                  elif fidelity == 'PASS':
+                      verdict = 'PASS'
+                  summary.write(
+                      f"| {row.get('source_url', row.get('layer', '-'))} | {', '.join(row.get('layer_ids', []))} | "
+                      f"{row.get('original_features', '-')} | {row.get('partition_rows', '-')} | "
+                      f"{row.get('hash_mismatch', '-')} | {row.get('projected_mismatch', '-')} | "
+                      f"{row.get('coord_mismatch', '-')} | {len(row.get('prop_keys_dropped', []))} | "
+                      f"{row.get('delivery_budget_s_at_20mbit', '-')} | {row.get('on_demand_budget_s_at_20mbit', '-')} | {verdict} |\n"
+                  )
+
+          results = []
+          for row in fidelity_bad:
+              results.append({
+                  'ruleId': 'layer-fidelity',
+                  'level': 'error',
+                  'message': {'text': f"{row.get('source_url', row.get('layer'))}: {row.get('fidelity')}"},
+                  'locations': [{'physicalLocation': {'artifactLocation': {'uri': 'state/live-set.json'}, 'region': {'startLine': 1}}}],
+              })
+          for row in over_budget:
+              results.append({
+                  'ruleId': 'layer-delivery-budget',
+                  'level': 'warning',
+                  'message': {'text': f"{row.get('source_url')}: DuckDB on-demand estimate {row.get('on_demand_budget_s_at_20mbit')} s exceeds 15 s"},
+                  'locations': [{'physicalLocation': {'artifactLocation': {'uri': 'state/live-set.json'}, 'region': {'startLine': 1}}}],
+              })
+          sarif = {
+              '$schema': 'https://json.schemastore.org/sarif-2.1.0.json',
+              'version': '2.1.0',
+              'runs': [{
+                  'tool': {'driver': {'name': 'layer-fidelity', 'rules': [
+                      {'id': 'layer-fidelity'}, {'id': 'layer-delivery-budget'}
+                  ]}},
+                  'results': results,
+              }],
+          }
+          Path('fidelity.sarif').write_text(json.dumps(sarif, indent=2) + '\n', encoding='utf-8')
+          Path('fidelity-summary.json').write_text(json.dumps({
+              'schema': 'data-gridatlas.layer-fidelity-summary.v1',
+              'reports': len(reports),
+              'fidelity_failures': len(fidelity_bad),
+              'delivery_budget_warnings': len(over_budget),
+              'status': 'FAIL' if fidelity_bad else 'PASS',
+          }, indent=2) + '\n', encoding='utf-8')
+          if fidelity_bad:
+              raise SystemExit(f'{len(fidelity_bad)} fidelity/source mapping failure(s)')
+          PY
+
+      - name: Upload SARIF
+        if: always()
+        uses: github/codeql-action/upload-sarif@6f5948dfacef28e207b48d0905cf90c03365536d
+        with:
+          sarif_file: fidelity.sarif
+          category: data-gridatlas-layer-fidelity
+
+      - name: Retain offline evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v4.4.3
+        with:
+          name: layer-fidelity-offline-${{ github.run_id }}
+          path: |
+            layers.json
+            reports/*.json
+            fidelity-summary.json
+            fidelity.sarif
+          if-no-files-found: warn
+          retention-days: 90
+          compression-level: 6
+
+  browser:
+    needs: offline
+    if: always()
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - name: Checkout workflow evidence only
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Configure Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version: '22'
+
+      - name: Install exact Playwright and Chromium
+        run: |
+          npm install --no-save --ignore-scripts playwright@1.62.1
+          npx playwright install --with-deps chromium
+
+      - name: Toggle every live layer and measure MapLibre readiness, heap and features
+        env:
+          BASE_URL: https://ventusltd.github.io/gridatlas/atlas/
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat > live.mjs <<'EOF2'
+          import fs from 'node:fs/promises';
+          import { chromium } from 'playwright';
+
+          const base = process.env.BASE_URL;
+          const browser = await chromium.launch({ headless: true });
+          const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+          const page = await context.newPage();
+          const cdp = await context.newCDPSession(page);
+          const consoleErrors = [];
+          page.on('console', message => { if (message.type() === 'error') consoleErrors.push(message.text()); });
+          page.on('pageerror', error => consoleErrors.push(String(error?.message || error)));
+
+          await page.goto(`${base}?layer-fidelity=${Date.now()}`, { waitUntil: 'domcontentloaded', timeout: 120000 });
+          await page.waitForFunction(() => window.__GRIDATLAS_V9_MAP__ && document.querySelectorAll('#scada-ui-container input[data-layer-id]').length > 0, null, { timeout: 120000 });
+          const ids = await page.$$eval('#scada-ui-container input[data-layer-id]', elements => [...new Set(elements.map(element => element.dataset.layerId))]);
+          const rows = [];
+          let failures = 0;
+
+          for (const id of ids) {
+            const selector = `#scada-ui-container input[data-layer-id="${id}"]`;
+            const started = Date.now();
+            await page.locator(selector).check({ force: true });
+            const state = await page.waitForFunction(layerId => {
+              const label = document.querySelector(`#lbl-${CSS.escape(layerId)}`)?.textContent || '';
+              const map = window.__GRIDATLAS_V9_MAP__;
+              const mapLayer = map?.getLayer(`l-${layerId}`);
+              const sourceId = mapLayer?.source;
+              let sourceLoaded = false;
+              let features = -1;
+              try {
+                sourceLoaded = Boolean(sourceId && map.isSourceLoaded(sourceId));
+                features = sourceId ? map.querySourceFeatures(sourceId).length : -1;
+              } catch {}
+              const terminal = /\[(OK|EMPTY|FAIL)\]/.test(label);
+              return terminal && { label, sourceId, sourceLoaded, features };
+            }, id, { timeout: 60000 }).then(handle => handle.jsonValue()).catch(() => ({ label: 'TIMEOUT', sourceId: null, sourceLoaded: false, features: -1 }));
+
+            if (state.sourceId && state.label.includes('[OK]')) {
+              await page.waitForFunction(sourceId => {
+                const map = window.__GRIDATLAS_V9_MAP__;
+                try { return map?.isSourceLoaded(sourceId) === true; } catch { return false; }
+              }, state.sourceId, { timeout: 60000 }).catch(() => {});
+            }
+
+            const heapMb = (await cdp.send('Runtime.getHeapUsage')).usedSize / 1e6;
+            const seconds = (Date.now() - started) / 1000;
+            const final = await page.evaluate(layerId => {
+              const map = window.__GRIDATLAS_V9_MAP__;
+              const mapLayer = map?.getLayer(`l-${layerId}`);
+              const sourceId = mapLayer?.source || null;
+              let loaded = false;
+              let features = -1;
+              try {
+                loaded = Boolean(sourceId && map.isSourceLoaded(sourceId));
+                features = sourceId ? map.querySourceFeatures(sourceId).length : -1;
+              } catch {}
+              return { sourceId, loaded, features, label: document.querySelector(`#lbl-${CSS.escape(layerId)}`)?.textContent || '' };
+            }, id);
+            const bad = !final.label.includes('[OK]') || !final.loaded || seconds > 15 || heapMb > 400 || final.features < 1;
+            if (bad) failures += 1;
+            rows.push({ id, ...final, seconds, heap_mb: heapMb, verdict: bad ? 'FAIL' : 'PASS' });
+            await page.locator(selector).uncheck({ force: true }).catch(() => {});
+            await page.waitForTimeout(100);
+          }
+
+          const report = {
+            schema: 'gridatlas.live-layer-fidelity.v1',
+            base,
+            rows,
+            failures,
+            console_errors: consoleErrors,
+            status: failures ? 'FAIL' : 'PASS',
+          };
+          await fs.writeFile('live-layer-fidelity.json', JSON.stringify(report, null, 2) + '\n');
+          console.log('| layer | label | loaded | seconds | heap MB | features | verdict |');
+          console.log('|---|---|---:|---:|---:|---:|---|');
+          for (const row of rows) console.log(`| ${row.id} | ${row.label.replaceAll('|', '/')} | ${row.loaded} | ${row.seconds.toFixed(1)} | ${row.heap_mb.toFixed(0)} | ${row.features} | ${row.verdict} |`);
+          if (consoleErrors.length) console.log(`\nConsole errors: ${consoleErrors.length}`);
+          await browser.close();
+          process.exit(failures ? 1 : 0);
+          EOF2
+          node live.mjs | tee -a "$GITHUB_STEP_SUMMARY"
+
+      - name: Retain browser evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v4.4.3
+        with:
+          name: layer-fidelity-browser-${{ github.run_id }}
+          path: live-layer-fidelity.json
+          if-no-files-found: warn
+          retention-days: 90
+          compression-level: 6
