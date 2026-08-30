@@ -2,7 +2,7 @@
   "schema": "data-gridatlas.automation-contract.v1",
   "generation": "202608291507",
   "incepted_at": "2026-08-29T15:07:12+01:00",
-  "baseline_reconciled_at": "2026-08-29T15:28:08+01:00",
+  "baseline_reconciled_at": "2026-08-30T18:01:00+00:00",
   "repository": "Ventusltd/data-gridatlas",
   "baseline": {
     "main_commit": "b8668b4d5f34880158aeed2eab5c4a1e678a467d",
@@ -91,9 +91,13 @@
     ".github/workflows/202608291507-contract-guard.yml",
     ".github/workflows/202608291507-watchdog-router.yml",
     ".github/workflows/202608291507-current-integrity.yml",
+    ".github/workflows/202608301102-repair-consumer-pointer-semantics.yml",
+    ".github/workflows/202608301115-repair-consumer-pointer-semantics-v2.yml",
+    ".github/workflows/202608301931-layer-fidelity.yml",
     "atman/202608291507-current-integrity.py",
     "contracts/202608291507-automation.json",
-    "runbooks/202608291507-data-gridatlas-automation.md"
+    "runbooks/202608291507-data-gridatlas-automation.md",
+    "tools/202608301930-fidelity.py"
   ],
   "rules": {
     "mutate_main": false,
