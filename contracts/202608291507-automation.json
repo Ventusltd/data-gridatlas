@@ -88,6 +88,7 @@
     "actions/download-artifact": "37930b1c2abaa49bbe596cd826c3c89aef350131"
   },
   "first_checkpoint_files": [
+    ".gitattributes",
     ".github/workflows/202608291507-contract-guard.yml",
     ".github/workflows/202608291507-watchdog-router.yml",
     ".github/workflows/202608291507-current-integrity.yml",
