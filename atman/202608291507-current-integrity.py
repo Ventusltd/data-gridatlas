@@ -13,7 +13,7 @@ import sys
 import time
 from pathlib import Path
 from urllib.error import HTTPError, URLError
-from urllib.parse import quote
+from urllib.parse import quote, urlsplit
 from urllib.request import Request, urlopen
 
 
@@ -127,6 +127,20 @@ def load_contract(repository: Path, relative: str) -> dict:
     require(contract["runtime"]["maximum_parallel_shards"] == 8, "parallel shard ceiling mismatch")
     require(contract["rules"]["mutate_main"] is False, "automation must be read-only")
     return contract
+
+
+def app_release_url(contract: dict, release_id: str) -> str:
+    """The public directory one GridAtlas release is served from.
+
+    GridAtlas moved its published releases under `atlas/releases/`; the
+    pre-migration shape returns 404 and this verifier held it as a literal, so
+    the hourly watchdog's consumer probe has failed every hour since
+    2026-09-01 while being entirely correct about what it found. The prefix is
+    contract data rather than a literal here so that the next move is one
+    declared edit instead of a hunt through the verifier.
+    """
+    public = contract["public"]
+    return public["app_root"] + public["app_release_prefix"] + release_id + "/"
 
 
 def assign_parquet(artifacts: list[dict], shards: int) -> list[list[dict]]:
@@ -425,7 +439,7 @@ def verify_consumer(state: dict) -> dict:
     require((current.get("query_contract") or {}).get("parameter") == query["parameter"], "app query parameter mismatch")
     require((current.get("query_contract") or {}).get("golden_value") == query["value"], "app query value mismatch")
 
-    release = root + expected["release_id"] + "/"
+    release = app_release_url(contract, expected["release_id"])
     release_checks = {
         "release-manifest.json": expected["release_manifest_sha256"],
         "build-manifest.json": expected["build_manifest_sha256"],
@@ -490,7 +504,7 @@ def _verify_current_and_historical_consumer(state: dict) -> dict:
     historical_current = historical_pointer.get("current") or {}
     require(historical_current.get("release_id") == expected["release_id"], "historical release binding mismatch")
 
-    historical_release = root + expected["release_id"] + "/"
+    historical_release = app_release_url(contract, expected["release_id"])
     historical_checks = {
         "release-manifest.json": expected["release_manifest_sha256"],
         "build-manifest.json": expected["build_manifest_sha256"],
@@ -532,8 +546,13 @@ def _verify_current_and_historical_consumer(state: dict) -> dict:
     current = current_pointer.get("current") or {}
     release_id = str(current.get("release_id") or "")
     require(re.fullmatch(r"\d{12}-atlas-v9", release_id) is not None, "unsafe current app release ID")
-    release_url = root + release_id + "/"
-    require(current.get("live_url") == release_url, "current app live URL mismatch")
+    release_url = app_release_url(contract, release_id)
+    # `live_url` is the stable composed-app route and `release_route` is the
+    # immutable release directory; before the migration they were the same
+    # string and this compared one against the other. Bind each to what it is,
+    # so the pointer must declare the exact directory this verifier then reads.
+    require(current.get("live_url") == root + contract["public"]["app_route"], "current app live URL mismatch")
+    require(current.get("release_route") == urlsplit(release_url).path, "current app release route mismatch")
     receiver = current.get("deep_link_receiver") or {}
     require(receiver.get("identity_parameter") == query["parameter"], "current query parameter mismatch")
     require(receiver.get("identity_rule") == "EXACT_REPD_REF_ONLY", "current identity rule mismatch")

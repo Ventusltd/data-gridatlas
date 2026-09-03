@@ -68,6 +68,8 @@
   "public": {
     "data_root": "https://ventusltd.github.io/data-gridatlas/",
     "app_root": "https://ventusltd.github.io/gridatlas/",
+    "app_route": "atlas/",
+    "app_release_prefix": "atlas/releases/",
     "cors": "*",
     "identity_encoding": true,
     "parquet_prefix": "PAR1",
